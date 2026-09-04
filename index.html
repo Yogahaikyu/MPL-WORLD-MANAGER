@@ -44,17 +44,17 @@
             box-sizing: border-box;
         }
 
-        .card h2 {
-            margin-top: 0;
+        .league-team {
+            background: #222936;
+            padding: 14px;
+            margin-top: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
         }
 
-        .card h3 {
-            margin-bottom: 8px;
-        }
-
-        .card p {
-            color: #ccc;
-            line-height: 1.5;
+        .league-team:hover {
+            transform: scale(1.02);
         }
 
         .player {
@@ -98,6 +98,11 @@
             transform: scale(0.98);
         }
 
+        .back-button {
+            background: #303642;
+            color: white;
+        }
+
         #result {
             text-align: center;
             font-size: 18px;
@@ -109,7 +114,6 @@
 
 <body>
 
-    <!-- HEADER -->
     <header>
         <h1>🌍 MPL World Manager</h1>
         <p>Esports Management Simulator</p>
@@ -118,16 +122,30 @@
 
     <div class="container">
 
-        <!-- REGION DAN LIGA -->
-        <div id="leagueList"></div>
+        <!-- HALAMAN LIGA -->
+        <div id="leaguePage">
+
+            <div id="leagueList"></div>
+
+        </div>
 
 
-        <!-- ROSTER RRQ -->
-        <div class="card">
+        <!-- HALAMAN ROSTER -->
+        <div id="rosterPage" style="display: none;">
 
-            <h2>👑 RRQ — Roster</h2>
+            <div class="card">
 
-            <div id="rrqRoster"></div>
+                <button class="back-button" onclick="kembaliKeLiga()">
+                    ← KEMBALI KE LIGA
+                </button>
+
+                <h2 id="rosterTitle">
+                    Roster
+                </h2>
+
+                <div id="rosterList"></div>
+
+            </div>
 
         </div>
 
@@ -152,101 +170,239 @@
     </div>
 
 
-    <!-- MATCH ENGINE -->
+    <!-- GAME SCRIPT -->
+
+    <script src="game.js"></script>
+
+
+    <!-- UI SCRIPT -->
+
     <script>
 
-        function mainMatch() {
+        // ========================================
+        // TAMPILKAN SEMUA LIGA
+        // ========================================
 
-            const rrq = 85;
-            const onic = 88;
+        function tampilkanSemuaLiga() {
 
-            const rrqPower = rrq + Math.random() * 20;
-            const onicPower = onic + Math.random() * 20;
+            const container = document.getElementById("leagueList");
 
-            const result = document.getElementById("result");
+            container.innerHTML = "";
 
-            if (rrqPower > onicPower) {
+            for (const id in game.regions) {
 
-                result.innerHTML = "🏆 RRQ MENANG!";
+                const region = game.regions[id];
 
-            } else {
+                const regionBox = document.createElement("div");
 
-                result.innerHTML = "🏆 ONIC MENANG!";
+                regionBox.className = "card";
+
+                let html = `
+                    <h2>🌍 ${region.name}</h2>
+
+                    <h3>🏆 ${region.tier1.name}</h3>
+                `;
+
+                region.tier1.teams.forEach(function(team) {
+
+                    html += `
+                        <div
+                            class="league-team"
+                            onclick="bukaRoster('${team}')"
+                        >
+                            🏆 ${team}
+                        </div>
+                    `;
+
+                });
+
+
+                html += `
+                    <h3>🥈 ${region.tier2.name}</h3>
+                `;
+
+
+                region.tier2.teams.forEach(function(team) {
+
+                    html += `
+                        <div
+                            class="league-team"
+                            onclick="bukaRoster('${team}')"
+                        >
+                            🥈 ${team}
+                        </div>
+                    `;
+
+                });
+
+
+                regionBox.innerHTML = html;
+
+                container.appendChild(regionBox);
 
             }
+
         }
 
 
         // ========================================
-        // TAMPILKAN ROSTER RRQ
+        // BUKA ROSTER
         // ========================================
 
-        function tampilkanRosterRRQ() {
+        function bukaRoster(teamName) {
 
-            const container = document.getElementById("rrqRoster");
+            document.getElementById("leaguePage").style.display = "none";
 
-            container.innerHTML = "";
+            document.getElementById("rosterPage").style.display = "block";
+
+            document.getElementById("rosterTitle").innerHTML =
+                "👑 " + teamName + " — Roster";
+
+            const rosterList =
+                document.getElementById("rosterList");
+
+            rosterList.innerHTML = "";
+
+
+            let jumlahPemain = 0;
+
 
             for (const id in game.players) {
 
                 const player = game.players[id];
 
-                if (player.team !== "RRQ") {
-                    continue;
+
+                if (player.team === teamName) {
+
+                    jumlahPemain++;
+
+
+                    const playerBox =
+                        document.createElement("div");
+
+                    playerBox.className = "player";
+
+
+                    playerBox.innerHTML = `
+
+                        <div class="player-name">
+                            👤 ${player.name}
+                        </div>
+
+                        <div class="player-info">
+
+                            🎯 Role:
+                            ${player.role}
+                            <br>
+
+                            🎂 Umur:
+                            ${player.age} tahun
+                            <br>
+
+                            ⭐ Rating:
+                            <span class="rating">
+                                ${player.rating}
+                            </span>
+                            <br>
+
+                            📈 Potential:
+                            ${player.potential}
+                            <br>
+
+                            💰 Gaji:
+                            Rp ${player.salary.toLocaleString("id-ID")}
+                            / bulan
+                            <br>
+
+                            😊 Morale:
+                            ${player.morale}
+
+                        </div>
+                    `;
+
+
+                    rosterList.appendChild(playerBox);
+
                 }
 
-                const playerBox = document.createElement("div");
+            }
 
-                playerBox.className = "player";
 
-                playerBox.innerHTML = `
-                    <div class="player-name">
-                        👤 ${player.name}
-                    </div>
+            if (jumlahPemain === 0) {
 
-                    <div class="player-info">
-
-                        🎯 Role: ${player.role}<br>
-
-                        🎂 Umur: ${player.age} tahun<br>
-
-                        ⭐ Rating:
-                        <span class="rating">
-                            ${player.rating}
-                        </span>
-                        <br>
-
-                        📈 Potential: ${player.potential}<br>
-
-                        💰 Gaji:
-                        Rp ${player.salary.toLocaleString("id-ID")}
-                        / bulan<br>
-
-                        😊 Morale: ${player.morale}
-
-                    </div>
+                rosterList.innerHTML = `
+                    <p>
+                        Belum ada data pemain untuk tim ini.
+                    </p>
                 `;
 
-                container.appendChild(playerBox);
             }
+
         }
 
 
         // ========================================
-        // START GAME
+        // KEMBALI KE LIGA
         // ========================================
 
-        document.addEventListener("DOMContentLoaded", function() {
+        function kembaliKeLiga() {
 
-            tampilkanRosterRRQ();
+            document.getElementById("rosterPage").style.display = "none";
 
-        });
+            document.getElementById("leaguePage").style.display = "block";
+
+        }
+
+
+        // ========================================
+        // MATCH
+        // ========================================
+
+        function mainMatch() {
+
+            const rrq = 85;
+
+            const onic = 88;
+
+            const rrqPower =
+                rrq + Math.random() * 20;
+
+            const onicPower =
+                onic + Math.random() * 20;
+
+            const result =
+                document.getElementById("result");
+
+
+            if (rrqPower > onicPower) {
+
+                result.innerHTML =
+                    "🏆 RRQ MENANG!";
+
+            } else {
+
+                result.innerHTML =
+                    "🏆 ONIC MENANG!";
+
+            }
+
+        }
+
+
+        // ========================================
+        // START
+        // ========================================
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function() {
+
+                tampilkanSemuaLiga();
+
+            }
+        );
 
     </script>
-
-
-    <!-- DATABASE GAME -->
-    <script src="game.js"></script>
 
 </body>
 
