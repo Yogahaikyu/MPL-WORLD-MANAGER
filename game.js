@@ -1992,3 +1992,1230 @@ console.log(
     game.schedule.length,
     "matches"
 );
+/* =========================================================
+   MPL INDONESIA — PLAYOFF TOP 6
+   Paste kode ini di PALING BAWAH game.js
+   ========================================================= */
+
+
+/* =========================================================
+   PLAYOFF DATA
+   ========================================================= */
+
+function createMPLPlayoffs() {
+
+    const standings = getSortedStandings();
+
+    if (!standings || standings.length < 6) {
+        alert("Regular Season belum selesai.");
+        return;
+    }
+
+    const top6 = standings.slice(0, 6);
+
+    game.playoffs = {
+
+        season: game.season,
+
+        status: "active",
+
+        champion: null,
+
+        runnerUp: null,
+
+        teams: top6.map((s, index) => ({
+            seed: index + 1,
+            teamId: s.teamId
+        })),
+
+        matches: [
+
+            /* =========================================
+               ROUND 1
+               Seed 3 vs Seed 6
+               Seed 4 vs Seed 5
+               ========================================= */
+
+            {
+                id: "PO1",
+                round: "Round 1",
+                label: "Seed 3 vs Seed 6",
+                teamA: top6[2].teamId,
+                teamB: top6[5].teamId,
+                scoreA: 0,
+                scoreB: 0,
+                played: false,
+                winner: null,
+                format: "BO5"
+            },
+
+            {
+                id: "PO2",
+                round: "Round 1",
+                label: "Seed 4 vs Seed 5",
+                teamA: top6[3].teamId,
+                teamB: top6[4].teamId,
+                scoreA: 0,
+                scoreB: 0,
+                played: false,
+                winner: null,
+                format: "BO5"
+            }
+
+        ],
+
+        winners: [],
+
+        losers: [],
+
+        grandFinal: null
+
+    };
+
+
+    saveGameSilent();
+
+}
+
+
+/* =========================================================
+   START PLAYOFF
+   ========================================================= */
+
+function startMPLPlayoffs() {
+
+    if (
+        game.week < 18 ||
+        !isCurrentWeekComplete()
+    ) {
+
+        alert(
+            "Selesaikan Regular Season terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    createMPLPlayoffs();
+
+    renderPlayoffs();
+
+    showPage("playoffs");
+
+}
+
+
+/* =========================================================
+   AMBIL PLAYOFF MATCH
+   ========================================================= */
+
+function getPlayoffMatch(id) {
+
+    if (
+        !game.playoffs ||
+        !game.playoffs.matches
+    ) {
+
+        return null;
+
+    }
+
+
+    return game.playoffs.matches.find(
+        match => match.id === id
+    );
+
+}
+
+
+/* =========================================================
+   TAMBAH MATCH PLAYOFF
+   ========================================================= */
+
+function addPlayoffMatch(
+    id,
+    round,
+    label,
+    teamA,
+    teamB,
+    format = "BO5"
+) {
+
+    game.playoffs.matches.push({
+
+        id: id,
+
+        round: round,
+
+        label: label,
+
+        teamA: teamA,
+
+        teamB: teamB,
+
+        scoreA: 0,
+
+        scoreB: 0,
+
+        played: false,
+
+        winner: null,
+
+        format: format
+
+    });
+
+}
+
+
+/* =========================================================
+   SIMULASI BO5
+   ========================================================= */
+
+function simulateBo5(teamA, teamB) {
+
+    let scoreA = 0;
+
+    let scoreB = 0;
+
+    const games = [];
+
+
+    while (
+        scoreA < 3 &&
+        scoreB < 3
+    ) {
+
+        const gameResult =
+            simulateGame(
+                teamA,
+                teamB
+            );
+
+
+        games.push({
+
+            game:
+                games.length + 1,
+
+            winner:
+                gameResult.winner,
+
+            loser:
+                gameResult.loser,
+
+            killsWinner:
+                gameResult.killsWinner,
+
+            killsLoser:
+                gameResult.killsLoser
+
+        });
+
+
+        if (
+            gameResult.winner === teamA
+        ) {
+
+            scoreA++;
+
+        } else {
+
+            scoreB++;
+
+        }
+
+    }
+
+
+    return {
+
+        teamA: teamA,
+
+        teamB: teamB,
+
+        scoreA: scoreA,
+
+        scoreB: scoreB,
+
+        winner:
+            scoreA > scoreB
+            ? teamA
+            : teamB,
+
+        loser:
+            scoreA > scoreB
+            ? teamB
+            : teamA,
+
+        games: games
+
+    };
+
+}
+
+
+/* =========================================================
+   SIMULASI BO7
+   ========================================================= */
+
+function simulateBo7(teamA, teamB) {
+
+    let scoreA = 0;
+
+    let scoreB = 0;
+
+    const games = [];
+
+
+    while (
+        scoreA < 4 &&
+        scoreB < 4
+    ) {
+
+        const gameResult =
+            simulateGame(
+                teamA,
+                teamB
+            );
+
+
+        games.push({
+
+            game:
+                games.length + 1,
+
+            winner:
+                gameResult.winner,
+
+            loser:
+                gameResult.loser,
+
+            killsWinner:
+                gameResult.killsWinner,
+
+            killsLoser:
+                gameResult.killsLoser
+
+        });
+
+
+        if (
+            gameResult.winner === teamA
+        ) {
+
+            scoreA++;
+
+        } else {
+
+            scoreB++;
+
+        }
+
+    }
+
+
+    return {
+
+        teamA: teamA,
+
+        teamB: teamB,
+
+        scoreA: scoreA,
+
+        scoreB: scoreB,
+
+        winner:
+            scoreA > scoreB
+            ? teamA
+            : teamB,
+
+        loser:
+            scoreA > scoreB
+            ? teamB
+            : teamA,
+
+        games: games
+
+    };
+
+}
+
+
+/* =========================================================
+   MAIN PLAYOFF MATCH
+   ========================================================= */
+
+function playPlayoffMatch(id) {
+
+    const match =
+        getPlayoffMatch(id);
+
+
+    if (!match) {
+
+        alert(
+            "Match playoff tidak ditemukan."
+        );
+
+        return;
+
+    }
+
+
+    if (match.played) {
+
+        alert(
+            "Match ini sudah dimainkan."
+        );
+
+        return;
+
+    }
+
+
+    if (!match.teamA || !match.teamB) {
+
+        alert(
+            "Tim untuk pertandingan belum tersedia."
+        );
+
+        return;
+
+    }
+
+
+    let result;
+
+
+    if (match.format === "BO7") {
+
+        result =
+            simulateBo7(
+                match.teamA,
+                match.teamB
+            );
+
+    } else {
+
+        result =
+            simulateBo5(
+                match.teamA,
+                match.teamB
+            );
+
+    }
+
+
+    match.scoreA =
+        result.scoreA;
+
+    match.scoreB =
+        result.scoreB;
+
+    match.winner =
+        result.winner;
+
+    match.loser =
+        result.loser;
+
+    match.games =
+        result.games;
+
+    match.played =
+        true;
+
+
+    game.currentMatch =
+        result;
+
+
+    const mvp =
+        calculateMVP(result);
+
+
+    game.currentMatch.mvp =
+        mvp
+        ? mvp.id
+        : null;
+
+
+    saveGameSilent();
+
+
+    alert(
+        "🏆 " +
+        getTeam(result.winner).name +
+        " menang " +
+        result.scoreA +
+        "-" +
+        result.scoreB
+    );
+
+
+    updatePlayoffBracket();
+
+    renderPlayoffs();
+
+    showPage("playoffs");
+
+}
+
+
+/* =========================================================
+   UPDATE BRACKET
+   ========================================================= */
+
+function updatePlayoffBracket() {
+
+    const p =
+        game.playoffs;
+
+
+    if (!p) return;
+
+
+    const po1 =
+        getPlayoffMatch("PO1");
+
+    const po2 =
+        getPlayoffMatch("PO2");
+
+
+    /*
+      Setelah Round 1 selesai,
+      Seed 1 dan Seed 2 masuk.
+    */
+
+    if (
+        po1 &&
+        po2 &&
+        po1.played &&
+        po2.played
+    ) {
+
+        const winnerPO1 =
+            po1.winner;
+
+        const winnerPO2 =
+            po2.winner;
+
+
+        const loserPO1 =
+            po1.loser;
+
+        const loserPO2 =
+            po2.loser;
+
+
+        p.winners = [
+            winnerPO1,
+            winnerPO2
+        ];
+
+
+        p.losers = [
+            loserPO1,
+            loserPO2
+        ];
+
+
+        /*
+          Seed 1 vs pemenang 4/5
+        */
+
+        if (
+            !getPlayoffMatch("PO3")
+        ) {
+
+            const seed1 =
+                p.teams[0].teamId;
+
+            const seed2 =
+                p.teams[1].teamId;
+
+
+            addPlayoffMatch(
+                "PO3",
+                "Upper Round 1",
+                "Seed 1 vs Winner PO2",
+                seed1,
+                winnerPO2,
+                "BO5"
+            );
+
+
+            /*
+              Seed 2 vs pemenang 3/6
+            */
+
+            addPlayoffMatch(
+                "PO4",
+                "Upper Round 1",
+                "Seed 2 vs Winner PO1",
+                seed2,
+                winnerPO1,
+                "BO5"
+            );
+
+
+            /*
+              Loser PO1 vs Loser PO2
+            */
+
+            addPlayoffMatch(
+                "PO5",
+                "Lower Round 1",
+                "Lower Round 1",
+                loserPO1,
+                loserPO2,
+                "BO5"
+            );
+
+        }
+
+    }
+
+
+    const po3 =
+        getPlayoffMatch("PO3");
+
+    const po4 =
+        getPlayoffMatch("PO4");
+
+    const po5 =
+        getPlayoffMatch("PO5");
+
+
+    /*
+      Setelah Upper Round 1
+    */
+
+    if (
+        po3 &&
+        po4 &&
+        po5 &&
+        po3.played &&
+        po4.played &&
+        po5.played
+    ) {
+
+        /*
+          Upper Final
+        */
+
+        if (
+            !getPlayoffMatch("PO6")
+        ) {
+
+            addPlayoffMatch(
+                "PO6",
+                "Upper Final",
+                "Upper Final",
+                po3.winner,
+                po4.winner,
+                "BO5"
+            );
+
+
+            /*
+              Lower Round 2
+            */
+
+            addPlayoffMatch(
+                "PO7",
+                "Lower Round 2",
+                "Lower Round 2",
+                po3.loser,
+                po5.winner,
+                "BO5"
+            );
+
+
+            /*
+              Lower Round 3
+            */
+
+            addPlayoffMatch(
+                "PO8",
+                "Lower Round 3",
+                "Lower Round 3",
+                po4.loser,
+                po5.loser,
+                "BO5"
+            );
+
+        }
+
+    }
+
+
+    const po6 =
+        getPlayoffMatch("PO6");
+
+    const po7 =
+        getPlayoffMatch("PO7");
+
+    const po8 =
+        getPlayoffMatch("PO8");
+
+
+    /*
+      Setelah Lower Round 2 & 3
+    */
+
+    if (
+        po6 &&
+        po7 &&
+        po8 &&
+        po6.played &&
+        po7.played &&
+        po8.played
+    ) {
+
+        if (
+            !getPlayoffMatch("PO9")
+        ) {
+
+            /*
+              Lower Final
+            */
+
+            addPlayoffMatch(
+                "PO9",
+                "Lower Final",
+                "Lower Final",
+                po7.winner,
+                po8.winner,
+                "BO7"
+            );
+
+        }
+
+    }
+
+
+    /*
+      Upper Final selesai
+      + Lower Final selesai
+      = Grand Final
+    */
+
+    if (
+        po6 &&
+        po9ExistsAndPlayed()
+    ) {
+
+        const po9 =
+            getPlayoffMatch("PO9");
+
+
+        if (
+            po6.played &&
+            po9.played &&
+            !getPlayoffMatch("PO10")
+        ) {
+
+            addPlayoffMatch(
+                "PO10",
+                "Grand Final",
+                "GRAND FINAL",
+                po6.winner,
+                po9.winner,
+                "BO7"
+            );
+
+        }
+
+    }
+
+
+    /*
+      Grand Final selesai
+    */
+
+    const grandFinal =
+        getPlayoffMatch("PO10");
+
+
+    if (
+        grandFinal &&
+        grandFinal.played
+    ) {
+
+        finishMPLPlayoffs(
+            grandFinal.winner,
+            grandFinal.loser
+        );
+
+    }
+
+
+    saveGameSilent();
+
+}
+
+
+/* =========================================================
+   CEK LOWER FINAL
+   ========================================================= */
+
+function po9ExistsAndPlayed() {
+
+    const po9 =
+        getPlayoffMatch("PO9");
+
+
+    return (
+        po9 &&
+        po9.played
+    );
+
+}
+
+
+/* =========================================================
+   SELESAI PLAYOFF
+   ========================================================= */
+
+function finishMPLPlayoffs(
+    championId,
+    runnerUpId
+) {
+
+    if (
+        game.playoffs.champion
+    ) {
+
+        return;
+
+    }
+
+
+    game.playoffs.status =
+        "finished";
+
+
+    game.playoffs.champion =
+        championId;
+
+
+    game.playoffs.runnerUp =
+        runnerUpId;
+
+
+    /*
+      Tambah gelar MPL
+    */
+
+    recordMPLChampion(
+        championId
+    );
+
+
+    /*
+      Simpan history
+    */
+
+    game.history.seasons.push({
+
+        season:
+            game.season,
+
+        mplChampion:
+            championId,
+
+        mplRunnerUp:
+            runnerUpId
+
+    });
+
+
+    saveGameSilent();
+
+
+    alert(
+        "🏆🏆🏆 GRAND FINAL SELESAI!\n\n" +
+
+        "JUARA MPL INDONESIA\n" +
+
+        getTeam(championId).name +
+
+        "\n\n🥈 Runner Up\n" +
+
+        getTeam(runnerUpId).name +
+
+        "\n\n⭐ Gelar MPL bertambah!"
+    );
+
+
+    renderPlayoffs();
+
+}
+
+
+/* =========================================================
+   RECORD MPL CHAMPION
+   ========================================================= */
+
+function recordMPLChampion(
+    teamId
+) {
+
+    const team =
+        getTeam(teamId);
+
+
+    if (!team) return;
+
+
+    team.mplTitles =
+        (team.mplTitles || 0) + 1;
+
+
+    team.stars =
+        (team.stars || 0) + 1;
+
+
+    game.history.mpl.push({
+
+        season:
+            game.season,
+
+        teamId:
+            teamId
+
+    });
+
+}
+
+
+/* =========================================================
+   RENDER PLAYOFF
+   ========================================================= */
+
+function renderPlayoffs() {
+
+    const box =
+        document.getElementById(
+            "playoffsContainer"
+        );
+
+
+    if (!box) return;
+
+
+    if (!game.playoffs) {
+
+        box.innerHTML = `
+
+            <div class="card">
+
+                <h2>
+                    🏆 MPL Playoffs
+                </h2>
+
+                <p>
+                    Playoffs belum dimulai.
+                </p>
+
+                <button
+                    class="main-btn"
+                    onclick="
+                        startMPLPlayoffs()
+                    "
+                >
+
+                    🔥 MULAI PLAYOFF
+
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let html = `
+
+        <div class="card">
+
+            <h2>
+                🏆 MPL INDONESIA PLAYOFFS
+            </h2>
+
+            <p class="muted">
+
+                Season ${game.season}
+
+            </p>
+
+        </div>
+
+    `;
+
+
+    /*
+      Tampilkan semua match
+    */
+
+    game.playoffs.matches
+        .forEach(match => {
+
+            const teamA =
+                match.teamA
+                ? getTeam(match.teamA)
+                : null;
+
+
+            const teamB =
+                match.teamB
+                ? getTeam(match.teamB)
+                : null;
+
+
+            html += `
+
+                <div class="card">
+
+                    <div class="mini">
+
+                        ${match.round}
+
+                    </div>
+
+                    <h3>
+
+                        ${match.label}
+
+                    </h3>
+
+
+                    <div
+                        style="
+                        display:flex;
+                        justify-content:
+                        space-between;
+                        align-items:center;
+                        "
+                    >
+
+                        <b>
+                            ${
+                                teamA
+                                ? teamA.short
+                                : "TBD"
+                            }
+                        </b>
+
+
+                        <strong>
+
+                            ${
+                                match.played
+                                ? match.scoreA +
+                                  " - " +
+                                  match.scoreB
+                                : "VS"
+                            }
+
+                        </strong>
+
+
+                        <b>
+                            ${
+                                teamB
+                                ? teamB.short
+                                : "TBD"
+                            }
+                        </b>
+
+                    </div>
+
+
+                    <p class="mini">
+
+                        Format:
+                        ${match.format}
+
+                    </p>
+
+
+                    ${
+                        match.played
+
+                        ? `
+
+                            <p
+                                style="
+                                text-align:center;
+                                "
+                            >
+
+                                🏆 Winner:
+                                <b>
+                                    ${
+                                        getTeam(
+                                            match.winner
+                                        ).name
+                                    }
+                                </b>
+
+                            </p>
+
+                        `
+
+                        : (
+
+                            teamA &&
+                            teamB
+
+                        )
+
+                        ? `
+
+                            <button
+                                class="main-btn"
+                                onclick="
+                                    playPlayoffMatch(
+                                        '${match.id}'
+                                    )
+                                "
+                            >
+
+                                🎮 MAINKAN
+
+                            </button>
+
+                        `
+
+                        : `
+
+                            <p
+                                class="muted"
+                            >
+
+                                ⏳ Menunggu
+                                hasil pertandingan
+                                sebelumnya.
+
+                            </p>
+
+                        `
+
+                    }
+
+                </div>
+
+            `;
+
+        });
+
+
+    if (
+        game.playoffs.champion
+    ) {
+
+        html += `
+
+            <div class="card">
+
+                <h2>
+                    🏆 JUARA MPL
+                </h2>
+
+                <div
+                    style="
+                    text-align:center;
+                    font-size:24px;
+                    padding:20px;
+                    "
+                >
+
+                    ${
+                        getTeam(
+                            game.playoffs.champion
+                        ).name
+                    }
+
+                    ⭐
+
+                </div>
+
+                <p
+                    style="
+                    text-align:center;
+                    "
+                >
+
+                    Selamat menjadi
+                    Juara MPL Indonesia!
+
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    box.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   OVERRIDE FINISH REGULAR SEASON
+   ========================================================= */
+
+const oldFinishRegularSeason =
+    finishMPLRegularSeason;
+
+
+finishMPLRegularSeason =
+function() {
+
+    oldFinishRegularSeason();
+
+
+    setTimeout(() => {
+
+        if (
+            game.regularSeasonResult &&
+            game.regularSeasonResult.top6
+        ) {
+
+            createMPLPlayoffs();
+
+            renderPlayoffs();
+
+        }
+
+    }, 100);
+
+};
+
+
+/* =========================================================
+   INITIALIZE PLAYOFF
+   ========================================================= */
+
+if (!game.playoffs) {
+
+    game.playoffs = null;
+
+}
+
+
+/* =========================================================
+   SAVE
+   ========================================================= */
+
+saveGameSilent();
