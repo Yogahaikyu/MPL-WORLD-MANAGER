@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MPL Manager</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>🏆 MPL MANAGER</h1>
+        <p>Mobile Legends Esports Manager</p>
+    </header>
+
+    <main>
+
+        <section id="dashboard">
+
+            <div class="card">
+                <h2>👤 Manager</h2>
+                <p id="managerName">Belum memilih tim</p>
+            </div>
+
+            <div class="card">
+                <h2>💰 Budget</h2>
+                <p id="budget">-</p>
+            </div>
+
+            <div class="card">
+                <h2>🏆 Posisi</h2>
+                <p id="position">-</p>
+            </div>
+
+        </section>
+
+
+        <section class="panel">
+
+            <h2>Pilih Tim</h2>
+
+            <select id="teamSelect">
+                <option value="">-- Pilih Tim --</option>
+                <option value="RRQ">RRQ</option>
+                <option value="ONIC">ONIC</option>
+                <option value="EVOS">EVOS</option>
+                <option value="BTR">Bigetron</option>
+            </select>
+
+            <button onclick="startGame()">
+                Mulai Karier
+            </button>
+
+        </section>
+
+
+        <section class="panel">
+
+            <h2>📅 Pertandingan Berikutnya</h2>
+
+            <div id="nextMatch">
+                Pilih tim terlebih dahulu.
+            </div>
+
+            <button onclick="simulateMatch()">
+                Simulasikan Match
+            </button>
+
+        </section>
+
+
+        <section class="panel">
+
+            <h2>📊 Klasemen</h2>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Pos</th>
+                        <th>Tim</th>
+                        <th>Menang</th>
+                        <th>Kalah</th>
+                        <th>Poin</th>
+                    </tr>
+                </thead>
+
+                <tbody id="standings">
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>MPL Manager Fan Project</p>
+    </footer>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
