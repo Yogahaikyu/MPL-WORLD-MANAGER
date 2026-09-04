@@ -1,409 +1,1709 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MPL World Manager</title>
+<title>MPL World Manager</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #10131a;
-            color: white;
-        }
+<style>
 
-        header {
-            padding: 20px;
-            text-align: center;
-            background: #171b25;
-        }
+*{
+    box-sizing:border-box;
+}
 
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#090909;
+    color:white;
+}
 
-        header p {
-            color: #aaa;
-        }
+header{
+    background:#111;
+    padding:18px;
+    text-align:center;
+    border-bottom:1px solid #292929;
+}
 
-        .container {
-            padding: 20px;
-            max-width: 700px;
-            margin: auto;
-        }
+header h1{
+    margin:0;
+    font-size:24px;
+}
 
-        .card {
-            background: #191e29;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-        }
+header p{
+    margin:6px 0 0;
+    color:#aaa;
+}
 
-        .league-team {
-            background: #222936;
-            padding: 14px;
-            margin-top: 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
+nav{
+    display:flex;
+    overflow-x:auto;
+    gap:8px;
+    padding:10px;
+    background:#101010;
+    border-bottom:1px solid #222;
+}
 
-        .league-team:hover {
-            transform: scale(1.02);
-        }
+nav button{
+    white-space:nowrap;
+    border:0;
+    border-radius:9px;
+    padding:10px 14px;
+    background:#202020;
+    color:white;
+    font-weight:bold;
+}
 
-        .player {
-            background: #222936;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 12px;
-        }
+nav button:active{
+    transform:scale(.97);
+}
 
-        .player-name {
-            font-size: 19px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
+.page{
+    display:none;
+    padding:15px;
+    max-width:900px;
+    margin:auto;
+}
 
-        .player-info {
-            color: #bbb;
-            line-height: 1.7;
-            font-size: 14px;
-        }
+.page.active{
+    display:block;
+}
 
-        .rating {
-            font-size: 22px;
-            font-weight: bold;
-        }
+.card{
+    background:#151515;
+    border:1px solid #282828;
+    border-radius:14px;
+    padding:15px;
+    margin-bottom:12px;
+}
 
-        button {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 8px;
-            background: #f5c542;
-            color: #111;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+.card h3{
+    margin-top:0;
+}
 
-        button:active {
-            transform: scale(0.98);
-        }
+.stat-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
 
-        .back-button {
-            background: #303642;
-            color: white;
-        }
+.stat{
+    background:#111;
+    padding:13px;
+    border-radius:10px;
+}
 
-        #result {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-    </style>
+.stat small{
+    display:block;
+    color:#999;
+    margin-bottom:5px;
+}
+
+button{
+    cursor:pointer;
+}
+
+.main-btn{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:10px;
+    background:#f2f2f2;
+    color:#111;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+.secondary-btn{
+    padding:10px 13px;
+    border:0;
+    border-radius:9px;
+    background:#292929;
+    color:white;
+    font-weight:bold;
+}
+
+.team-card{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.team-card button{
+    padding:9px 12px;
+    border:0;
+    border-radius:8px;
+    background:#292929;
+    color:white;
+}
+
+.player-card{
+    background:#101010;
+    padding:13px;
+    border-radius:10px;
+    margin-top:8px;
+}
+
+.player-name{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.muted{
+    color:#999;
+}
+
+.stars{
+    font-size:22px;
+    letter-spacing:2px;
+}
+
+.match-teams{
+    display:grid;
+    grid-template-columns:1fr auto 1fr;
+    align-items:center;
+    gap:10px;
+    text-align:center;
+}
+
+.match-team{
+    font-size:20px;
+    font-weight:bold;
+}
+
+.vs{
+    color:#888;
+    font-weight:bold;
+}
+
+.score{
+    font-size:35px;
+    font-weight:bold;
+    margin:8px 0;
+}
+
+.game-box{
+    background:#101010;
+    border-radius:10px;
+    padding:13px;
+    margin-top:8px;
+}
+
+.win{
+    font-weight:bold;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:570px;
+}
+
+th,td{
+    padding:10px 7px;
+    text-align:center;
+    border-bottom:1px solid #292929;
+}
+
+th{
+    color:#aaa;
+    font-size:12px;
+}
+
+td:first-child,
+td:nth-child(2){
+    text-align:left;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+.rank{
+    font-weight:bold;
+}
+
+.top6{
+    color:#eee;
+}
+
+.bottom{
+    color:#777;
+}
+
+.search{
+    width:100%;
+    padding:12px;
+    background:#111;
+    color:white;
+    border:1px solid #333;
+    border-radius:9px;
+    margin-bottom:10px;
+}
+
+select{
+    width:100%;
+    padding:12px;
+    background:#111;
+    color:white;
+    border:1px solid #333;
+    border-radius:9px;
+}
+
+.history-item{
+    background:#101010;
+    padding:14px;
+    border-radius:11px;
+    margin-bottom:9px;
+}
+
+.schedule-match{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.schedule-match button{
+    padding:9px 11px;
+    background:#292929;
+    color:white;
+    border:0;
+    border-radius:8px;
+}
+
+.mini{
+    font-size:13px;
+    color:#aaa;
+}
+
+@media(max-width:600px){
+
+    .stat-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .match-team{
+        font-size:16px;
+    }
+
+    .score{
+        font-size:29px;
+    }
+
+}
+
+</style>
 </head>
 
 <body>
 
-    <header>
-        <h1>🌍 MPL World Manager</h1>
-        <p>Esports Management Simulator</p>
-    </header>
+<header>
+
+    <h1>🏆 MPL WORLD MANAGER</h1>
+
+    <p>
+        MPL Indonesia • Season <span id="seasonNumber">18</span>
+    </p>
+
+</header>
 
 
-    <div class="container">
+<nav>
 
-        <!-- HALAMAN LIGA -->
-        <div id="leaguePage">
+    <button onclick="showPage('dashboard')">
+        🏠 Home
+    </button>
 
-            <div id="leagueList"></div>
+    <button onclick="showPage('teams')">
+        👥 Teams
+    </button>
 
-        </div>
+    <button onclick="showPage('standings')">
+        📊 Klasemen
+    </button>
+
+    <button onclick="showPage('schedule')">
+        📅 Jadwal
+    </button>
+
+    <button onclick="showPage('players')">
+        👤 Players
+    </button>
+
+    <button onclick="showPage('history')">
+        🏆 History
+    </button>
+
+</nav>
 
 
-        <!-- HALAMAN ROSTER -->
-        <div id="rosterPage" style="display: none;">
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
 
-            <div class="card">
+<section id="dashboardPage" class="page active">
 
-                <button class="back-button" onclick="kembaliKeLiga()">
-                    ← KEMBALI KE LIGA
-                </button>
+    <div class="card">
 
-                <h2 id="rosterTitle">
-                    Roster
-                </h2>
+        <h2>🇮🇩 MPL Indonesia</h2>
 
-                <div id="rosterList"></div>
+        <p class="muted">
+            Season <span id="dashSeason">18</span>
+            • Week <span id="dashWeek">1</span>
+        </p>
 
+        <div class="stat-grid">
+
+            <div class="stat">
+                <small>Budget</small>
+                <b id="budgetValue">Rp 5.000.000.000</b>
             </div>
 
-        </div>
+            <div class="stat">
+                <small>Teams</small>
+                <b>9</b>
+            </div>
 
+            <div class="stat">
+                <small>Format</small>
+                <b>Bo3</b>
+            </div>
 
-        <!-- PERTANDINGAN -->
-        <div class="card">
-
-            <h2>⚔️ Pertandingan</h2>
-
-            <p id="match">
-                RRQ vs ONIC
-            </p>
-
-            <button onclick="mainMatch()">
-                MAINKAN MATCH
-            </button>
-
-            <p id="result"></p>
+            <div class="stat">
+                <small>Playoff</small>
+                <b>Top 6</b>
+            </div>
 
         </div>
 
     </div>
 
 
-    <!-- GAME SCRIPT -->
+    <div class="card">
 
-    <script src="game.js"></script>
+        <h3>⚔️ Quick Match</h3>
 
+        <p class="muted">
+            Pilih dua tim untuk memainkan pertandingan MPL.
+        </p>
 
-    <!-- UI SCRIPT -->
+        <select id="quickTeamA"></select>
 
-    <script>
+        <br><br>
 
-        // ========================================
-        // TAMPILKAN SEMUA LIGA
-        // ========================================
+        <select id="quickTeamB"></select>
 
-        function tampilkanSemuaLiga() {
+        <button
+            class="main-btn"
+            onclick="startQuickMatch()">
+            🎮 MAIN MATCH
+        </button>
 
-            const container = document.getElementById("leagueList");
-
-            container.innerHTML = "";
-
-            for (const id in game.regions) {
-
-                const region = game.regions[id];
-
-                const regionBox = document.createElement("div");
-
-                regionBox.className = "card";
-
-                let html = `
-                    <h2>🌍 ${region.name}</h2>
-
-                    <h3>🏆 ${region.tier1.name}</h3>
-                `;
-
-                region.tier1.teams.forEach(function(team) {
-
-                    html += `
-                        <div
-                            class="league-team"
-                            onclick="bukaRoster('${team}')"
-                        >
-                            🏆 ${team}
-                        </div>
-                    `;
-
-                });
+    </div>
 
 
-                html += `
-                    <h3>🥈 ${region.tier2.name}</h3>
-                `;
+    <div class="card">
+
+        <h3>📊 Klasemen Saat Ini</h3>
+
+        <div id="dashboardStandings"></div>
+
+        <button
+            class="secondary-btn"
+            onclick="showPage('standings')">
+            Lihat Klasemen Lengkap →
+        </button>
+
+    </div>
+
+</section>
 
 
-                region.tier2.teams.forEach(function(team) {
+<!-- =====================================================
+     TEAMS
+===================================================== -->
 
-                    html += `
-                        <div
-                            class="league-team"
-                            onclick="bukaRoster('${team}')"
-                        >
-                            🥈 ${team}
-                        </div>
-                    `;
+<section id="teamsPage" class="page">
 
-                });
+    <h2>👥 MPL Indonesia Teams</h2>
+
+    <div id="teamsContainer"></div>
+
+</section>
 
 
-                regionBox.innerHTML = html;
+<!-- =====================================================
+     ROSTER
+===================================================== -->
 
-                container.appendChild(regionBox);
+<section id="rosterPage" class="page">
 
-            }
+    <div id="rosterContainer"></div>
 
+</section>
+
+
+<!-- =====================================================
+     STANDINGS
+===================================================== -->
+
+<section id="standingsPage" class="page">
+
+    <h2>📊 Klasemen MPL Indonesia</h2>
+
+    <div class="card">
+
+        <p class="mini">
+            MP = Match Point • W-L = Match Win-Loss
+            • NGW = Net Game Win • GW-L = Game Win-Loss
+        </p>
+
+        <div id="standingsContainer"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     SCHEDULE
+===================================================== -->
+
+<section id="schedulePage" class="page">
+
+    <h2>📅 Jadwal MPL Indonesia</h2>
+
+    <div id="scheduleContainer"></div>
+
+</section>
+
+
+<!-- =====================================================
+     PLAYERS
+===================================================== -->
+
+<section id="playersPage" class="page">
+
+    <h2>👤 Player Database</h2>
+
+    <input
+        id="playerSearch"
+        class="search"
+        placeholder="Cari nama pemain..."
+        oninput="renderPlayers()"
+    >
+
+    <select
+        id="roleFilter"
+        onchange="renderPlayers()">
+
+        <option value="all">
+            Semua Role
+        </option>
+
+        <option value="EXP Lane">
+            EXP Lane
+        </option>
+
+        <option value="Jungle">
+            Jungle
+        </option>
+
+        <option value="Mid Lane">
+            Mid Lane
+        </option>
+
+        <option value="Gold Lane">
+            Gold Lane
+        </option>
+
+        <option value="Roam">
+            Roam
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <div id="playersContainer"></div>
+
+</section>
+
+
+<!-- =====================================================
+     MATCH
+===================================================== -->
+
+<section id="matchPage" class="page">
+
+    <div id="matchContainer"></div>
+
+</section>
+
+
+<!-- =====================================================
+     HISTORY
+===================================================== -->
+
+<section id="historyPage" class="page">
+
+    <h2>🏆 MPL Indonesia History</h2>
+
+    <div class="card">
+
+        <h3>🏆 Juara MPL</h3>
+
+        <div id="mplHistory"></div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>⭐ Hall of Fame</h3>
+
+        <div id="hallOfFame"></div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     JAVASCRIPT UI
+===================================================== -->
+
+<script>
+
+function showPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p => p.classList.remove("active"));
+
+    const target =
+        document.getElementById(page + "Page");
+
+    if(target){
+        target.classList.add("active");
+    }
+
+    game.currentPage = page;
+
+    if(page === "dashboard"){
+        renderDashboard();
+    }
+
+    if(page === "teams"){
+        renderTeams();
+    }
+
+    if(page === "standings"){
+        renderStandings();
+    }
+
+    if(page === "schedule"){
+        renderSchedule();
+    }
+
+    if(page === "players"){
+        renderPlayers();
+    }
+
+    if(page === "history"){
+        renderHistoryUI();
+    }
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function renderDashboard(){
+
+    document.getElementById("seasonNumber").textContent =
+        game.season;
+
+    document.getElementById("dashSeason").textContent =
+        game.season;
+
+    document.getElementById("dashWeek").textContent =
+        game.week;
+
+    document.getElementById("budgetValue").textContent =
+        formatMoney(game.budget);
+
+    const selectA =
+        document.getElementById("quickTeamA");
+
+    const selectB =
+        document.getElementById("quickTeamB");
+
+    selectA.innerHTML = "";
+    selectB.innerHTML = "";
+
+    Object.values(game.teams).forEach(team => {
+
+        selectA.innerHTML += `
+            <option value="${team.id}">
+                ${team.name}
+            </option>
+        `;
+
+        selectB.innerHTML += `
+            <option value="${team.id}">
+                ${team.name}
+            </option>
+        `;
+    });
+
+    if(selectA.value === selectB.value){
+
+        if(selectB.options.length > 1){
+            selectB.selectedIndex = 1;
         }
 
+    }
 
-        // ========================================
-        // BUKA ROSTER
-        // ========================================
-
-        function bukaRoster(teamName) {
-
-            document.getElementById("leaguePage").style.display = "none";
-
-            document.getElementById("rosterPage").style.display = "block";
-
-            document.getElementById("rosterTitle").innerHTML =
-                "👑 " + teamName + " — Roster";
-
-            const rosterList =
-                document.getElementById("rosterList");
-
-            rosterList.innerHTML = "";
+    renderDashboardStandings();
+}
 
 
-            let jumlahPemain = 0;
+function renderDashboardStandings(){
+
+    const container =
+        document.getElementById("dashboardStandings");
+
+    const standings =
+        getSortedStandings().slice(0,5);
+
+    let html = `
+        <div class="table-wrap">
+
+        <table>
+
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Team</th>
+            <th>MP</th>
+            <th>W-L</th>
+            <th>NGW</th>
+        </tr>
+        </thead>
+
+        <tbody>
+    `;
+
+    standings.forEach((s,index)=>{
+
+        const team =
+            getTeam(s.teamId);
+
+        const ngw =
+            s.gameWin - s.gameLoss;
+
+        html += `
+            <tr>
+
+                <td>${index+1}</td>
+
+                <td>
+                    <b>${team.short}</b>
+                </td>
+
+                <td>${s.points}</td>
+
+                <td>
+                    ${s.matchWin}-${s.matchLoss}
+                </td>
+
+                <td>
+                    ${ngw > 0 ? "+" : ""}${ngw}
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+    html += `
+        </tbody>
+        </table>
+
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
 
 
-            for (const id in game.players) {
+/* =====================================================
+   TEAMS
+===================================================== */
 
-                const player = game.players[id];
+function renderTeams(){
+
+    const container =
+        document.getElementById("teamsContainer");
+
+    let html = "";
+
+    Object.values(game.teams).forEach(team => {
+
+        html += `
+
+        <div class="card team-card">
+
+            <div>
+
+                <h3>
+                    ${team.name}
+                </h3>
+
+                <div class="stars">
+                    ${team.stars > 0
+                        ? "⭐".repeat(team.stars)
+                        : "☆"
+                    }
+                </div>
+
+                <div class="mini">
+                    MPL Champion:
+                    ${team.mplTitles}x
+                    <br>
+                    World Champion:
+                    ${team.worldTitles}x
+                    <br>
+                    Power:
+                    ${calculateTeamPower(team.id)}
+                </div>
+
+            </div>
+
+            <button
+                onclick="bukaRoster('${team.id}')">
+
+                Roster →
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+    container.innerHTML = html;
+}
 
 
-                if (player.team === teamName) {
+/* =====================================================
+   ROSTER
+===================================================== */
 
-                    jumlahPemain++;
+function bukaRoster(teamId){
 
+    const team =
+        getTeam(teamId);
 
-                    const playerBox =
-                        document.createElement("div");
+    const players =
+        getTeamPlayers(teamId);
 
-                    playerBox.className = "player";
+    const container =
+        document.getElementById("rosterContainer");
 
+    let html = `
 
-                    playerBox.innerHTML = `
+        <button
+            class="secondary-btn"
+            onclick="showPage('teams')">
 
-                        <div class="player-name">
-                            👤 ${player.name}
-                        </div>
+            ← Kembali
 
-                        <div class="player-info">
+        </button>
 
-                            🎯 Role:
-                            ${player.role}
-                            <br>
+        <div class="card">
 
-                            🎂 Umur:
-                            ${player.age} tahun
-                            <br>
+            <h2>${team.name}</h2>
 
-                            ⭐ Rating:
-                            <span class="rating">
-                                ${player.rating}
-                            </span>
-                            <br>
+            <div class="stars">
 
-                            📈 Potential:
-                            ${player.potential}
-                            <br>
-
-                            💰 Gaji:
-                            Rp ${player.salary.toLocaleString("id-ID")}
-                            / bulan
-                            <br>
-
-                            😊 Morale:
-                            ${player.morale}
-
-                        </div>
-                    `;
-
-
-                    rosterList.appendChild(playerBox);
-
+                ${
+                    team.stars > 0
+                    ? "⭐".repeat(team.stars)
+                    : "☆"
                 }
 
+            </div>
+
+            <p>
+
+                🏆 MPL:
+                ${team.mplTitles}x
+
+                <br>
+
+                🌎 World:
+                ${team.worldTitles}x
+
+                <br>
+
+                👔 Coach:
+                ${team.coach}
+
+                <br>
+
+                ⚡ Team Power:
+                ${calculateTeamPower(teamId)}
+
+            </p>
+
+        </div>
+
+        <h3>👥 Roster</h3>
+    `;
+
+    players.forEach(player => {
+
+        html += `
+
+        <div class="player-card">
+
+            <div class="player-name">
+                ${player.name}
+            </div>
+
+            <div class="muted">
+                ${player.role}
+            </div>
+
+            <br>
+
+            Rating:
+            <b>${player.rating}</b>
+
+            &nbsp;|&nbsp;
+
+            Potential:
+            <b>${player.potential}</b>
+
+            <br><br>
+
+            Morale:
+            ${player.morale}
+
+            &nbsp;|&nbsp;
+
+            Stamina:
+            ${player.stamina}
+
+            <br><br>
+
+            Salary:
+            ${formatMoney(player.salary)}
+
+            <br>
+
+            <button
+                class="secondary-btn"
+                style="margin-top:8px"
+                onclick="trainPlayer('${player.id}'); bukaRoster('${teamId}')">
+
+                🏋️ Latih
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+    container.innerHTML = html;
+
+    showPage("roster");
+}
+
+
+/* =====================================================
+   STANDINGS
+===================================================== */
+
+function renderStandings(){
+
+    const container =
+        document.getElementById("standingsContainer");
+
+    const standings =
+        getSortedStandings();
+
+    let html = `
+
+        <div class="table-wrap">
+
+        <table>
+
+        <thead>
+
+        <tr>
+
+            <th>#</th>
+            <th>TEAM</th>
+            <th>MP</th>
+            <th>W-L</th>
+            <th>NGW</th>
+            <th>GW-L</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+    `;
+
+    standings.forEach((s,index)=>{
+
+        const team =
+            getTeam(s.teamId);
+
+        const net =
+            s.gameWin - s.gameLoss;
+
+        const rowClass =
+            index < 6
+            ? "top6"
+            : "bottom";
+
+        html += `
+
+            <tr class="${rowClass}">
+
+                <td class="rank">
+                    ${index + 1}
+                </td>
+
+                <td>
+                    <b>${team.short}</b>
+                    <br>
+                    <span class="mini">
+                        ${team.name}
+                    </span>
+                </td>
+
+                <td>
+                    <b>${s.points}</b>
+                </td>
+
+                <td>
+                    ${s.matchWin}-${s.matchLoss}
+                </td>
+
+                <td>
+                    ${net > 0 ? "+" : ""}${net}
+                </td>
+
+                <td>
+                    ${s.gameWin}-${s.gameLoss}
+                </td>
+
+            </tr>
+        `;
+
+    });
+
+    html += `
+
+        </tbody>
+
+        </table>
+
+        </div>
+
+        <p class="mini">
+            🟢 Posisi 1–6 masuk Playoff.
+        </p>
+    `;
+
+    container.innerHTML = html;
+}
+
+
+/* =====================================================
+   SCHEDULE
+===================================================== */
+
+function renderSchedule(){
+
+    const container =
+        document.getElementById("scheduleContainer");
+
+    if(!game.schedule.length){
+        generateSchedule();
+    }
+
+    let html = "";
+
+    game.schedule
+        .slice()
+        .sort((a,b)=>a.week-b.week)
+        .forEach((match,index)=>{
+
+            const teamA =
+                getTeam(match.teamA);
+
+            const teamB =
+                getTeam(match.teamB);
+
+            html += `
+
+            <div class="card">
+
+                <div class="mini">
+                    Week ${match.week}
+                </div>
+
+                <div class="schedule-match">
+
+                    <div>
+
+                        <b>
+                            ${teamA.short}
+                        </b>
+
+                        VS
+
+                        <b>
+                            ${teamB.short}
+                        </b>
+
+                    </div>
+
+                    ${
+                        match.played
+
+                        ? `<span class="muted">
+                            SELESAI
+                           </span>`
+
+                        : `
+
+                        <button
+                            onclick="playScheduledMatch(${game.schedule.indexOf(match)})">
+
+                            Main
+
+                        </button>
+
+                        `
+                    }
+
+                </div>
+
+            </div>
+
+            `;
+
+        });
+
+    container.innerHTML = html;
+}
+
+
+/* =====================================================
+   PLAYERS
+===================================================== */
+
+function renderPlayers(){
+
+    const container =
+        document.getElementById("playersContainer");
+
+    const search =
+        (
+            document.getElementById("playerSearch")
+            .value || ""
+        ).toLowerCase();
+
+    const role =
+        document.getElementById("roleFilter")
+        .value;
+
+    let players =
+        game.players.filter(player => {
+
+            const nameMatch =
+                player.name
+                    .toLowerCase()
+                    .includes(search);
+
+            const roleMatch =
+                role === "all" ||
+                player.role === role;
+
+            return nameMatch && roleMatch;
+
+        });
+
+    players.sort((a,b)=>b.rating-a.rating);
+
+    let html = "";
+
+    players.forEach(player=>{
+
+        const team =
+            getTeam(player.team);
+
+        html += `
+
+        <div class="player-card">
+
+            <div class="player-name">
+                ${player.name}
+            </div>
+
+            <div class="muted">
+                ${team.name}
+                •
+                ${player.role}
+            </div>
+
+            <br>
+
+            ⭐ Rating:
+            <b>${player.rating}</b>
+
+            <br>
+
+            🔮 Potential:
+            ${player.potential}
+
+            <br>
+
+            ❤️ Morale:
+            ${player.morale}
+
+            <br>
+
+            ⚡ Stamina:
+            ${player.stamina}
+
+        </div>
+
+        `;
+
+    });
+
+    if(!players.length){
+
+        html = `
+            <div class="card">
+                Pemain tidak ditemukan.
+            </div>
+        `;
+
+    }
+
+    container.innerHTML = html;
+}
+
+
+/* =====================================================
+   QUICK MATCH
+===================================================== */
+
+function startQuickMatch(){
+
+    const teamA =
+        document.getElementById("quickTeamA").value;
+
+    const teamB =
+        document.getElementById("quickTeamB").value;
+
+    if(teamA === teamB){
+
+        alert("Pilih dua tim yang berbeda.");
+
+        return;
+    }
+
+    bukaMatch(teamA,teamB);
+}
+
+
+/* =====================================================
+   MATCH SCREEN
+===================================================== */
+
+function bukaMatch(teamA,teamB){
+
+    const result =
+        simulateBo3(teamA,teamB);
+
+    applyMatchResult(result);
+
+    const mvp =
+        calculateMVP(result);
+
+    game.currentMatch =
+        result;
+
+    game.currentMatch.mvp =
+        mvp ? mvp.id : null;
+
+    renderMatch();
+
+    showPage("match");
+}
+
+
+function renderMatch(){
+
+    const container =
+        document.getElementById("matchContainer");
+
+    const match =
+        game.currentMatch;
+
+    if(!match){
+
+        container.innerHTML = `
+            <div class="card">
+                Belum ada pertandingan.
+            </div>
+        `;
+
+        return;
+    }
+
+    const teamA =
+        getTeam(match.teamA);
+
+    const teamB =
+        getTeam(match.teamB);
+
+    const mvp =
+        match.mvp
+        ? getPlayer(match.mvp)
+        : null;
+
+    let gamesHTML = "";
+
+    match.games.forEach((g,index)=>{
+
+        const winner =
+            getTeam(g.winner);
+
+        const loser =
+            getTeam(g.loser);
+
+        gamesHTML += `
+
+            <div class="game-box">
+
+                <b>🎮 Game ${index+1}</b>
+
+                <br><br>
+
+                <span class="win">
+                    ${winner.short}
+                </span>
+
+                menang
+
+                <br>
+
+                ${g.killsWinner}
+                -
+                ${g.killsLoser}
+                kills
+
+                <br>
+
+                <span class="mini">
+                    ${winner.name}
+                    mengalahkan
+                    ${loser.name}
+                </span>
+
+            </div>
+
+        `;
+
+    });
+
+    container.innerHTML = `
+
+        <button
+            class="secondary-btn"
+            onclick="showPage('dashboard')">
+
+            ← Kembali
+
+        </button>
+
+        <div class="card">
+
+            <div class="mini">
+                MPL Indonesia • Season ${game.season}
+            </div>
+
+            <div class="match-teams">
+
+                <div class="match-team">
+                    ${teamA.name}
+                </div>
+
+                <div class="vs">
+                    VS
+                </div>
+
+                <div class="match-team">
+                    ${teamB.name}
+                </div>
+
+            </div>
+
+            <div style="text-align:center">
+
+                <div class="score">
+                    ${match.scoreA}
+                    -
+                    ${match.scoreB}
+                </div>
+
+                <b>
+                    🏆
+                    ${getTeam(match.winner).name}
+                    MENANG
+                </b>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>🎮 Game Results</h3>
+
+            ${gamesHTML}
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>🏅 MVP</h3>
+
+            ${
+                mvp
+                ? `
+                    <b>
+                        ${mvp.name}
+                    </b>
+
+                    <br>
+
+                    ${mvp.role}
+
+                    <br>
+
+                    Rating:
+                    ${mvp.rating}
+                `
+                : "-"
             }
 
+        </div>
 
-            if (jumlahPemain === 0) {
 
-                rosterList.innerHTML = `
-                    <p>
-                        Belum ada data pemain untuk tim ini.
-                    </p>
+        <div class="card">
+
+            <h3>
+                📊 Klasemen Live
+            </h3>
+
+            <p class="mini">
+                Hasil pertandingan sudah
+                masuk ke klasemen.
+            </p>
+
+            ${getStandingsTableHTML()}
+
+        </div>
+
+    `;
+}
+
+
+/* =====================================================
+   STANDINGS TABLE FOR MATCH
+===================================================== */
+
+function getStandingsTableHTML(){
+
+    const standings =
+        getSortedStandings();
+
+    let html = `
+
+        <div class="table-wrap">
+
+        <table>
+
+        <thead>
+
+        <tr>
+
+            <th>#</th>
+            <th>TEAM</th>
+            <th>MP</th>
+            <th>W-L</th>
+            <th>NGW</th>
+            <th>GW-L</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+    `;
+
+    standings.forEach((s,index)=>{
+
+        const team =
+            getTeam(s.teamId);
+
+        const net =
+            s.gameWin - s.gameLoss;
+
+        html += `
+
+            <tr>
+
+                <td>
+                    ${index+1}
+                </td>
+
+                <td>
+                    <b>${team.short}</b>
+                </td>
+
+                <td>
+                    ${s.points}
+                </td>
+
+                <td>
+                    ${s.matchWin}-${s.matchLoss}
+                </td>
+
+                <td>
+                    ${net > 0 ? "+" : ""}${net}
+                </td>
+
+                <td>
+                    ${s.gameWin}-${s.gameLoss}
+                </td>
+
+            </tr>
+
+        `;
+
+    });
+
+    html += `
+        </tbody>
+        </table>
+        </div>
+    `;
+
+    return html;
+}
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+function renderHistoryUI(){
+
+    const history =
+        document.getElementById("mplHistory");
+
+    const hall =
+        document.getElementById("hallOfFame");
+
+    if(!game.history.mpl.length){
+
+        history.innerHTML = `
+            <p class="muted">
+                Belum ada juara yang tercatat.
+                Season 18 sedang berjalan.
+            </p>
+        `;
+
+    }else{
+
+        let html = "";
+
+        game.history.mpl
+            .slice()
+            .reverse()
+            .forEach(h=>{
+
+                const champion =
+                    getTeam(h.champion);
+
+                const runner =
+                    h.runnerUp
+                    ? getTeam(h.runnerUp)
+                    : null;
+
+                html += `
+
+                <div class="history-item">
+
+                    <b>
+                        Season ${h.season}
+                    </b>
+
+                    <br><br>
+
+                    🏆
+                    <b>
+                        ${champion.name}
+                    </b>
+
+                    ${
+                        runner
+                        ? `
+                            <br>
+                            🥈
+                            ${runner.name}
+                        `
+                        : ""
+                    }
+
+                </div>
+
                 `;
 
+            });
+
+        history.innerHTML = html;
+    }
+
+
+    let hof = "";
+
+    Object.values(game.teams)
+        .sort((a,b)=>{
+
+            if(b.stars !== a.stars){
+                return b.stars-a.stars;
             }
 
-        }
+            return b.mplTitles-a.mplTitles;
+
+        })
+        .forEach(team=>{
+
+            hof += `
+
+            <div class="history-item">
+
+                <b>
+                    ${team.name}
+                </b>
+
+                <div class="stars">
+
+                    ${
+                        team.stars > 0
+                        ? "⭐".repeat(team.stars)
+                        : "☆"
+                    }
+
+                </div>
+
+                🏆 MPL:
+                ${team.mplTitles}x
+
+                <br>
+
+                🌎 World:
+                ${team.worldTitles}x
+
+            </div>
+
+            `;
+
+        });
+
+    hall.innerHTML = hof;
+}
 
 
-        // ========================================
-        // KEMBALI KE LIGA
-        // ========================================
+/* =====================================================
+   UPDATE EVERYTHING
+===================================================== */
 
-        function kembaliKeLiga() {
+function refreshUI(){
 
-            document.getElementById("rosterPage").style.display = "none";
+    renderDashboard();
 
-            document.getElementById("leaguePage").style.display = "block";
+    renderTeams();
 
-        }
+    renderStandings();
 
+    renderSchedule();
 
-        // ========================================
-        // MATCH
-        // ========================================
+    renderPlayers();
 
-        function mainMatch() {
+    renderHistoryUI();
 
-            const rrq = 85;
-
-            const onic = 88;
-
-            const rrqPower =
-                rrq + Math.random() * 20;
-
-            const onicPower =
-                onic + Math.random() * 20;
-
-            const result =
-                document.getElementById("result");
+}
 
 
-            if (rrqPower > onicPower) {
+/* =====================================================
+   OVERRIDE MATCH FUNCTIONS TO REFRESH UI
+===================================================== */
 
-                result.innerHTML =
-                    "🏆 RRQ MENANG!";
-
-            } else {
-
-                result.innerHTML =
-                    "🏆 ONIC MENANG!";
-
-            }
-
-        }
+const originalBukaMatch =
+    bukaMatch;
 
 
-        // ========================================
-        // START
-        // ========================================
+/* =====================================================
+   START
+===================================================== */
 
-        document.addEventListener(
-            "DOMContentLoaded",
-            function() {
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
 
-                tampilkanSemuaLiga();
+        refreshUI();
 
-            }
-        );
+        showPage("dashboard");
 
-    </script>
+    }
+);
+
+</script>
+
+
+<!-- GAME ENGINE -->
+
+<script src="game.js"></script>
 
 </body>
-
-</html>
+    </html>
