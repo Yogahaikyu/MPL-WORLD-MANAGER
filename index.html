@@ -1,1294 +1,825 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MPL World Manager</title>
 
 <style>
-
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
 }
 
 body{
-margin:0;
-font-family:Arial, sans-serif;
-background:#0b1020;
-color:#fff;
-}
-
-header{
-background:#11182d;
-padding:16px;
-text-align:center;
-border-bottom:1px solid #26304d;
-}
-
-header h1{
-margin:0;
-font-size:22px;
-}
-
-header p{
-margin:6px 0 0;
-color:#9ca8c7;
-font-size:13px;
-}
-
-nav{
-display:flex;
-overflow-x:auto;
-background:#10162a;
-border-bottom:1px solid #26304d;
-}
-
-nav button{
-flex:1;
-min-width:90px;
-padding:13px 8px;
-border:0;
-background:transparent;
-color:#aeb8d3;
-font-size:13px;
-}
-
-nav button:hover{
-background:#1a2340;
-color:#fff;
-}
-
-.page{
-display:none;
-padding:15px;
-max-width:900px;
-margin:auto;
-}
-
-.page.active{
-display:block;
-}
-
-.card{
-background:#121a30;
-border:1px solid #26304d;
-border-radius:12px;
-padding:15px;
-margin-bottom:14px;
-}
-
-.card h2,
-.card h3{
-margin-top:0;
-}
-
-.muted{
-color:#8f9ab7;
-font-size:13px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-}
-
-.team-card{
-background:#18213a;
-padding:13px;
-border-radius:10px;
-border:1px solid #293657;
-}
-
-.team-card b{
-font-size:17px;
+    background:#080b12;
+    color:white;
+    min-height:100vh;
 }
 
 button{
-cursor:pointer;
+    border:none;
+    cursor:pointer;
 }
 
-.primary{
-width:100%;
-padding:13px;
-border:0;
-border-radius:9px;
-background:#e9b949;
-color:#111;
-font-weight:bold;
-font-size:15px;
+.container{
+    width:100%;
+    max-width:900px;
+    margin:auto;
+    padding:20px;
 }
 
-.primary:hover{
-background:#f4ca61;
+/* =========================
+   PILIH TIM
+========================= */
+
+#teamSelect{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-select,
-input{
-width:100%;
-padding:12px;
-border-radius:8px;
-border:1px solid #34405f;
-background:#0e1528;
-color:#fff;
-margin-bottom:10px;
+.select-box{
+    width:100%;
+    text-align:center;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-font-size:13px;
+.logo-title{
+    font-size:14px;
+    color:#888;
+    letter-spacing:3px;
+    margin-bottom:10px;
 }
 
-th,
-td{
-padding:10px 6px;
-border-bottom:1px solid #283451;
-text-align:left;
+h1{
+    font-size:30px;
+    margin-bottom:8px;
 }
 
-th{
-color:#aeb8d3;
+.subtitle{
+    color:#999;
+    margin-bottom:25px;
 }
 
-.rank{
-width:35px;
-font-weight:bold;
+.team-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
 }
 
-.win{
-color:#70e09c;
+.team-card{
+    background:#111722;
+    border:2px solid #202938;
+    border-radius:14px;
+    padding:18px 10px;
+    transition:.2s;
 }
 
-.loss{
-color:#ff7f8f;
+.team-card:hover{
+    transform:translateY(-2px);
+    border-color:#555;
 }
 
-.match-team{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:10px;
-font-size:18px;
-font-weight:bold;
+.team-card.selected{
+    border-color:#00e5ff;
+    background:#10202a;
 }
 
-.match-score{
-font-size:30px;
-font-weight:bold;
-text-align:center;
-margin:10px 0;
+.team-name{
+    font-size:17px;
+    font-weight:bold;
 }
 
-.game-box{
-background:#18213a;
-border:1px solid #303d60;
-border-radius:10px;
-padding:13px;
-margin-top:10px;
+.team-region{
+    color:#777;
+    font-size:12px;
+    margin-top:5px;
 }
 
-.game-box h3{
-margin-bottom:8px;
+.team-rating{
+    margin-top:10px;
+    font-size:12px;
+    color:#aaa;
 }
 
-.mvp{
-padding:10px;
-border-radius:8px;
-background:#222d4a;
-margin-top:8px;
+.start-btn{
+    width:100%;
+    margin-top:20px;
+    padding:16px;
+    border-radius:12px;
+    background:#00c8ff;
+    color:#001018;
+    font-weight:bold;
+    font-size:16px;
 }
 
-.history-item{
-border-left:3px solid #e9b949;
-padding-left:10px;
-margin-bottom:12px;
+.start-btn:disabled{
+    background:#252b35;
+    color:#666;
+    cursor:not-allowed;
 }
 
-@media(max-width:600px){
+/* =========================
+   DASHBOARD
+========================= */
 
-.grid{
-grid-template-columns:1fr;
+#dashboard{
+    display:none;
 }
 
-.match-team{
-font-size:16px;
+.topbar{
+    background:#111722;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:15px;
 }
 
+.small-title{
+    color:#888;
+    font-size:12px;
 }
 
+.manager-team{
+    font-size:25px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.season{
+    color:#00d9ff;
+    font-size:13px;
+    margin-top:5px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.stat{
+    background:#111722;
+    padding:15px;
+    border-radius:12px;
+}
+
+.stat-label{
+    color:#777;
+    font-size:12px;
+}
+
+.stat-value{
+    font-size:20px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.section{
+    background:#111722;
+    border-radius:15px;
+    padding:18px;
+    margin-bottom:15px;
+}
+
+.section h2{
+    font-size:17px;
+    margin-bottom:15px;
+}
+
+.menu{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.menu button{
+    padding:15px 10px;
+    border-radius:10px;
+    background:#1b2330;
+    color:white;
+    font-weight:bold;
+}
+
+.menu button:hover{
+    background:#273345;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:10px 0;
+    border-bottom:1px solid #202633;
+}
+
+.info-row:last-child{
+    border-bottom:none;
+}
+
+.muted{
+    color:#777;
+}
+
+.danger{
+    color:#ff5b5b;
+}
+
+.change-team{
+    margin-top:15px;
+    width:100%;
+    padding:12px;
+    background:#222936;
+    color:#aaa;
+    border-radius:10px;
+}
+
+/* MOBILE */
+
+@media(max-width:500px){
+    .container{
+        padding:15px;
+    }
+
+    h1{
+        font-size:25px;
+    }
+
+    .team-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .team-card{
+        padding:15px 8px;
+    }
+
+    .team-name{
+        font-size:14px;
+    }
+}
 </style>
-
 </head>
 
 <body>
 
-<header>
+<!-- =====================================================
+     HALAMAN PILIH TIM
+===================================================== -->
 
-<h1>🏆 MPL WORLD MANAGER</h1>
+<div id="teamSelect">
+    <div class="container">
+        <div class="select-box">
 
-<p>MLBB Esports Management Simulator</p>
+            <div class="logo-title">
+                MPL WORLD MANAGER
+            </div>
 
-</header>
+            <h1>PILIH TIM</h1>
 
+            <div class="subtitle">
+                MPL Indonesia Season 18
+            </div>
 
-<nav>
+            <div id="teamGrid" class="team-grid"></div>
 
-<button onclick="showPage('home')">
-🏠 Home
-</button>
+            <button
+                id="startCareerBtn"
+                class="start-btn"
+                disabled
+                onclick="startCareer()">
+                PILIH TIM TERLEBIH DAHULU
+            </button>
 
-<button onclick="showPage('teams')">
-👥 Teams
-</button>
-
-<button onclick="showPage('standings')">
-📊 Klasemen
-</button>
-
-<button onclick="showPage('schedule')">
-📅 Jadwal
-</button>
-
-<button onclick="showPage('players')">
-👤 Players
-</button>
-
-<button onclick="showPage('history')">
-🏆 History
-</button>
-
-</nav>
+        </div>
+    </div>
+</div>
 
 
-<!-- ================= HOME ================= -->
+<!-- =====================================================
+     DASHBOARD MANAGER
+===================================================== -->
 
-<section id="homePage" class="page active">
+<div id="dashboard">
 
-<div class="card">
+    <div class="container">
 
-<h2>🌏 MPL Indonesia</h2>
+        <div class="topbar">
+            <div class="small-title">
+                MANAGER CAREER
+            </div>
 
-<p>
-Season <b id="seasonText">18</b>
-•
-Week <b id="weekText">1</b>
-</p>
+            <div id="managerTeamName" class="manager-team">
+                -
+            </div>
 
-<p>
-💰 Budget:
-<b id="budgetText">Rp 5.000.000.000</b>
-</p>
+            <div class="season">
+                MPL INDONESIA — SEASON 18
+            </div>
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+            <div class="stat">
+                <div class="stat-label">BUDGET</div>
+                <div id="budget" class="stat-value">Rp 0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">MORAL</div>
+                <div id="morale" class="stat-value">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">CHEMISTRY</div>
+                <div id="chemistry" class="stat-value">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-label">REPUTATION</div>
+                <div id="reputation" class="stat-value">0</div>
+            </div>
+
+        </div>
+
+
+        <!-- MENU MANAGER -->
+
+        <div class="section">
+
+            <h2>MANAGER MENU</h2>
+
+            <div class="menu">
+
+                <button onclick="comingSoon('Roster')">
+                    👥 ROSTER
+                </button>
+
+                <button onclick="comingSoon('Lineup')">
+                    ⚔️ LINEUP
+                </button>
+
+                <button onclick="comingSoon('Training')">
+                    🏋️ TRAINING
+                </button>
+
+                <button onclick="comingSoon('Transfers')">
+                    🔄 TRANSFER
+                </button>
+
+                <button onclick="comingSoon('Scouting')">
+                    🔎 SCOUTING
+                </button>
+
+                <button onclick="comingSoon('Staff')">
+                    🧑‍💼 STAFF
+                </button>
+
+                <button onclick="comingSoon('Schedule')">
+                    📅 JADWAL
+                </button>
+
+                <button onclick="comingSoon('Standings')">
+                    🏆 KLASEMEN
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- INFO TIM -->
+
+        <div class="section">
+
+            <h2>INFORMASI TIM</h2>
+
+            <div class="info-row">
+                <span class="muted">Status</span>
+                <span>Manager</span>
+            </div>
+
+            <div class="info-row">
+                <span class="muted">Liga</span>
+                <span>MPL Indonesia</span>
+            </div>
+
+            <div class="info-row">
+                <span class="muted">Season</span>
+                <span>18</span>
+            </div>
+
+            <div class="info-row">
+                <span class="muted">Fase</span>
+                <span>Regular Season</span>
+            </div>
+
+        </div>
+
+
+        <!-- UPCOMING MATCH -->
+
+        <div class="section">
+
+            <h2>PERTANDINGAN BERIKUTNYA</h2>
+
+            <div id="nextMatch">
+                Belum ada jadwal pertandingan.
+            </div>
+
+        </div>
+
+
+        <button
+            class="change-team"
+            onclick="changeTeam()">
+            GANTI TIM / RESET CAREER
+        </button>
+
+    </div>
 
 </div>
 
 
-<div class="card">
-
-<h2>⚡ Quick Match</h2>
-
-<p class="muted">
-Simulasikan pertandingan BO3.
-</p>
-
-<select id="quickHome">
-
-<option value="">
-Pilih Tim 1
-</option>
-
-<option value="rrq">
-RRQ Hoshi
-</option>
-
-<option value="onic">
-FNATIC ONIC
-</option>
-
-<option value="evos">
-EVOS
-</option>
-
-<option value="btr">
-Bigetron by Vitality
-</option>
-
-<option value="alterego">
-Alter Ego
-</option>
-
-<option value="dewa">
-Dewa United
-</option>
-
-<option value="geek">
-Geek Fam
-</option>
-
-<option value="navi">
-Natus Vincere
-</option>
-
-<option value="tlid">
-Team Liquid ID
-</option>
-
-</select>
-
-
-<select id="quickAway">
-
-<option value="">
-Pilih Tim 2
-</option>
-
-<option value="rrq">
-RRQ Hoshi
-</option>
-
-<option value="onic">
-FNATIC ONIC
-</option>
-
-<option value="evos">
-EVOS
-</option>
-
-<option value="btr">
-Bigetron by Vitality
-</option>
-
-<option value="alterego">
-Alter Ego
-</option>
-
-<option value="dewa">
-Dewa United
-</option>
-
-<option value="geek">
-Geek Fam
-</option>
-
-<option value="navi">
-Natus Vincere
-</option>
-
-<option value="tlid">
-Team Liquid ID
-</option>
-
-</select>
-
-
-<button class="primary"
-onclick="startQuickMatch()">
-
-⚔️ MULAI MATCH
-
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h2>📊 Klasemen Saat Ini</h2>
-
-<div id="dashboardStandings">
-
-Memuat...
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>🏟️ Tim MPL Indonesia</h2>
-
-<div id="dashboardTeams"
-class="grid">
-
-Memuat...
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ================= TEAMS ================= -->
-
-<section id="teamsPage" class="page">
-
-<div class="card">
-
-<h2>👥 Tim MPL Indonesia</h2>
-
-<p class="muted">
-Daftar tim yang mengikuti MPL Indonesia Season 18.
-</p>
-
-</div>
-
-<div id="teamsContainer"
-class="grid">
-
-Memuat...
-
-</div>
-
-</section>
-
-
-
-<!-- ================= ROSTER ================= -->
-
-<section id="rosterPage" class="page">
-
-<div class="card">
-
-<h2 id="rosterTitle">
-Roster
-</h2>
-
-<div id="rosterContainer">
-
-Memuat...
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ================= STANDINGS ================= -->
-
-<section id="standingsPage" class="page">
-
-<div class="card">
-
-<h2>📊 Klasemen MPL Indonesia</h2>
-
-<p class="muted">
-
-Season
-<span id="standingsSeason">
-18
-</span>
-
-•
-
-Week
-<span id="standingsWeek">
-1
-</span>
-
-</p>
-
-<div id="standingsContainer">
-
-Memuat...
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ================= SCHEDULE ================= -->
-
-<section id="schedulePage" class="page">
-
-<div class="card">
-
-<h2>📅 Jadwal MPL Indonesia</h2>
-
-<p class="muted">
-
-Season
-<span id="scheduleSeason">
-18
-</span>
-
-•
-
-Week
-<span id="scheduleWeek">
-1
-</span>
-/
-18
-
-</p>
-
-</div>
-
-
-<div id="scheduleContainer">
-
-<div class="card">
-
-⏳ Memuat jadwal...
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ================= PLAYERS ================= -->
-
-<section id="playersPage" class="page">
-
-<div class="card">
-
-<h2>👤 Players</h2>
-
-<input
-id="playerSearch"
-type="text"
-placeholder="Cari nama player..."
-oninput="renderPlayers()"
-/>
-
-
-<select
-id="roleFilter"
-onchange="renderPlayers()">
-
-<option value="">
-Semua Role
-</option>
-
-<option value="EXP">
-EXP
-</option>
-
-<option value="Jungler">
-Jungler
-</option>
-
-<option value="Mid">
-Mid
-</option>
-
-<option value="Gold">
-Gold
-</option>
-
-<option value="Roamer">
-Roamer
-</option>
-
-</select>
-
-</div>
-
-
-<div id="playersContainer">
-
-Memuat...
-
-</div>
-
-</section>
-
-
-
-<!-- ================= MATCH ================= -->
-
-<section id="matchPage" class="page">
-
-<div class="card">
-
-<h2>⚔️ MATCH CENTER</h2>
-
-<div id="matchContainer">
-
-Belum ada pertandingan.
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<!-- ================= HISTORY ================= -->
-
-<section id="historyPage" class="page">
-
-<div class="card">
-
-<h2>🏆 History</h2>
-
-<div id="historyContainer">
-
-Memuat...
-
-</div>
-
-</div>
-
-</section>
-
-
+<script src="game.js?v=7"></script>
 
 <script>
 
-function showPage(page){
+/* =====================================================
+   VARIABEL
+===================================================== */
 
-document
-.querySelectorAll(".page")
-.forEach(function(el){
-
-el.classList.remove("active");
-
-});
+let selectedTeam = null;
 
 
-const target =
-document.getElementById(page + "Page");
+/* =====================================================
+   FORMAT UANG
+===================================================== */
 
-if(target){
+function formatMoney(value){
 
-target.classList.add("active");
+    if(value >= 1000000000){
+        return "Rp " + (value / 1000000000).toFixed(1) + " M";
+    }
 
+    if(value >= 1000000){
+        return "Rp " + (value / 1000000).toFixed(0) + " Jt";
+    }
+
+    return "Rp " + value.toLocaleString("id-ID");
 }
 
 
-if(page === "home"){
-
-renderDashboard();
-
-}
-
-if(page === "teams"){
-
-renderTeams();
-
-}
-
-if(page === "standings"){
-
-renderStandings();
-
-}
-
-if(page === "schedule"){
-
-if(typeof renderScheduleUI === "function"){
-
-renderScheduleUI();
-
-}
-
-}
-
-if(page === "players"){
-
-renderPlayers();
-
-}
-
-if(page === "history"){
-
-renderHistoryUI();
-
-}
-
-}
-
-
-function renderDashboard(){
-
-if(typeof game === "undefined"){
-
-return;
-
-}
-
-
-document.getElementById("seasonText")
-.innerText =
-game.season;
-
-document.getElementById("weekText")
-.innerText =
-game.week;
-
-if(typeof formatMoney === "function"){
-
-document.getElementById("budgetText")
-.innerText =
-formatMoney(game.budget);
-
-}
-
-
-renderDashboardStandings();
-
-renderDashboardTeams();
-
-}
-
-
-function renderDashboardStandings(){
-
-const box =
-document.getElementById("dashboardStandings");
-
-if(!box){
-
-return;
-
-}
-
-if(typeof getStandingsTableHTML === "function"){
-
-box.innerHTML =
-getStandingsTableHTML();
-
-}
-
-}
-
-
-function renderDashboardTeams(){
-
-const box =
-document.getElementById("dashboardTeams");
-
-if(!box){
-
-return;
-
-}
-
-if(typeof game === "undefined"){
-
-return;
-
-}
-
-
-box.innerHTML =
-game.teams.map(function(team){
-
-return `
-
-<div class="team-card">
-
-<b>${team.name}</b>
-
-<p class="muted">
-
-⭐ Reputation:
-${team.reputation}
-
-</p>
-
-<p>
-
-🏆 MPL:
-${team.mplTitles}
-
-</p>
-
-<p>
-
-🌍 World:
-${team.worldTitles}
-
-</p>
-
-</div>
-
-`;
-
-}).join("");
-
-}
-
-
+/* =====================================================
+   TAMPILKAN SEMUA TIM
+===================================================== */
 
 function renderTeams(){
 
-const box =
-document.getElementById("teamsContainer");
+    const grid = document.getElementById("teamGrid");
 
-if(!box ||
-typeof game === "undefined"){
+    grid.innerHTML = "";
 
-return;
+    if(!game || !game.teams){
+        grid.innerHTML =
+            "<p>Database tim belum ditemukan.</p>";
+        return;
+    }
+
+    Object.values(game.teams).forEach(team => {
+
+        const card = document.createElement("div");
+
+        card.className = "team-card";
+
+        card.innerHTML = `
+            <div class="team-name">
+                ${team.name}
+            </div>
+
+            <div class="team-region">
+                MPL Indonesia
+            </div>
+
+            <div class="team-rating">
+                ⭐ Reputation: ${team.reputation || 0}
+            </div>
+        `;
+
+        card.onclick = function(){
+
+            document
+                .querySelectorAll(".team-card")
+                .forEach(c => c.classList.remove("selected"));
+
+            card.classList.add("selected");
+
+            selectedTeam = team.id;
+
+            const btn =
+                document.getElementById("startCareerBtn");
+
+            btn.disabled = false;
+
+            btn.innerText =
+                "MULAI KARIER DENGAN " + team.name;
+        };
+
+        grid.appendChild(card);
+
+    });
+}
+
+
+/* =====================================================
+   MULAI KARIER
+===================================================== */
+
+function startCareer(){
+
+    if(!selectedTeam){
+        alert("Pilih tim terlebih dahulu!");
+        return;
+    }
+
+    const team = game.teams[selectedTeam];
+
+    if(!team){
+        alert("Tim tidak ditemukan.");
+        return;
+    }
+
+    /*
+      Hanya tim yang dipilih menjadi tim manager.
+      Tim lainnya tetap AI.
+    */
+
+    game.managerTeam = selectedTeam;
+
+    game.budget =
+        team.budget || 5000000000;
+
+    game.phase = "regular";
+
+    game.week = 1;
+
+    if(typeof saveGame === "function"){
+        saveGame();
+    }else{
+        localStorage.setItem(
+            "mpl_world_manager",
+            JSON.stringify(game)
+        );
+    }
+
+    showDashboard();
 
 }
 
 
-box.innerHTML =
-game.teams.map(function(team){
+/* =====================================================
+   DASHBOARD
+===================================================== */
 
-return `
+function showDashboard(){
 
-<div class="team-card">
+    const team =
+        game.teams[game.managerTeam];
 
-<h3>${team.name}</h3>
+    if(!team){
+        return;
+    }
 
-<p class="muted">
+    document.getElementById("teamSelect")
+        .style.display = "none";
 
-Coach:
-${team.coach}
+    document.getElementById("dashboard")
+        .style.display = "block";
 
-</p>
 
-<p>
+    document.getElementById("managerTeamName")
+        .innerText = team.name;
 
-⭐ Reputation:
-${team.reputation}
 
-</p>
+    document.getElementById("budget")
+        .innerText =
+        formatMoney(game.budget);
 
-<p>
 
-🏆 MPL Titles:
-${team.mplTitles}
+    document.getElementById("morale")
+        .innerText =
+        team.morale || 0;
 
-</p>
 
-<p>
+    document.getElementById("chemistry")
+        .innerText =
+        team.chemistry || 0;
 
-🌍 World Titles:
-${team.worldTitles}
 
-</p>
+    document.getElementById("reputation")
+        .innerText =
+        team.reputation || 0;
 
-<p>
 
-❤️ Morale:
-${team.morale}
-
-</p>
-
-<button
-class="primary"
-onclick="bukaRoster('${team.id}')">
-
-Lihat Roster
-
-</button>
-
-</div>
-
-`;
-
-}).join("");
+    renderNextMatch();
 
 }
 
 
+/* =====================================================
+   MATCH BERIKUTNYA
+===================================================== */
 
-function bukaRoster(teamId){
+function renderNextMatch(){
 
-if(typeof getTeam !== "function"){
+    const box =
+        document.getElementById("nextMatch");
 
-return;
+    if(!game.schedule ||
+       !Array.isArray(game.schedule)){
 
-}
+        box.innerHTML =
+            "Jadwal pertandingan belum tersedia.";
 
+        return;
+    }
 
-const team =
-getTeam(teamId);
+    const teamId =
+        game.managerTeam;
 
-if(!team){
+    const match =
+        game.schedule.find(m => {
 
-return;
+            return !m.played &&
+            (m.home === teamId ||
+             m.away === teamId);
 
-}
-
-
-document.getElementById("rosterTitle")
-.innerText =
-"👥 Roster " + team.name;
-
-
-const players =
-getTeamPlayers(teamId);
-
-
-document.getElementById("rosterContainer")
-.innerHTML = `
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Player</th>
-<th>Role</th>
-<th>Rating</th>
-<th>Potential</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-${players.map(function(player){
-
-return `
-
-<tr>
-
-<td>
-<b>${player.name}</b>
-</td>
-
-<td>
-${player.role}
-</td>
-
-<td>
-${player.rating}
-</td>
-
-<td>
-${player.potential}
-</td>
-
-</tr>
-
-`;
-
-}).join("")}
-
-</tbody>
-
-</table>
-
-`;
+        });
 
 
-showPage("roster");
+    if(!match){
 
-}
+        box.innerHTML =
+            "Tidak ada pertandingan berikutnya.";
 
-
-
-function renderStandings(){
-
-const box =
-document.getElementById("standingsContainer");
-
-if(!box){
-
-return;
-
-}
-
-if(typeof getStandingsTableHTML === "function"){
-
-box.innerHTML =
-getStandingsTableHTML();
-
-}
+        return;
+    }
 
 
-if(typeof game !== "undefined"){
+    const home =
+        game.teams[match.home];
 
-document.getElementById("standingsSeason")
-.innerText =
-game.season;
+    const away =
+        game.teams[match.away];
 
-document.getElementById("standingsWeek")
-.innerText =
-game.week;
 
-}
+    if(!home || !away){
+
+        box.innerHTML =
+            "Data pertandingan belum lengkap.";
+
+        return;
+    }
+
+
+    box.innerHTML = `
+
+        <div style="
+            text-align:center;
+            padding:15px;
+            background:#1b2330;
+            border-radius:12px;
+        ">
+
+            <div style="
+                color:#777;
+                font-size:12px;
+                margin-bottom:8px;
+            ">
+                WEEK ${match.week || 1}
+            </div>
+
+            <strong>
+                ${home.name}
+            </strong>
+
+            <div style="
+                margin:8px;
+                color:#00d9ff;
+                font-weight:bold;
+            ">
+                VS
+            </div>
+
+            <strong>
+                ${away.name}
+            </strong>
+
+            <br><br>
+
+            <button
+                onclick="comingSoon('Match')"
+                style="
+                    margin-top:10px;
+                    padding:12px 25px;
+                    border-radius:8px;
+                    background:#00c8ff;
+                    font-weight:bold;
+                ">
+                KE PERTANDINGAN
+            </button>
+
+        </div>
+
+    `;
 
 }
 
 
+/* =====================================================
+   MENU SEMENTARA
+===================================================== */
 
-function renderPlayers(){
+function comingSoon(name){
 
-const box =
-document.getElementById("playersContainer");
-
-if(!box ||
-typeof game === "undefined"){
-
-return;
-
-}
-
-
-const search =
-(
-document.getElementById("playerSearch")
-.value || ""
-).toLowerCase();
-
-
-const role =
-document.getElementById("roleFilter")
-.value;
-
-
-const players =
-game.players.filter(function(player){
-
-const matchName =
-player.name
-.toLowerCase()
-.includes(search);
-
-
-const matchRole =
-!role ||
-player.role === role;
-
-
-return matchName && matchRole;
-
-});
-
-
-box.innerHTML = `
-
-<div class="card">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Player</th>
-<th>Team</th>
-<th>Role</th>
-<th>Rating</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-${players.map(function(player){
-
-const team =
-getTeam(player.teamId);
-
-return `
-
-<tr>
-
-<td>
-<b>${player.name}</b>
-</td>
-
-<td>
-${team ? team.short : "-"}
-</td>
-
-<td>
-${player.role}
-</td>
-
-<td>
-${player.rating}
-</td>
-
-</tr>
-
-`;
-
-}).join("")}
-
-</tbody>
-
-</table>
-
-</div>
-
-`;
+    alert(
+        name +
+        " akan kita bangun pada tahap berikutnya 🔥"
+    );
 
 }
 
 
+/* =====================================================
+   GANTI TIM
+===================================================== */
 
-function renderHistoryUI(){
+function changeTeam(){
 
-const box =
-document.getElementById("historyContainer");
+    const yakin =
+        confirm(
+            "Ganti tim akan menghapus karier saat ini. Lanjut?"
+        );
 
-if(!box ||
-typeof game === "undefined"){
+    if(!yakin){
+        return;
+    }
 
-return;
+    localStorage.removeItem(
+        "mpl_world_manager"
+    );
 
-}
-
-
-if(!game.history ||
-game.history.length === 0){
-
-box.innerHTML = `
-
-<p class="muted">
-
-Belum ada sejarah pertandingan.
-
-</p>
-
-`;
-
-return;
+    location.reload();
 
 }
 
 
-box.innerHTML =
-game.history
-.slice()
-.reverse()
-.map(function(item){
+/* =====================================================
+   LOAD CAREER
+===================================================== */
 
-return `
+function loadCareer(){
 
-<div class="history-item">
+    if(!game){
+        return;
+    }
 
-<b>${item.title || "MPL Match"}</b>
+    if(game.managerTeam){
 
-<p>
+        selectedTeam =
+            game.managerTeam;
 
-${item.text || ""}
+        showDashboard();
 
-</p>
+    }else{
 
-</div>
+        renderTeams();
 
-`;
-
-}).join("");
-
-}
-
-
-
-function refreshUI(){
-
-if(typeof game === "undefined"){
-
-return;
+    }
 
 }
 
 
-renderDashboard();
-
-renderTeams();
-
-renderStandings();
-
-renderPlayers();
-
-renderHistoryUI();
-
-if(typeof renderScheduleUI === "function"){
-
-renderScheduleUI();
-
-}
-
-}
-
-
+/* =====================================================
+   START
+===================================================== */
 
 document.addEventListener(
-"DOMContentLoaded",
-function(){
+    "DOMContentLoaded",
+    function(){
 
-setTimeout(function(){
+        renderTeams();
 
-if(typeof initializeGame === "function"){
+        loadCareer();
 
-initializeGame();
-
-}
-
-refreshUI();
-
-if(typeof renderScheduleUI === "function"){
-
-renderScheduleUI();
-
-}
-
-},100);
-
-});
-
-</script>
-
-
-<!-- GAME ENGINE -->
-
-<script src="game.js?v=6"></script>
-
-
-<script>
-
-/*
-=====================================================
-Setelah game.js dimuat,
-refresh UI sekali lagi supaya data game langsung muncul.
-=====================================================
-*/
-
-window.addEventListener(
-"load",
-function(){
-
-setTimeout(function(){
-
-if(typeof refreshUI === "function"){
-
-refreshUI();
-
-}
-
-if(typeof renderScheduleUI === "function"){
-
-renderScheduleUI();
-
-}
-
-},200);
-
-});
+    }
+);
 
 </script>
 
 </body>
-
 </html>
