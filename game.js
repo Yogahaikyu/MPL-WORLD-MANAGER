@@ -13,6 +13,10 @@ const game = {
 
     players: {
 
+        // ==============================
+        // RRQ
+        // ==============================
+
         P001: {
             id: "P001",
             name: "Alberttt",
@@ -73,64 +77,394 @@ const game = {
             morale: 86
         },
 
+
+        // ==============================
+        // ONIC
+        // ==============================
+
         P006: {
             id: "P006",
-            name: "Player ONIC 1",
+            name: "Kairi",
             team: "ONIC",
             role: "Jungler",
             age: 21,
             rating: 89,
-            potential: 93,
-            salary: 160000000,
-            morale: 88
+            potential: 94,
+            salary: 170000000,
+            morale: 90
         },
 
         P007: {
             id: "P007",
-            name: "Player ONIC 2",
+            name: "Butsss",
             team: "ONIC",
             role: "EXP Laner",
-            age: 22,
-            rating: 86,
-            potential: 90,
-            salary: 130000000,
-            morale: 85
+            age: 23,
+            rating: 87,
+            potential: 91,
+            salary: 145000000,
+            morale: 88
         },
 
         P008: {
             id: "P008",
-            name: "Player ONIC 3",
+            name: "Sanz",
             team: "ONIC",
             role: "Mid Laner",
-            age: 21,
-            rating: 88,
-            potential: 92,
-            salary: 150000000,
-            morale: 89
+            age: 23,
+            rating: 90,
+            potential: 94,
+            salary: 175000000,
+            morale: 91
         },
 
         P009: {
             id: "P009",
-            name: "Player ONIC 4",
+            name: "CW",
             team: "ONIC",
             role: "Gold Laner",
             age: 22,
-            rating: 91,
-            potential: 95,
-            salary: 190000000,
-            morale: 94
+            rating: 89,
+            potential: 93,
+            salary: 165000000,
+            morale: 89
         },
 
         P010: {
             id: "P010",
-            name: "Player ONIC 5",
+            name: "Kiboy",
             team: "ONIC",
             role: "Roamer",
             age: 23,
-            rating: 87,
+            rating: 91,
+            potential: 95,
+            salary: 180000000,
+            morale: 93
+        },
+
+
+        // ==============================
+        // EVOS
+        // ==============================
+
+        P011: {
+            id: "P011",
+            name: "EVOS Player 1",
+            team: "EVOS",
+            role: "Jungler",
+            age: 21,
+            rating: 82,
+            potential: 89,
+            salary: 110000000,
+            morale: 84
+        },
+
+        P012: {
+            id: "P012",
+            name: "EVOS Player 2",
+            team: "EVOS",
+            role: "EXP Laner",
+            age: 22,
+            rating: 80,
+            potential: 87,
+            salary: 100000000,
+            morale: 82
+        },
+
+        P013: {
+            id: "P013",
+            name: "EVOS Player 3",
+            team: "EVOS",
+            role: "Mid Laner",
+            age: 20,
+            rating: 81,
             potential: 90,
-            salary: 140000000,
+            salary: 105000000,
+            morale: 86
+        },
+
+        P014: {
+            id: "P014",
+            name: "EVOS Player 4",
+            team: "EVOS",
+            role: "Gold Laner",
+            age: 21,
+            rating: 83,
+            potential: 90,
+            salary: 115000000,
+            morale: 85
+        },
+
+        P015: {
+            id: "P015",
+            name: "EVOS Player 5",
+            team: "EVOS",
+            role: "Roamer",
+            age: 23,
+            rating: 79,
+            potential: 85,
+            salary: 95000000,
+            morale: 80
+        },
+
+
+        // ==============================
+        // BTR
+        // ==============================
+
+        P016: {
+            id: "P016",
+            name: "BTR Player 1",
+            team: "BTR",
+            role: "Jungler",
+            age: 20,
+            rating: 81,
+            potential: 90,
+            salary: 105000000,
+            morale: 84
+        },
+
+        P017: {
+            id: "P017",
+            name: "BTR Player 2",
+            team: "BTR",
+            role: "EXP Laner",
+            age: 22,
+            rating: 79,
+            potential: 86,
+            salary: 95000000,
+            morale: 81
+        },
+
+        P018: {
+            id: "P018",
+            name: "BTR Player 3",
+            team: "BTR",
+            role: "Mid Laner",
+            age: 21,
+            rating: 82,
+            potential: 89,
+            salary: 110000000,
+            morale: 86
+        },
+
+        P019: {
+            id: "P019",
+            name: "BTR Player 4",
+            team: "BTR",
+            role: "Gold Laner",
+            age: 21,
+            rating: 84,
+            potential: 91,
+            salary: 120000000,
             morale: 87
+        },
+
+        P020: {
+            id: "P020",
+            name: "BTR Player 5",
+            team: "BTR",
+            role: "Roamer",
+            age: 22,
+            rating: 80,
+            potential: 87,
+            salary: 100000000,
+            morale: 83
+        },
+
+
+        // ==============================
+        // PHILIPPINES
+        // ==============================
+
+        P021: {
+            id: "P021",
+            name: "PH Player 1",
+            team: "Team PH 1",
+            role: "Jungler",
+            age: 21,
+            rating: 86,
+            potential: 92,
+            salary: 140000000,
+            morale: 88
+        },
+
+        P022: {
+            id: "P022",
+            name: "PH Player 2",
+            team: "Team PH 1",
+            role: "EXP Laner",
+            age: 22,
+            rating: 84,
+            potential: 90,
+            salary: 125000000,
+            morale: 86
+        },
+
+        P023: {
+            id: "P023",
+            name: "PH Player 3",
+            team: "Team PH 1",
+            role: "Mid Laner",
+            age: 20,
+            rating: 87,
+            potential: 94,
+            salary: 145000000,
+            morale: 90
+        },
+
+        P024: {
+            id: "P024",
+            name: "PH Player 4",
+            team: "Team PH 1",
+            role: "Gold Laner",
+            age: 21,
+            rating: 88,
+            potential: 94,
+            salary: 150000000,
+            morale: 91
+        },
+
+        P025: {
+            id: "P025",
+            name: "PH Player 5",
+            team: "Team PH 1",
+            role: "Roamer",
+            age: 22,
+            rating: 85,
+            potential: 90,
+            salary: 130000000,
+            morale: 87
+        },
+
+
+        // ==============================
+        // MALAYSIA
+        // ==============================
+
+        P026: {
+            id: "P026",
+            name: "MY Player 1",
+            team: "Team MY 1",
+            role: "Jungler",
+            age: 21,
+            rating: 82,
+            potential: 89,
+            salary: 110000000,
+            morale: 85
+        },
+
+        P027: {
+            id: "P027",
+            name: "MY Player 2",
+            team: "Team MY 1",
+            role: "EXP Laner",
+            age: 22,
+            rating: 80,
+            potential: 87,
+            salary: 100000000,
+            morale: 83
+        },
+
+        P028: {
+            id: "P028",
+            name: "MY Player 3",
+            team: "Team MY 1",
+            role: "Mid Laner",
+            age: 20,
+            rating: 83,
+            potential: 91,
+            salary: 115000000,
+            morale: 86
+        },
+
+        P029: {
+            id: "P029",
+            name: "MY Player 4",
+            team: "Team MY 1",
+            role: "Gold Laner",
+            age: 21,
+            rating: 84,
+            potential: 90,
+            salary: 120000000,
+            morale: 88
+        },
+
+        P030: {
+            id: "P030",
+            name: "MY Player 5",
+            team: "Team MY 1",
+            role: "Roamer",
+            age: 23,
+            rating: 81,
+            potential: 87,
+            salary: 105000000,
+            morale: 84
+        },
+
+
+        // ==============================
+        // SINGAPORE
+        // ==============================
+
+        P031: {
+            id: "P031",
+            name: "SG Player 1",
+            team: "Team SG 1",
+            role: "Jungler",
+            age: 20,
+            rating: 80,
+            potential: 88,
+            salary: 95000000,
+            morale: 84
+        },
+
+        P032: {
+            id: "P032",
+            name: "SG Player 2",
+            team: "Team SG 1",
+            role: "EXP Laner",
+            age: 22,
+            rating: 78,
+            potential: 85,
+            salary: 90000000,
+            morale: 81
+        },
+
+        P033: {
+            id: "P033",
+            name: "SG Player 3",
+            team: "Team SG 1",
+            role: "Mid Laner",
+            age: 21,
+            rating: 81,
+            potential: 89,
+            salary: 100000000,
+            morale: 85
+        },
+
+        P034: {
+            id: "P034",
+            name: "SG Player 4",
+            team: "Team SG 1",
+            role: "Gold Laner",
+            age: 21,
+            rating: 82,
+            potential: 90,
+            salary: 105000000,
+            morale: 87
+        },
+
+        P035: {
+            id: "P035",
+            name: "SG Player 5",
+            team: "Team SG 1",
+            role: "Roamer",
+            age: 22,
+            rating: 79,
+            potential: 86,
+            salary: 90000000,
+            morale: 83
         }
     },
 
@@ -281,7 +615,6 @@ function tampilkanLiga() {
         regionBox.className = "card";
 
         regionBox.innerHTML = `
-
             <h2>🌍 ${region.name}</h2>
 
             <h3>🏆 Tier 1</h3>
@@ -299,7 +632,6 @@ function tampilkanLiga() {
             <p>
                 ${region.tier2.teams.join(" • ")}
             </p>
-
         `;
 
         container.appendChild(regionBox);
