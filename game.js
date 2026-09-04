@@ -1,388 +1,1192 @@
-/* =====================================================
+/* =========================================================
    MPL WORLD MANAGER
-   MPL INDONESIA SEASON 18
-===================================================== */
+   DATABASE MPL INDONESIA - SEASON 18
+   ========================================================= */
 
-const SAVE_KEY = "mpl_world_manager_v5";
-
-let game;
+const SAVE_KEY = "mpl_world_manager_s18";
 
 
-/* =====================================================
-   TEAMS
-===================================================== */
+// =========================================================
+// GAME DATA
+// =========================================================
 
-const TEAM_DATA = [
+const game = {
+
+    version: 1,
+
+    season: 18,
+
+    region: "Indonesia",
+
+    league: "MPL Indonesia",
+
+    week: 1,
+
+    managerTeam: null,
+
+    budget: 5000000000,
+
+    phase: "regular",
+
+    teams: [],
+
+    players: [],
+
+    staff: [],
+
+    standings: [],
+
+    schedule: [],
+
+    history: [],
+
+    currentMatch: null
+
+};
+
+
+// =========================================================
+// TEAMS
+// =========================================================
+
+game.teams = [
 
     {
         id: "rrq",
-        name: "RRQ",
+        name: "RRQ Hoshi",
         short: "RRQ",
-        coach: "Adi",
+
+        region: "Indonesia",
+
         reputation: 94,
-        chemistry: 84,
-        morale: 88,
-        mplTitles: 4,
-        worldTitles: 1
+
+        budget: 5000000000,
+
+        morale: 85,
+
+        chemistry: 82,
+
+        mplTitles: 5,
+
+        worldTitles: 0,
+
+        active: true
     },
 
     {
         id: "onic",
         name: "ONIC",
         short: "ONIC",
-        coach: "CW",
+
+        region: "Indonesia",
+
         reputation: 96,
-        chemistry: 90,
-        morale: 91,
+
+        budget: 5000000000,
+
+        morale: 87,
+
+        chemistry: 88,
+
         mplTitles: 5,
-        worldTitles: 1
+
+        worldTitles: 1,
+
+        active: true
     },
 
     {
         id: "evos",
         name: "EVOS",
         short: "EVOS",
-        coach: "Aldo",
-        reputation: 86,
-        chemistry: 78,
+
+        region: "Indonesia",
+
+        reputation: 90,
+
+        budget: 4500000000,
+
         morale: 82,
-        mplTitles: 3,
-        worldTitles: 1
+
+        chemistry: 80,
+
+        mplTitles: 2,
+
+        worldTitles: 1,
+
+        active: true
     },
 
     {
         id: "btr",
         name: "Bigetron by Vitality",
         short: "BTR",
-        coach: "K Dot",
-        reputation: 84,
-        chemistry: 79,
-        morale: 80,
-        mplTitles: 0,
-        worldTitles: 0
+
+        region: "Indonesia",
+
+        reputation: 91,
+
+        budget: 4500000000,
+
+        morale: 86,
+
+        chemistry: 87,
+
+        mplTitles: 1,
+
+        worldTitles: 0,
+
+        active: true
     },
 
     {
         id: "alterego",
         name: "Alter Ego",
         short: "AE",
-        coach: "xepher",
-        reputation: 82,
-        chemistry: 81,
-        morale: 83,
+
+        region: "Indonesia",
+
+        reputation: 84,
+
+        budget: 4000000000,
+
+        morale: 80,
+
+        chemistry: 79,
+
         mplTitles: 0,
-        worldTitles: 0
+
+        worldTitles: 0,
+
+        active: true
     },
 
     {
         id: "dewa",
-        name: "Dewa United",
+        name: "Dewa United Esports",
         short: "DEWA",
-        coach: "Right",
+
+        region: "Indonesia",
+
         reputation: 78,
+
+        budget: 3500000000,
+
+        morale: 76,
+
         chemistry: 77,
-        morale: 79,
+
         mplTitles: 0,
-        worldTitles: 0
+
+        worldTitles: 0,
+
+        active: true
     },
 
     {
         id: "geek",
-        name: "Geek Fam",
+        name: "Geek Fam ID",
         short: "GEEK",
-        coach: "Erpang",
-        reputation: 80,
-        chemistry: 82,
-        morale: 81,
+
+        region: "Indonesia",
+
+        reputation: 79,
+
+        budget: 3500000000,
+
+        morale: 78,
+
+        chemistry: 76,
+
         mplTitles: 0,
-        worldTitles: 0
+
+        worldTitles: 0,
+
+        active: true
     },
 
     {
         id: "navi",
-        name: "NAVI",
+        name: "Natus Vincere",
         short: "NAVI",
-        coach: "Ynot",
-        reputation: 79,
-        chemistry: 76,
-        morale: 78,
+
+        region: "Indonesia",
+
+        reputation: 82,
+
+        budget: 4000000000,
+
+        morale: 80,
+
+        chemistry: 78,
+
         mplTitles: 0,
-        worldTitles: 0
+
+        worldTitles: 0,
+
+        active: true
     },
 
     {
         id: "tlid",
         name: "Team Liquid ID",
         short: "TLID",
-        coach: "HonJaw",
+
+        region: "Indonesia",
+
         reputation: 88,
-        chemistry: 85,
+
+        budget: 4500000000,
+
+        morale: 83,
+
+        chemistry: 84,
+
+        mplTitles: 1,
+
+        worldTitles: 0,
+
+        active: true
+    }
+
+];
+
+
+// =========================================================
+// PLAYER DATABASE
+// =========================================================
+
+game.players = [
+
+    // =====================================================
+    // RRQ
+    // =====================================================
+
+    {
+        id: "rrq_l =",
+        name: "Lynchh",
+        teamId: "rrq",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 84,
+        potential: 90,
+        salary: 180000000,
+        morale: 85,
+        status: "active"
+    },
+
+    {
+        id: "rrq_demonkite",
+        name: "Demonkite",
+        teamId: "rrq",
+        role: "Jungler",
+        nationality: "Philippines",
+        rating: 91,
+        potential: 94,
+        salary: 250000000,
+        morale: 88,
+        status: "active"
+    },
+
+    {
+        id: "rrq_rinz",
+        name: "Rinz",
+        teamId: "rrq",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 86,
+        potential: 93,
+        salary: 190000000,
+        morale: 85,
+        status: "active"
+    },
+
+    {
+        id: "rrq_sutsujin",
+        name: "Sutsujin",
+        teamId: "rrq",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 88,
+        potential: 91,
+        salary: 210000000,
+        morale: 84,
+        status: "active"
+    },
+
+    {
+        id: "rrq_kuroky",
+        name: "Kuroky",
+        teamId: "rrq",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 80,
+        potential: 88,
+        salary: 140000000,
+        morale: 82,
+        status: "active"
+    },
+
+    {
+        id: "rrq_idok",
+        name: "Idok",
+        teamId: "rrq",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 87,
+        potential: 92,
+        salary: 200000000,
         morale: 86,
-        mplTitles: 0,
-        worldTitles: 0
+        status: "active"
+    },
+
+    // =====================================================
+    // ONIC
+    // =====================================================
+
+    {
+        id: "onic_lutpiii",
+        name: "Lutpiii",
+        teamId: "onic",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 89,
+        potential: 93,
+        salary: 220000000,
+        morale: 88,
+        status: "active"
+    },
+
+    {
+        id: "onic_kairi",
+        name: "Kairi",
+        teamId: "onic",
+        role: "Jungler",
+        nationality: "Philippines",
+        rating: 96,
+        potential: 97,
+        salary: 350000000,
+        morale: 91,
+        status: "active"
+    },
+
+    {
+        id: "onic_sanz",
+        name: "S A N Z",
+        teamId: "onic",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 94,
+        potential: 95,
+        salary: 320000000,
+        morale: 90,
+        status: "active"
+    },
+
+    {
+        id: "onic_kelra",
+        name: "Kelra",
+        teamId: "onic",
+        role: "Gold",
+        nationality: "Philippines",
+        rating: 96,
+        potential: 98,
+        salary: 350000000,
+        morale: 92,
+        status: "active"
+    },
+
+    {
+        id: "onic_kiboy",
+        name: "Kiboy",
+        teamId: "onic",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 94,
+        potential: 96,
+        salary: 310000000,
+        morale: 91,
+        status: "active"
+    },
+
+    {
+        id: "onic_samuel",
+        name: "SamueL",
+        teamId: "onic",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 82,
+        potential: 89,
+        salary: 150000000,
+        morale: 83,
+        status: "active"
+    },
+
+    // =====================================================
+    // EVOS
+    // =====================================================
+
+    {
+        id: "evos_vell",
+        name: "Vell",
+        teamId: "evos",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 84,
+        potential: 90,
+        salary: 170000000,
+        morale: 82,
+        status: "active"
+    },
+
+    {
+        id: "evos_alberttt",
+        name: "Alberttt",
+        teamId: "evos",
+        role: "Jungler",
+        nationality: "Indonesia",
+        rating: 92,
+        potential: 94,
+        salary: 280000000,
+        morale: 88,
+        status: "active"
+    },
+
+    {
+        id: "evos_treacky",
+        name: "Treacky",
+        teamId: "evos",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 83,
+        potential: 91,
+        salary: 170000000,
+        morale: 82,
+        status: "active"
+    },
+
+    {
+        id: "evos_erlan",
+        name: "Erlan",
+        teamId: "evos",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 85,
+        potential: 91,
+        salary: 180000000,
+        morale: 83,
+        status: "active"
+    },
+
+    {
+        id: "evos_muezzaa",
+        name: "Muezzaa",
+        teamId: "evos",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 82,
+        potential: 88,
+        salary: 150000000,
+        morale: 80,
+        status: "active"
+    },
+
+    {
+        id: "evos_rendyy",
+        name: "Rendyy",
+        teamId: "evos",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 78,
+        potential: 87,
+        salary: 120000000,
+        morale: 80,
+        status: "active"
+    },
+
+    // =====================================================
+    // BIGETRON
+    // =====================================================
+
+    {
+        id: "btr_shogun",
+        name: "Shogun",
+        teamId: "btr",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 89,
+        potential: 93,
+        salary: 210000000,
+        morale: 88,
+        status: "active"
+    },
+
+    {
+        id: "btr_nnael",
+        name: "Nnael",
+        teamId: "btr",
+        role: "Jungler",
+        nationality: "Indonesia",
+        rating: 91,
+        potential: 94,
+        salary: 240000000,
+        morale: 89,
+        status: "active"
+    },
+
+    {
+        id: "btr_moreno",
+        name: "Moreno",
+        teamId: "btr",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 90,
+        potential: 94,
+        salary: 230000000,
+        morale: 88,
+        status: "active"
+    },
+
+    {
+        id: "btr_ryzaa",
+        name: "Ryzaa",
+        teamId: "btr",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 82,
+        potential: 90,
+        salary: 150000000,
+        morale: 82,
+        status: "active"
+    },
+
+    {
+        id: "btr_emann",
+        name: "EMANN",
+        teamId: "btr",
+        role: "Gold",
+        nationality: "Philippines",
+        rating: 90,
+        potential: 93,
+        salary: 250000000,
+        morale: 87,
+        status: "active"
+    },
+
+    {
+        id: "btr_pinnn",
+        name: "Pinnn",
+        teamId: "btr",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 81,
+        potential: 89,
+        salary: 140000000,
+        morale: 81,
+        status: "active"
+    },
+
+    {
+        id: "btr_finn",
+        name: "Finn",
+        teamId: "btr",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 88,
+        potential: 92,
+        salary: 200000000,
+        morale: 87,
+        status: "active"
+    },
+
+    // =====================================================
+    // ALTER EGO
+    // =====================================================
+
+    {
+        id: "ae_nino",
+        name: "Nino",
+        teamId: "alterego",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 88,
+        potential: 91,
+        salary: 190000000,
+        morale: 83,
+        status: "active"
+    },
+
+    {
+        id: "ae_yazukee",
+        name: "Yazukee",
+        teamId: "alterego",
+        role: "Jungler",
+        nationality: "Indonesia",
+        rating: 84,
+        potential: 92,
+        salary: 170000000,
+        morale: 82,
+        status: "active"
+    },
+
+    {
+        id: "ae_reyy",
+        name: "Reyy",
+        teamId: "alterego",
+        role: "Jungler",
+        nationality: "Indonesia",
+        rating: 79,
+        potential: 88,
+        salary: 130000000,
+        morale: 80,
+        status: "active"
+    },
+
+    {
+        id: "ae_hijumee",
+        name: "Hijumee",
+        teamId: "alterego",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 86,
+        potential: 92,
+        salary: 180000000,
+        morale: 84,
+        status: "active"
+    },
+
+    {
+        id: "ae_nathzz",
+        name: "Nathzz",
+        teamId: "alterego",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 84,
+        potential: 90,
+        salary: 170000000,
+        morale: 82,
+        status: "active"
+    },
+
+    {
+        id: "ae_roamer",
+        name: "Yume",
+        teamId: "alterego",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 80,
+        potential: 88,
+        salary: 140000000,
+        morale: 79,
+        status: "active"
+    },
+
+    // =====================================================
+    // DEWA UNITED
+    // =====================================================
+
+    {
+        id: "dewa_qinn",
+        name: "QINN",
+        teamId: "dewa",
+        role: "EXP",
+        nationality: "Philippines",
+        rating: 82,
+        potential: 88,
+        salary: 150000000,
+        morale: 78,
+        status: "active"
+    },
+
+    {
+        id: "dewa_kayn",
+        name: "Kayn",
+        teamId: "dewa",
+        role: "Jungler",
+        nationality: "Philippines",
+        rating: 81,
+        potential: 89,
+        salary: 150000000,
+        morale: 78,
+        status: "active"
+    },
+
+    {
+        id: "dewa_octa",
+        name: "Octa",
+        teamId: "dewa",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 80,
+        potential: 87,
+        salary: 140000000,
+        morale: 77,
+        status: "active"
+    },
+
+    {
+        id: "dewa_maybeee",
+        name: "Maybeee",
+        teamId: "dewa",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 81,
+        potential: 89,
+        salary: 150000000,
+        morale: 78,
+        status: "active"
+    },
+
+    {
+        id: "dewa_kesuuu",
+        name: "KESUUU",
+        teamId: "dewa",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 79,
+        potential: 87,
+        salary: 130000000,
+        morale: 77,
+        status: "active"
+    },
+
+    // =====================================================
+    // GEEK FAM
+    // =====================================================
+
+    {
+        id: "geek_marcel",
+        name: "MarceL",
+        teamId: "geek",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 81,
+        potential: 89,
+        salary: 140000000,
+        morale: 78,
+        status: "active"
+    },
+
+    {
+        id: "geek_febriii",
+        name: "Febriii",
+        teamId: "geek",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 77,
+        potential: 87,
+        salary: 110000000,
+        morale: 76,
+        status: "active"
+    },
+
+    {
+        id: "geek_nazara",
+        name: "Nazara",
+        teamId: "geek",
+        role: "Jungler",
+        nationality: "Indonesia",
+        rating: 81,
+        potential: 90,
+        salary: 140000000,
+        morale: 79,
+        status: "active"
+    },
+
+    {
+        id: "geek_aboy",
+        name: "A B O Y",
+        teamId: "geek",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 84,
+        potential: 89,
+        salary: 160000000,
+        morale: 80,
+        status: "active"
+    },
+
+    {
+        id: "geek_kennzyy",
+        name: "KennzyySkie",
+        teamId: "geek",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 80,
+        potential: 88,
+        salary: 130000000,
+        morale: 77,
+        status: "active"
+    },
+
+    {
+        id: "geek_audytzy",
+        name: "AudyTzy",
+        teamId: "geek",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 79,
+        potential: 87,
+        salary: 120000000,
+        morale: 77,
+        status: "active"
+    },
+
+    // =====================================================
+    // NAVI
+    // =====================================================
+
+    {
+        id: "navi_xmagic",
+        name: "XMagic",
+        teamId: "navi",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 81,
+        potential: 89,
+        salary: 140000000,
+        morale: 80,
+        status: "active"
+    },
+
+    {
+        id: "navi_jungler",
+        name: "Yve",
+        teamId: "navi",
+        role: "Jungler",
+        nationality: "Indonesia",
+        rating: 82,
+        potential: 90,
+        salary: 150000000,
+        morale: 80,
+        status: "active"
+    },
+
+    {
+        id: "navi_uk1r",
+        name: "UK1R",
+        teamId: "navi",
+        role: "Mid",
+        nationality: "Philippines",
+        rating: 84,
+        potential: 91,
+        salary: 170000000,
+        morale: 82,
+        status: "active"
+    },
+
+    {
+        id: "navi_gold",
+        name: "Yve",
+        teamId: "navi",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 80,
+        potential: 88,
+        salary: 130000000,
+        morale: 78,
+        status: "active"
+    },
+
+    {
+        id: "navi_roamer",
+        name: "Kyyro",
+        teamId: "navi",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 79,
+        potential: 88,
+        salary: 130000000,
+        morale: 78,
+        status: "active"
+    },
+
+    // =====================================================
+    // TEAM LIQUID ID
+    // =====================================================
+
+    {
+        id: "tlid_aran",
+        name: "Aran",
+        teamId: "tlid",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 87,
+        potential: 91,
+        salary: 190000000,
+        morale: 85,
+        status: "active"
+    },
+
+    {
+        id: "tlid_aredlavv",
+        name: "Aredlavv",
+        teamId: "tlid",
+        role: "EXP",
+        nationality: "Indonesia",
+        rating: 80,
+        potential: 88,
+        salary: 130000000,
+        morale: 80,
+        status: "active"
+    },
+
+    {
+        id: "tlid_kevinn",
+        name: "Kevinn",
+        teamId: "tlid",
+        role: "Jungler",
+        nationality: "Indonesia",
+        rating: 87,
+        potential: 92,
+        salary: 190000000,
+        morale: 85,
+        status: "active"
+    },
+
+    {
+        id: "tlid_drichel",
+        name: "Drichel",
+        teamId: "tlid",
+        role: "Mid",
+        nationality: "Indonesia",
+        rating: 84,
+        potential: 91,
+        salary: 170000000,
+        morale: 83,
+        status: "active"
+    },
+
+    {
+        id: "tlid_kyou",
+        name: "Kyou",
+        teamId: "tlid",
+        role: "Gold",
+        nationality: "Indonesia",
+        rating: 88,
+        potential: 92,
+        salary: 200000000,
+        morale: 86,
+        status: "active"
+    },
+
+    {
+        id: "tlid_lyoni",
+        name: "Lyoni",
+        teamId: "tlid",
+        role: "Roamer",
+        nationality: "Indonesia",
+        rating: 85,
+        potential: 90,
+        salary: 180000000,
+        morale: 84,
+        status: "active"
     }
 
 ];
 
 
-/* =====================================================
-   PLAYERS
-===================================================== */
+// =========================================================
+// STAFF DATABASE
+// =========================================================
 
-const PLAYER_DATA = [
+game.staff = [
 
-    ["p001","Nino","EXP","alterego",84,91],
-    ["p002","Alexander","Roam","alterego",82,88],
-    ["p003","Dingarai","Gold","alterego",83,90],
-    ["p004","Dalvin","Mid","alterego",81,88],
-    ["p005","Halim","Mid","alterego",79,86],
-    ["p006","Reyy","Jungle","alterego",82,89],
-    ["p007","Affan","Jungle","alterego",78,86],
-    ["p008","Ivann","Roam","alterego",77,84],
+    {
+        id: "rrq_adi",
+        name: "Adi",
+        teamId: "rrq",
+        role: "Head Coach",
+        nationality: "Indonesia",
+        rating: 90
+    },
 
-    ["p009","Kiboy","Roam","onic",91,95],
-    ["p010","Sanz","Mid","onic",94,97],
-    ["p011","Kairi","Jungle","onic",95,98],
-    ["p012","Lutpi","EXP","onic",86,92],
-    ["p013","Kelra","Gold","onic",94,98],
-    ["p014","SSamuel","Roam","onic",80,87],
+    {
+        id: "rrq_caleb",
+        name: "Caleb",
+        teamId: "rrq",
+        role: "Assistant Coach",
+        nationality: "Indonesia",
+        rating: 84
+    },
 
-    ["p015","Hajirin","Mid","rrq",82,90],
-    ["p016","Arthur","Gold","rrq",84,91],
-    ["p017","Said","Roam","rrq",80,88],
-    ["p018","Joshua","EXP","rrq",83,91],
-    ["p019","Demonkite","Jungle","rrq",88,93],
-    ["p020","Habil","Gold","rrq",79,87],
-    ["p021","Clayyy","Mid","rrq",89,94],
+    {
+        id: "evos_aldo",
+        name: "Aldo",
+        teamId: "evos",
+        role: "Head Coach",
+        nationality: "Indonesia",
+        rating: 86
+    },
 
-    ["p022","Alberttt","Jungle","evos",92,96],
-    ["p023","Erlan","Gold","evos",82,89],
-    ["p024","Vell","EXP","evos",81,89],
-    ["p025","Muezza","Roam","evos",80,88],
-    ["p026","Rendyyy","EXP","evos",77,85],
-    ["p027","Ryzaa","Mid","evos",80,88],
+    {
+        id: "btr_theonael",
+        name: "Theonael",
+        teamId: "btr",
+        role: "Head Coach",
+        nationality: "Indonesia",
+        rating: 88
+    },
 
-    ["p028","Morenooo","Mid","btr",84,92],
-    ["p029","EMANN","Gold","btr",89,95],
-    ["p030","Finn","Roam","btr",81,89],
-    ["p031","Nnael","Jungle","btr",86,93],
-    ["p032","Shogun","EXP","btr",82,90],
-    ["p033","Miguel","Gold","btr",78,87],
+    {
+        id: "tlid_honjaw",
+        name: "Honjaw",
+        teamId: "tlid",
+        role: "Head Coach",
+        nationality: "Indonesia",
+        rating: 87
+    },
 
-    ["p034","Octa","Mid","dewa",81,89],
-    ["p035","Qinn","EXP","dewa",80,88],
-    ["p036","Maybeee","Gold","dewa",82,90],
-    ["p037","Kayn","Jungle","dewa",81,89],
-    ["p038","Itoshi Kesu","Roam","dewa",79,87],
-    ["p039","Rul Good","Roam","dewa",77,85],
-    ["p040","Hazle","Jungle","dewa",76,85],
-
-    ["p041","Aboyy","Mid","geek",86,92],
-    ["p042","Nazara","Jungle","geek",82,90],
-    ["p043","Kennzyyskie","Gold","geek",81,89],
-    ["p044","Marcel","EXP","geek",80,88],
-    ["p045","Febriii","EXP","geek",78,86],
-    ["p046","Frenzyy","Roam","geek",80,88],
-
-    ["p047","Karss","EXP","navi",80,88],
-    ["p048","Andoryuuu","Jungle","navi",82,90],
-    ["p049","Aprho","Roam","navi",79,87],
-    ["p050","Zeonn","Gold","navi",82,91],
-    ["p051","Jiizee","Mid","navi",81,90],
-    ["p052","Febbb","EXP","navi",77,86],
-    ["p053","Joshuaa","Jungle","navi",78,87],
-
-    ["p054","Aran","EXP","tlid",87,93],
-    ["p055","Drichel","Mid","tlid",84,92],
-    ["p056","Lyoni","Roam","tlid",83,90],
-    ["p057","Keven","Gold","tlid",88,94],
-    ["p058","Anaver","Mid","tlid",80,89],
-    ["p059","Kevin","Jungle","tlid",86,93]
+    {
+        id: "tlid_pahlevi",
+        name: "Pahlevi",
+        teamId: "tlid",
+        role: "Assistant Coach",
+        nationality: "Indonesia",
+        rating: 82
+    }
 
 ];
 
 
-/* =====================================================
-   BUILD PLAYERS
-===================================================== */
+// =========================================================
+// STANDINGS
+// =========================================================
 
-function buildPlayers() {
+function createStandings(){
 
-    return PLAYER_DATA.map(function(p) {
+    game.standings =
+        game.teams.map(function(team){
 
-        return {
+            return {
 
-            id: p[0],
-            name: p[1],
-            role: p[2],
-            teamId: p[3],
+                teamId: team.id,
 
-            rating: p[4],
-            potential: p[5],
+                played: 0,
 
-            morale: 80,
-            stamina: 100,
+                wins: 0,
 
-            kills: 0,
-            deaths: 0,
-            assists: 0
+                losses: 0,
 
-        };
+                gameWins: 0,
+
+                gameLosses: 0,
+
+                points: 0,
+
+                diff: 0
+
+            };
+
+        });
+
+}
+
+
+function getTeam(teamId){
+
+    return game.teams.find(function(team){
+
+        return team.id === teamId;
 
     });
 
 }
 
 
-/* =====================================================
-   HELPERS
-===================================================== */
+function getPlayer(playerId){
 
-function getTeam(id) {
+    return game.players.find(function(player){
 
-    return game.teams.find(function(team) {
-        return team.id === id;
+        return player.id === playerId;
+
     });
 
 }
 
 
-function getPlayer(id) {
+function getTeamPlayers(teamId){
 
-    return game.players.find(function(player) {
-        return player.id === id;
-    });
+    return game.players.filter(function(player){
 
-}
-
-
-function getTeamPlayers(teamId) {
-
-    return game.players.filter(function(player) {
         return player.teamId === teamId;
+
     });
 
 }
 
 
-function formatMoney(value) {
+function getTeamStaff(teamId){
 
-    if (value >= 1000000000) {
+    return game.staff.filter(function(staff){
 
-        return "Rp " +
-            (value / 1000000000).toFixed(1) +
-            " M";
+        return staff.teamId === teamId;
 
-    }
-
-    if (value >= 1000000) {
-
-        return "Rp " +
-            (value / 1000000).toFixed(0) +
-            " Jt";
-
-    }
-
-    return "Rp " +
-        value.toLocaleString("id-ID");
+    });
 
 }
 
 
-function random(min, max) {
+// =========================================================
+// MONEY
+// =========================================================
+
+function formatMoney(value){
+
+    return new Intl.NumberFormat(
+        "id-ID",
+        {
+            style: "currency",
+            currency: "IDR",
+            maximumFractionDigits: 0
+        }
+    ).format(value);
+
+}
+
+
+// =========================================================
+// RANDOM
+// =========================================================
+
+function random(min, max){
 
     return Math.floor(
-        Math.random() *
-        (max - min + 1)
+        Math.random() * (max - min + 1)
     ) + min;
 
 }
 
 
-/* =====================================================
-   STANDINGS
-===================================================== */
+// =========================================================
+// TEAM POWER
+// =========================================================
 
-function createStandings() {
-
-    return game.teams.map(function(team) {
-
-        return {
-
-            teamId: team.id,
-
-            played: 0,
-
-            wins: 0,
-
-            losses: 0,
-
-            gameWins: 0,
-
-            gameLosses: 0,
-
-            gameDiff: 0,
-
-            points: 0
-
-        };
-
-    });
-
-}
-
-
-function getStanding(teamId) {
-
-    return game.standings.find(function(row) {
-
-        return row.teamId === teamId;
-
-    });
-
-}
-
-
-function getSortedStandings() {
-
-    return [...game.standings].sort(function(a, b) {
-
-        if (b.points !== a.points) {
-
-            return b.points - a.points;
-
-        }
-
-        if (b.gameDiff !== a.gameDiff) {
-
-            return b.gameDiff - a.gameDiff;
-
-        }
-
-        return b.wins - a.wins;
-
-    });
-
-}
-
-
-/* =====================================================
-   TEAM POWER
-===================================================== */
-
-function teamPower(teamId) {
+function teamPower(teamId){
 
     const players =
-        getTeamPlayers(teamId);
+        getTeamPlayers(teamId)
+        .filter(function(player){
 
-    if (!players.length) return 50;
+            return player.status === "active";
+
+        });
+
+    if(players.length === 0){
+
+        return 50;
+
+    }
 
     const total =
-        players.reduce(function(sum, player) {
+        players.reduce(
+            function(sum, player){
 
-            return sum + player.rating;
+                return sum + player.rating;
 
-        }, 0);
+            },
+            0
+        );
 
     const average =
         total / players.length;
@@ -390,346 +1194,165 @@ function teamPower(teamId) {
     const team =
         getTeam(teamId);
 
-    return average +
-        (team.reputation * 0.08) +
-        (team.chemistry * 0.05) +
-        (team.morale * 0.05);
+    return (
+
+        average
+
+        + (team.chemistry * 0.08)
+
+        + (team.morale * 0.05)
+
+        + (team.reputation * 0.04)
+
+        + random(-3, 3)
+
+    );
 
 }
 
 
-/* =====================================================
-   SINGLE GAME
-===================================================== */
+// =========================================================
+// BO3 SIMULATION
+// =========================================================
 
-function simulateGame(homeId, awayId) {
+function simulateBo3(homeId, awayId){
 
-    const homePower =
-        teamPower(homeId);
+    let homeGames = 0;
 
-    const awayPower =
-        teamPower(awayId);
+    let awayGames = 0;
 
-    const homeScore =
-        homePower + random(-12, 12);
+    const games = [];
 
-    const awayScore =
-        awayPower + random(-12, 12);
+    while(
+        homeGames < 2 &&
+        awayGames < 2
+    ){
 
-    let winner;
+        const homePower =
+            teamPower(homeId);
 
-    if (homeScore >= awayScore) {
+        const awayPower =
+            teamPower(awayId);
 
-        winner = homeId;
+        const homeWin =
+            homePower >= awayPower;
 
-    } else {
+        if(homeWin){
 
-        winner = awayId;
+            homeGames++;
+
+        }else{
+
+            awayGames++;
+
+        }
+
+        games.push({
+
+            game:
+                games.length + 1,
+
+            winner:
+                homeWin
+                    ? homeId
+                    : awayId
+
+        });
 
     }
 
-    const loser =
+    const winner =
+        homeGames === 2
+            ? homeId
+            : awayId;
+
+    const losingTeam =
         winner === homeId
-        ? awayId
-        : homeId;
+            ? awayId
+            : homeId;
 
     const winnerPlayers =
-        getTeamPlayers(winner);
+        getTeamPlayers(winner)
+        .filter(function(player){
 
-    const mvpPlayer =
-        winnerPlayers
-        .slice()
-        .sort(function(a, b) {
+            return player.status === "active";
 
-            return b.rating - a.rating;
+        });
 
-        })[0];
+    let mvp =
+        winnerPlayers[0];
+
+    winnerPlayers.forEach(function(player){
+
+        if(
+            player.rating >
+            mvp.rating
+        ){
+
+            mvp = player;
+
+        }
+
+    });
 
     return {
+
+        homeId: homeId,
+
+        awayId: awayId,
+
+        homeGames: homeGames,
+
+        awayGames: awayGames,
 
         winner: winner,
 
-        loser: loser,
+        loser: losingTeam,
 
-        mvp:
-            mvpPlayer
-            ? mvpPlayer.name
-            : "-"
+        mvp: mvp
+            ? mvp.name
+            : "-",
 
-    };
-
-}
-
-
-/* =====================================================
-   BO3
-===================================================== */
-
-function simulateBo3(homeId, awayId) {
-
-    let homeGames = 0;
-
-    let awayGames = 0;
-
-    let mvp = "-";
-
-    const games = [];
-
-    while (
-        homeGames < 2 &&
-        awayGames < 2
-    ) {
-
-        const result =
-            simulateGame(
-                homeId,
-                awayId
-            );
-
-        if (result.winner === homeId) {
-
-            homeGames++;
-
-        } else {
-
-            awayGames++;
-
-        }
-
-        mvp = result.mvp;
-
-        games.push({
-
-            game:
-                games.length + 1,
-
-            winner:
-                result.winner,
-
-            loser:
-                result.loser,
-
-            mvp:
-                result.mvp
-
-        });
-
-    }
-
-    return {
-
-        winner:
-            homeGames === 2
-            ? homeId
-            : awayId,
-
-        loser:
-            homeGames === 2
-            ? awayId
-            : homeId,
-
-        homeGames:
-            homeGames,
-
-        awayGames:
-            awayGames,
-
-        mvp:
-            mvp,
-
-        games:
-            games
+        games: games
 
     };
 
 }
 
 
-/* =====================================================
-   BO5
-===================================================== */
-
-function simulateBo5(homeId, awayId) {
-
-    let homeGames = 0;
-
-    let awayGames = 0;
-
-    let mvp = "-";
-
-    const games = [];
-
-    while (
-        homeGames < 3 &&
-        awayGames < 3
-    ) {
-
-        const result =
-            simulateGame(
-                homeId,
-                awayId
-            );
-
-        if (result.winner === homeId) {
-
-            homeGames++;
-
-        } else {
-
-            awayGames++;
-
-        }
-
-        mvp = result.mvp;
-
-        games.push({
-
-            game:
-                games.length + 1,
-
-            winner:
-                result.winner,
-
-            loser:
-                result.loser,
-
-            mvp:
-                result.mvp
-
-        });
-
-    }
-
-    return {
-
-        winner:
-            homeGames === 3
-            ? homeId
-            : awayId,
-
-        loser:
-            homeGames === 3
-            ? awayId
-            : homeId,
-
-        homeGames:
-            homeGames,
-
-        awayGames:
-            awayGames,
-
-        mvp:
-            mvp,
-
-        games:
-            games
-
-    };
-
-}
-
-
-/* =====================================================
-   BO7
-===================================================== */
-
-function simulateBo7(homeId, awayId) {
-
-    let homeGames = 0;
-
-    let awayGames = 0;
-
-    let mvp = "-";
-
-    const games = [];
-
-    while (
-        homeGames < 4 &&
-        awayGames < 4
-    ) {
-
-        const result =
-            simulateGame(
-                homeId,
-                awayId
-            );
-
-        if (result.winner === homeId) {
-
-            homeGames++;
-
-        } else {
-
-            awayGames++;
-
-        }
-
-        mvp = result.mvp;
-
-        games.push({
-
-            game:
-                games.length + 1,
-
-            winner:
-                result.winner,
-
-            loser:
-                result.loser,
-
-            mvp:
-                result.mvp
-
-        });
-
-    }
-
-    return {
-
-        winner:
-            homeGames === 4
-            ? homeId
-            : awayId,
-
-        loser:
-            homeGames === 4
-            ? awayId
-            : homeId,
-
-        homeGames:
-            homeGames,
-
-        awayGames:
-            awayGames,
-
-        mvp:
-            mvp,
-
-        games:
-            games
-
-    };
-
-}
-
-
-/* =====================================================
-   APPLY REGULAR MATCH
-===================================================== */
+// =========================================================
+// APPLY RESULT
+// =========================================================
 
 function applyMatchResult(
     homeId,
     awayId,
     result
-) {
+){
 
     const home =
-        getStanding(homeId);
+        game.standings.find(
+            function(row){
+
+                return row.teamId === homeId;
+
+            }
+        );
 
     const away =
-        getStanding(awayId);
+        game.standings.find(
+            function(row){
 
-    if (!home || !away) return;
+                return row.teamId === awayId;
+
+            }
+        );
+
+    if(!home || !away){
+
+        return;
+
+    }
 
     home.played++;
 
@@ -747,15 +1370,16 @@ function applyMatchResult(
     away.gameLosses +=
         result.homeGames;
 
-    home.gameDiff =
+    home.diff =
         home.gameWins -
         home.gameLosses;
 
-    away.gameDiff =
+    away.diff =
         away.gameWins -
         away.gameLosses;
 
-    if (result.winner === homeId) {
+
+    if(result.winner === homeId){
 
         home.wins++;
 
@@ -763,7 +1387,7 @@ function applyMatchResult(
 
         away.losses++;
 
-    } else {
+    }else{
 
         away.wins++;
 
@@ -773,26 +1397,481 @@ function applyMatchResult(
 
     }
 
+
+    game.history.push({
+
+        type: "match",
+
+        season: game.season,
+
+        week: game.week,
+
+        home: homeId,
+
+        away: awayId,
+
+        homeGames: result.homeGames,
+
+        awayGames: result.awayGames,
+
+        winner: result.winner,
+
+        mvp: result.mvp
+
+    });
+
 }
 
 
-/* =====================================================
-   QUICK MATCH
-===================================================== */
+// =========================================================
+// SORT STANDINGS
+// =========================================================
 
-function startQuickMatch() {
+function sortStandings(){
+
+    game.standings.sort(
+        function(a, b){
+
+            if(
+                b.points !== a.points
+            ){
+
+                return (
+                    b.points -
+                    a.points
+                );
+
+            }
+
+            if(
+                b.diff !== a.diff
+            ){
+
+                return (
+                    b.diff -
+                    a.diff
+                );
+
+            }
+
+            return (
+                b.gameWins -
+                a.gameWins
+            );
+
+        }
+    );
+
+}
+
+
+// =========================================================
+// SCHEDULE GENERATOR
+// =========================================================
+
+function generateSchedule(){
+
+    game.schedule = [];
+
+    const ids =
+        game.teams.map(function(team){
+
+            return team.id;
+
+        });
+
+
+    let teams = ids.slice();
+
+    teams.push(null);
+
+
+    const totalTeams =
+        teams.length;
+
+    const rounds =
+        totalTeams - 1;
+
+
+    const firstHalf = [];
+
+
+    for(
+        let round = 0;
+        round < rounds;
+        round++
+    ){
+
+        const matches = [];
+
+        for(
+            let i = 0;
+            i < totalTeams / 2;
+            i++
+        ){
+
+            const home =
+                teams[i];
+
+            const away =
+                teams[
+                    totalTeams - 1 - i
+                ];
+
+
+            if(
+                home !== null &&
+                away !== null
+            ){
+
+                matches.push({
+
+                    week:
+                        round + 1,
+
+                    home:
+                        home,
+
+                    away:
+                        away,
+
+                    played: false
+
+                });
+
+            }
+
+        }
+
+
+        firstHalf.push(matches);
+
+
+        const fixed =
+            teams[0];
+
+        const rest =
+            teams.slice(1);
+
+        rest.unshift(
+            rest.pop()
+        );
+
+        teams =
+            [fixed].concat(rest);
+
+    }
+
+
+    firstHalf.forEach(
+        function(week){
+
+            week.forEach(
+                function(match){
+
+                    game.schedule.push(
+                        match
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    const secondHalf =
+        game.schedule.map(
+            function(match){
+
+                return {
+
+                    week:
+                        match.week + rounds,
+
+                    home:
+                        match.away,
+
+                    away:
+                        match.home,
+
+                    played: false
+
+                };
+
+            }
+        );
+
+
+    game.schedule =
+        game.schedule.concat(
+            secondHalf
+        );
+
+}
+
+
+// =========================================================
+// GET CURRENT WEEK
+// =========================================================
+
+function getCurrentWeekMatches(){
+
+    return game.schedule.filter(
+        function(match){
+
+            return (
+                match.week === game.week
+            );
+
+        }
+    );
+
+}
+
+
+// =========================================================
+// PLAY SCHEDULED MATCH
+// =========================================================
+
+function playScheduledMatch(index){
+
+    const matches =
+        getCurrentWeekMatches();
+
+    const match =
+        matches[index];
+
+    if(!match){
+
+        alert("Pertandingan tidak ditemukan.");
+
+        return;
+
+    }
+
+
+    if(match.played){
+
+        alert("Pertandingan sudah dimainkan.");
+
+        return;
+
+    }
+
+
+    const result =
+        simulateBo3(
+            match.home,
+            match.away
+        );
+
+
+    applyMatchResult(
+        match.home,
+        match.away,
+        result
+    );
+
+
+    match.played = true;
+
+
+    game.currentMatch = {
+
+        ...result,
+
+        format: "BO3",
+
+        week: game.week
+
+    };
+
+
+    sortStandings();
+
+    saveGame();
+
+
+    if(
+        typeof renderMatchResult ===
+        "function"
+    ){
+
+        renderMatchResult(
+            getTeam(match.home),
+            getTeam(match.away),
+            result
+        );
+
+    }
+
+
+    if(
+        typeof refreshUI ===
+        "function"
+    ){
+
+        refreshUI();
+
+    }
+
+
+    if(
+        typeof showPage ===
+        "function"
+    ){
+
+        showPage("match");
+
+    }
+
+}
+
+
+// =========================================================
+// NEXT WEEK
+// =========================================================
+
+function nextMPLWeek(){
+
+    const current =
+        getCurrentWeekMatches();
+
+
+    const unfinished =
+        current.some(
+            function(match){
+
+                return !match.played;
+
+            }
+        );
+
+
+    if(unfinished){
+
+        alert(
+            "Selesaikan semua pertandingan minggu ini terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+
+    if(game.week >= 18){
+
+        finishMPLRegularSeason();
+
+        return;
+
+    }
+
+
+    game.week++;
+
+    saveGame();
+
+
+    if(
+        typeof refreshUI ===
+        "function"
+    ){
+
+        refreshUI();
+
+    }
+
+
+    if(
+        typeof showPage ===
+        "function"
+    ){
+
+        showPage("schedule");
+
+    }
+
+}
+
+
+// =========================================================
+// REGULAR SEASON FINISH
+// =========================================================
+
+function finishMPLRegularSeason(){
+
+    sortStandings();
+
+    game.phase =
+        "playoffs";
+
+    game.history.push({
+
+        type: "regular-season-end",
+
+        season: game.season,
+
+        standings:
+            JSON.parse(
+                JSON.stringify(
+                    game.standings
+                )
+            )
+
+    });
+
+
+    saveGame();
+
+
+    alert(
+        "Regular Season selesai! Top 6 masuk Playoff."
+    );
+
+
+    if(
+        typeof refreshUI ===
+        "function"
+    ){
+
+        refreshUI();
+
+    }
+
+
+    if(
+        typeof showPage ===
+        "function"
+    ){
+
+        showPage("standings");
+
+    }
+
+}
+
+
+// =========================================================
+// QUICK MATCH
+// =========================================================
+
+function startQuickMatch(){
 
     const homeId =
         document.getElementById(
             "quickHome"
         ).value;
 
+
     const awayId =
         document.getElementById(
             "quickAway"
         ).value;
 
-    if (!homeId || !awayId) {
+
+    if(!homeId || !awayId){
 
         alert(
             "Pilih kedua tim terlebih dahulu."
@@ -802,7 +1881,8 @@ function startQuickMatch() {
 
     }
 
-    if (homeId === awayId) {
+
+    if(homeId === awayId){
 
         alert(
             "Tim 1 dan Tim 2 harus berbeda."
@@ -812,65 +1892,43 @@ function startQuickMatch() {
 
     }
 
+
     const result =
         simulateBo3(
             homeId,
             awayId
         );
 
-    applyMatchResult(
-        homeId,
-        awayId,
-        result
-    );
 
     game.currentMatch = {
 
-        home: homeId,
+        ...result,
 
-        away: awayId,
+        format: "BO3",
 
-        homeGames:
-            result.homeGames,
-
-        awayGames:
-            result.awayGames,
-
-        winner:
-            result.winner,
-
-        loser:
-            result.loser,
-
-        mvp:
-            result.mvp,
-
-        games:
-            result.games
+        week: game.week
 
     };
 
-    saveGame();
 
-    renderMatchResult(
-        getTeam(homeId),
-        getTeam(awayId),
-        result
-    );
-
-    if (
-        typeof refreshUI ===
+    if(
+        typeof renderMatchResult ===
         "function"
-    ) {
+    ){
 
-        refreshUI();
+        renderMatchResult(
+            getTeam(homeId),
+            getTeam(awayId),
+            result
+        );
 
     }
 
-    if (
+
+    if(
         typeof showPage ===
         "function"
-    ) {
+    ){
 
         showPage("match");
 
@@ -879,1015 +1937,62 @@ function startQuickMatch() {
 }
 
 
-/* =====================================================
-   MATCH RESULT
-===================================================== */
-
-function renderMatchResult(
-    home,
-    away,
-    result
-) {
-
-    const box =
-        document.getElementById(
-            "matchContainer"
-        );
-
-    if (!box) return;
-
-    let gamesHTML = "";
-
-    result.games.forEach(function(g) {
-
-        const winner =
-            getTeam(g.winner);
-
-        const loser =
-            getTeam(g.loser);
-
-        gamesHTML += `
-
-            <div class="card">
-
-                <h3>
-                    🎮 Game ${g.game}
-                </h3>
-
-                <p style="font-size:18px;">
-
-                    <b>
-                        ${winner.name}
-                    </b>
-
-                    <span class="win">
-                        WIN
-                    </span>
-
-                </p>
-
-                <p>
-                    ${loser.name}
-                    kalah
-                </p>
-
-                <p>
-                    ⭐ MVP:
-                    <b>
-                        ${g.mvp}
-                    </b>
-                </p>
-
-            </div>
-
-        `;
-
-    });
-
-    box.innerHTML = `
-
-        <div class="card">
-
-            <h2 style="text-align:center;">
-                ⚔️ MATCH RESULT
-            </h2>
-
-            <h1 style="text-align:center;">
-
-                ${home.short}
-
-                <br>
-
-                <span style="font-size:44px;">
-                    ${result.homeGames}
-                    -
-                    ${result.awayGames}
-                </span>
-
-                <br>
-
-                ${away.short}
-
-            </h1>
-
-            <div class="champion">
-
-                <div class="trophy">
-                    🏆
-                </div>
-
-                <h2>
-                    ${getTeam(result.winner).name}
-                </h2>
-
-                <p>
-                    MENANG
-                    ${result.homeGames}
-                    -
-                    ${result.awayGames}
-                </p>
-
-                <p>
-                    ⭐ MVP:
-                    <b>
-                        ${result.mvp}
-                    </b>
-                </p>
-
-            </div>
-
-        </div>
-
-        <div class="card">
-
-            <h2>
-                🎮 Detail Pertandingan
-            </h2>
-
-            ${gamesHTML}
-
-        </div>
-
-        <div class="card">
-
-            <h2>
-                📊 Klasemen Setelah Match
-            </h2>
-
-            ${
-                typeof getStandingsTableHTML ===
-                "function"
-                ? getStandingsTableHTML(false)
-                : "Klasemen tersedia di menu Klasemen."
-            }
-
-        </div>
-
-    `;
-
-}
-
-
-/* =====================================================
-   SCHEDULE
-===================================================== */
-
-function generateSchedule() {
-
-    const ids =
-        game.teams.map(function(team) {
-
-            return team.id;
-
-        });
-
-    let schedule = [];
-
-    let rotation =
-        ids.slice();
-
-    for (
-        let round = 0;
-        round < 9;
-        round++
-    ) {
-
-        const current =
-            rotation.slice();
-
-        for (
-            let i = 0;
-            i < 4;
-            i++
-        ) {
-
-            const home =
-                current[i];
-
-            const away =
-                current[8 - i];
-
-            schedule.push({
-
-                id:
-                    "w" +
-                    (round + 1) +
-                    "m" +
-                    (i + 1),
-
-                week:
-                    round + 1,
-
-                home:
-                    home,
-
-                away:
-                    away,
-
-                played:
-                    false,
-
-                homeGames:
-                    0,
-
-                awayGames:
-                    0
-
-            });
-
-        }
-
-        const last =
-            rotation.pop();
-
-        rotation.splice(
-            1,
-            0,
-            last
-        );
-
-    }
-
-
-    const firstHalf =
-        schedule.slice();
-
-    firstHalf.forEach(function(
-        match,
-        index
-    ) {
-
-        schedule.push({
-
-            id:
-                "w" +
-                (
-                    10 +
-                    Math.floor(
-                        index / 4
-                    )
-                ) +
-                "m" +
-                (
-                    (index % 4) + 1
-                ),
-
-            week:
-                10 +
-                Math.floor(
-                    index / 4
-                ),
-
-            home:
-                match.away,
-
-            away:
-                match.home,
-
-            played:
-                false,
-
-            homeGames:
-                0,
-
-            awayGames:
-                0
-
-        });
-
-    });
-
-    return schedule;
-
-}
-
-
-function getCurrentWeekMatches() {
-
-    return game.schedule.filter(
-        function(match) {
-
-            return match.week ===
-                game.week;
-
-        }
-    );
-
-}
-
-
-function isCurrentWeekComplete() {
-
-    const matches =
-        getCurrentWeekMatches();
-
-    return matches.length > 0 &&
-        matches.every(
-            function(match) {
-
-                return match.played;
-
-            }
-        );
-
-}
-
-
-/* =====================================================
-   PLAY SCHEDULED MATCH
-===================================================== */
-
-function playScheduledMatch(index) {
-
-    const match =
-        game.schedule[index];
-
-    if (!match) return;
-
-    if (match.played) {
-
-        alert(
-            "Match ini sudah dimainkan."
-        );
-
-        return;
-
-    }
-
-    if (
-        match.week !==
-        game.week
-    ) {
-
-        alert(
-            "Match ini bukan pada week sekarang."
-        );
-
-        return;
-
-    }
-
-    const result =
-        simulateBo3(
-            match.home,
-            match.away
-        );
-
-    match.played = true;
-
-    match.homeGames =
-        result.homeGames;
-
-    match.awayGames =
-        result.awayGames;
-
-    match.winner =
-        result.winner;
-
-    match.mvp =
-        result.mvp;
-
-    match.games =
-        result.games;
-
-    applyMatchResult(
-        match.home,
-        match.away,
-        result
-    );
-
-    game.currentMatch = {
-
-        home:
-            match.home,
-
-        away:
-            match.away,
-
-        homeGames:
-            result.homeGames,
-
-        awayGames:
-            result.awayGames,
-
-        winner:
-            result.winner,
-
-        loser:
-            result.loser,
-
-        mvp:
-            result.mvp,
-
-        games:
-            result.games
-
-    };
-
-    saveGame();
-
-    renderMatchResult(
-        getTeam(match.home),
-        getTeam(match.away),
-        result
-    );
-
-    if (
-        typeof refreshUI ===
-        "function"
-    ) {
-
-        refreshUI();
-
-    }
-
-    showPage("match");
-
-}
-
-
-/* =====================================================
-   NEXT WEEK
-===================================================== */
-
-function nextMPLWeek() {
-
-    if (
-        !isCurrentWeekComplete()
-    ) {
-
-        alert(
-            "Selesaikan semua pertandingan Week " +
-            game.week +
-            " terlebih dahulu."
-        );
-
-        return;
-
-    }
-
-    if (game.week >= 18) {
-
-        finishMPLRegularSeason();
-
-        return;
-
-    }
-
-    game.week++;
-
-    game.players.forEach(
-        function(player) {
-
-            player.stamina = 100;
-
-        }
-    );
-
-    saveGame();
-
-    if (
-        typeof refreshUI ===
-        "function"
-    ) {
-
-        refreshUI();
-
-    }
-
-    if (
-        typeof renderSchedule ===
-        "function"
-    ) {
-
-        renderSchedule();
-
-    }
-
-}
-
-
-/* =====================================================
-   REGULAR SEASON FINISH
-===================================================== */
-
-function finishMPLRegularSeason() {
-
-    if (game.week < 18) {
-
-        alert(
-            "Regular Season belum selesai."
-        );
-
-        return;
-
-    }
-
-    const matches =
-        game.schedule.filter(
-            function(match) {
-
-                return match.played;
-
-            }
-        );
-
-    if (matches.length < 72) {
-
-        alert(
-            "Masih ada pertandingan Regular Season yang belum dimainkan."
-        );
-
-        return;
-
-    }
-
-    const sorted =
-        getSortedStandings();
-
-    game.regularSeasonTop6 =
-        sorted
-        .slice(0, 6)
-        .map(function(row) {
-
-            return row.teamId;
-
-        });
-
-    createPlayoffs();
-
-    saveGame();
-
-    if (
-        typeof renderPlayoffs ===
-        "function"
-    ) {
-
-        renderPlayoffs();
-
-    }
-
-    if (
-        typeof showPage ===
-        "function"
-    ) {
-
-        showPage("playoffs");
-
-    }
-
-}
-
-
-/* =====================================================
-   PLAYOFFS
-===================================================== */
-
-function createPlayoffs() {
-
-    const top =
-        game.regularSeasonTop6;
-
-    if (
-        !top ||
-        top.length < 6
-    ) {
-
-        alert(
-            "Top 6 belum tersedia."
-        );
-
-        return;
-
-    }
-
-    game.playoffs = {
-
-        champion: null,
-
-        matches: [
-
-            {
-                id: "PO1",
-                round: "Play-In 1 • #3 vs #6",
-                format: "BO5",
-                home: top[2],
-                away: top[5],
-                played: false
-            },
-
-            {
-                id: "PO2",
-                round: "Play-In 2 • #4 vs #5",
-                format: "BO5",
-                home: top[3],
-                away: top[4],
-                played: false
-            },
-
-            {
-                id: "PO3",
-                round: "Upper Semifinal 1 • #1 vs PO2",
-                format: "BO5",
-                home: top[0],
-                away: null,
-                played: false
-            },
-
-            {
-                id: "PO4",
-                round: "Upper Semifinal 2 • #2 vs PO1",
-                format: "BO5",
-                home: top[1],
-                away: null,
-                played: false
-            },
-
-            {
-                id: "PO5",
-                round: "Lower Semifinal",
-                format: "BO5",
-                home: null,
-                away: null,
-                played: false
-            },
-
-            {
-                id: "PO6",
-                round: "Upper Final",
-                format: "BO5",
-                home: null,
-                away: null,
-                played: false
-            },
-
-            {
-                id: "PO7",
-                round: "Lower Final",
-                format: "BO5",
-                home: null,
-                away: null,
-                played: false
-            },
-
-            {
-                id: "PO8",
-                round: "Grand Final",
-                format: "BO7",
-                home: null,
-                away: null,
-                played: false
-            }
-
-        ]
-
-    };
-
-    updatePlayoffBracket();
-
-}
-
-
-/* =====================================================
-   GET PLAYOFF
-===================================================== */
-
-function getPlayoff(id) {
-
-    if (!game.playoffs) return null;
-
-    return game.playoffs.matches.find(
-        function(match) {
-
-            return match.id === id;
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   UPDATE PLAYOFF BRACKET
-===================================================== */
-
-function updatePlayoffBracket() {
-
-    const p =
-        game.playoffs;
-
-    if (!p) return;
-
-    const po1 =
-        getPlayoff("PO1");
-
-    const po2 =
-        getPlayoff("PO2");
-
-    const po3 =
-        getPlayoff("PO3");
-
-    const po4 =
-        getPlayoff("PO4");
-
-    const po5 =
-        getPlayoff("PO5");
-
-    const po6 =
-        getPlayoff("PO6");
-
-    const po7 =
-        getPlayoff("PO7");
-
-    const po8 =
-        getPlayoff("PO8");
-
-
-    if (
-        po2 &&
-        po2.played
-    ) {
-
-        po3.away =
-            po2.winner;
-
-    }
-
-
-    if (
-        po1 &&
-        po1.played
-    ) {
-
-        po4.away =
-            po1.winner;
-
-    }
-
-
-    if (
-        po3 &&
-        po4 &&
-        po3.played &&
-        po4.played
-    ) {
-
-        po5.home =
-            po3.loser;
-
-        po5.away =
-            po4.loser;
-
-        po6.home =
-            po3.winner;
-
-        po6.away =
-            po4.winner;
-
-    }
-
-
-    if (
-        po5 &&
-        po6 &&
-        po5.played &&
-        po6.played
-    ) {
-
-        po7.home =
-            po5.winner;
-
-        po7.away =
-            po6.loser;
-
-    }
-
-
-    if (
-        po6 &&
-        po7 &&
-        po6.played &&
-        po7.played
-    ) {
-
-        po8.home =
-            po6.winner;
-
-        po8.away =
-            po7.winner;
-
-    }
-
-}
-
-
-/* =====================================================
-   PLAYOFF READY
-===================================================== */
-
-function isPlayoffMatchReady(match) {
-
-    if (!match) return false;
-
-    return (
-        !match.played &&
-        match.home &&
-        match.away
-    );
-
-}
-
-
-/* =====================================================
-   PLAY PLAYOFF MATCH
-===================================================== */
-
-function playPlayoffMatch(id) {
-
-    const match =
-        getPlayoff(id);
-
-    if (!match) return;
-
-    if (
-        !isPlayoffMatchReady(match)
-    ) {
-
-        alert(
-            "Pertandingan belum siap dimainkan."
-        );
-
-        return;
-
-    }
-
-    let result;
-
-    if (
-        match.format === "BO7"
-    ) {
-
-        result =
-            simulateBo7(
-                match.home,
-                match.away
-            );
-
-    } else {
-
-        result =
-            simulateBo5(
-                match.home,
-                match.away
-            );
-
-    }
-
-    match.played = true;
-
-    match.homeGames =
-        result.homeGames;
-
-    match.awayGames =
-        result.awayGames;
-
-    match.winner =
-        result.winner;
-
-    match.loser =
-        result.loser;
-
-    match.mvp =
-        result.mvp;
-
-    match.games =
-        result.games;
-
-    updatePlayoffBracket();
-
-    checkPlayoffFinish();
-
-    saveGame();
-
-    if (
-        typeof renderPlayoffs ===
-        "function"
-    ) {
-
-        renderPlayoffs();
-
-    }
-
-    if (
-        typeof showPage ===
-        "function"
-    ) {
-
-        showPage("playoffs");
-
-    }
-
-}
-
-
-/* =====================================================
-   CHECK PLAYOFF FINISH
-===================================================== */
-
-function checkPlayoffFinish() {
-
-    const po8 =
-        getPlayoff("PO8");
-
-    if (
-        !po8 ||
-        !po8.played
-    ) {
-
-        return;
-
-    }
-
-    const champion =
-        getTeam(po8.winner);
-
-    game.playoffs.champion =
-        po8.winner;
-
-    champion.mplTitles++;
-
-    if (
-        !game.history.mpl
-    ) {
-
-        game.history.mpl = [];
-
-    }
-
-    game.history.mpl.push({
-
-        season:
-            game.season,
-
-        championId:
-            champion.id,
-
-        championName:
-            champion.name
-
-    });
-
-    game.nextSeasonReady =
-        true;
-
-    saveGame();
-
-    alert(
-        "🏆 " +
-        champion.name +
-        " menjadi JUARA MPL INDONESIA SEASON " +
-        game.season +
-        "!"
-    );
-
-}
-
-
-/* =====================================================
-   SAVE / LOAD
-===================================================== */
-
-function saveGame() {
+// =========================================================
+// SAVE
+// =========================================================
+
+function saveGame(){
 
     localStorage.setItem(
+
         SAVE_KEY,
+
         JSON.stringify(game)
+
     );
 
 }
 
 
-function loadGame() {
+// =========================================================
+// LOAD
+// =========================================================
+
+function loadGame(){
 
     const saved =
         localStorage.getItem(
             SAVE_KEY
         );
 
-    if (!saved) {
+
+    if(!saved){
 
         return false;
 
     }
 
-    try {
 
-        game =
+    try{
+
+        const data =
             JSON.parse(saved);
+
+
+        Object.assign(
+            game,
+            data
+        );
+
 
         return true;
 
-    } catch (error) {
+    }catch(error){
+
+        console.error(
+            "Gagal memuat save:",
+            error
+        );
 
         return false;
 
@@ -1896,122 +2001,49 @@ function loadGame() {
 }
 
 
-/* =====================================================
-   NEW GAME
-===================================================== */
+// =========================================================
+// RESET
+// =========================================================
 
-function createNewGame() {
-
-    game = {
-
-        season: 18,
-
-        week: 1,
-
-        budget: 5000000000,
-
-        managerTeam: "rrq",
-
-        teams:
-            JSON.parse(
-                JSON.stringify(
-                    TEAM_DATA
-                )
-            ),
-
-        players:
-            buildPlayers(),
-
-        standings: [],
-
-        schedule: [],
-
-        regularSeasonTop6: [],
-
-        playoffs: null,
-
-        currentMatch: null,
-
-        history: {
-
-            mpl: [],
-
-            mSeries: []
-
-        },
-
-        nextSeasonReady:
-            false
-
-    };
-
-
-    game.standings =
-        createStandings();
-
-    game.schedule =
-        generateSchedule();
-
-    saveGame();
-
-}
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
-function initializeGame() {
-
-    const loaded =
-        loadGame();
-
-    if (!loaded) {
-
-        createNewGame();
-
-    }
-
-    if (
-        !game.teams ||
-        !game.players ||
-        !game.standings ||
-        !game.schedule
-    ) {
-
-        createNewGame();
-
-    }
-
-}
-
-
-/* =====================================================
-   RESET GAME
-===================================================== */
-
-function resetGame() {
-
-    const yes =
-        confirm(
-            "Reset seluruh progress Season 18?"
-        );
-
-    if (!yes) return;
+function resetGame(){
 
     localStorage.removeItem(
         SAVE_KEY
     );
-
-    createNewGame();
 
     location.reload();
 
 }
 
 
-/* =====================================================
-   AUTO INITIALIZE
-===================================================== */
+// =========================================================
+// INITIALIZE
+// =========================================================
+
+function initializeGame(){
+
+    const loaded =
+        loadGame();
+
+
+    if(!loaded){
+
+        createStandings();
+
+        generateSchedule();
+
+        saveGame();
+
+    }
+
+
+    sortStandings();
+
+}
+
+
+// =========================================================
+// AUTO INITIALIZE
+// =========================================================
 
 initializeGame();
