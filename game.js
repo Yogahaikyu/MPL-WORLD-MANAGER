@@ -7,9 +7,142 @@ const game = {
 
     season: 1,
 
+    // ========================================
+    // DATABASE PEMAIN
+    // ========================================
+
+    players: {
+
+        P001: {
+            id: "P001",
+            name: "Alberttt",
+            team: "RRQ",
+            role: "Jungler",
+            age: 22,
+            rating: 88,
+            potential: 92,
+            salary: 150000000,
+            morale: 85
+        },
+
+        P002: {
+            id: "P002",
+            name: "R7",
+            team: "RRQ",
+            role: "EXP Laner",
+            age: 25,
+            rating: 87,
+            potential: 89,
+            salary: 140000000,
+            morale: 90
+        },
+
+        P003: {
+            id: "P003",
+            name: "Clay",
+            team: "RRQ",
+            role: "Mid Laner",
+            age: 23,
+            rating: 84,
+            potential: 88,
+            salary: 120000000,
+            morale: 82
+        },
+
+        P004: {
+            id: "P004",
+            name: "Skylar",
+            team: "RRQ",
+            role: "Gold Laner",
+            age: 23,
+            rating: 90,
+            potential: 94,
+            salary: 180000000,
+            morale: 92
+        },
+
+        P005: {
+            id: "P005",
+            name: "Kyy",
+            team: "RRQ",
+            role: "Roamer",
+            age: 22,
+            rating: 85,
+            potential: 89,
+            salary: 130000000,
+            morale: 86
+        },
+
+        P006: {
+            id: "P006",
+            name: "Player ONIC 1",
+            team: "ONIC",
+            role: "Jungler",
+            age: 21,
+            rating: 89,
+            potential: 93,
+            salary: 160000000,
+            morale: 88
+        },
+
+        P007: {
+            id: "P007",
+            name: "Player ONIC 2",
+            team: "ONIC",
+            role: "EXP Laner",
+            age: 22,
+            rating: 86,
+            potential: 90,
+            salary: 130000000,
+            morale: 85
+        },
+
+        P008: {
+            id: "P008",
+            name: "Player ONIC 3",
+            team: "ONIC",
+            role: "Mid Laner",
+            age: 21,
+            rating: 88,
+            potential: 92,
+            salary: 150000000,
+            morale: 89
+        },
+
+        P009: {
+            id: "P009",
+            name: "Player ONIC 4",
+            team: "ONIC",
+            role: "Gold Laner",
+            age: 22,
+            rating: 91,
+            potential: 95,
+            salary: 190000000,
+            morale: 94
+        },
+
+        P010: {
+            id: "P010",
+            name: "Player ONIC 5",
+            team: "ONIC",
+            role: "Roamer",
+            age: 23,
+            rating: 87,
+            potential: 90,
+            salary: 140000000,
+            morale: 87
+        }
+    },
+
+
+    // ========================================
+    // DATABASE REGION
+    // ========================================
+
     regions: {
 
         indonesia: {
+
             name: "Indonesia",
 
             tier1: {
@@ -34,6 +167,7 @@ const game = {
         },
 
         philippines: {
+
             name: "Philippines",
 
             tier1: {
@@ -58,6 +192,7 @@ const game = {
         },
 
         malaysia: {
+
             name: "Malaysia",
 
             tier1: {
@@ -82,6 +217,7 @@ const game = {
         },
 
         singapore: {
+
             name: "Singapore",
 
             tier1: {
@@ -105,6 +241,11 @@ const game = {
             }
         }
     },
+
+
+    // ========================================
+    // INTERNATIONAL
+    // ========================================
 
     international: {
 
@@ -140,9 +281,11 @@ function tampilkanLiga() {
         regionBox.className = "card";
 
         regionBox.innerHTML = `
+
             <h2>🌍 ${region.name}</h2>
 
             <h3>🏆 Tier 1</h3>
+
             <p>${region.tier1.name}</p>
 
             <p>
@@ -150,11 +293,13 @@ function tampilkanLiga() {
             </p>
 
             <h3>🥈 Tier 2</h3>
+
             <p>${region.tier2.name}</p>
 
             <p>
                 ${region.tier2.teams.join(" • ")}
             </p>
+
         `;
 
         container.appendChild(regionBox);
