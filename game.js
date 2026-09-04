@@ -1233,3 +1233,1000 @@ function initGame() {
 
 initGame();
 ```0
+/* =========================================================
+   MPL INDONESIA - REGULAR SEASON UPGRADE
+   Tambahkan kode ini di PALING BAWAH game.js
+   ========================================================= */
+
+
+/* =========================================================
+   GENERATE JADWAL MPL YANG BENAR
+   9 TEAM = 18 WEEK
+   DOUBLE ROUND ROBIN
+   ========================================================= */
+
+function generateMPLSchedule() {
+
+    const teams = Object.keys(game.teams);
+
+    game.schedule = [];
+
+    /*
+      Dengan 9 tim:
+      - 18 minggu
+      - setiap tim bermain 16 match
+      - setiap tim mendapat 2 bye
+      - total 72 pertandingan
+    */
+
+    const rounds = [];
+
+    // Algoritma round robin
+    let rotation = teams.slice();
+
+    for (let round = 0; round < 8; round++) {
+
+        const matches = [];
+
+        for (let i = 0; i < 4; i++) {
+
+            const teamA = rotation[i];
+            const teamB = rotation[8 - i];
+
+            matches.push({
+                teamA: teamA,
+                teamB: teamB
+            });
+        }
+
+        rounds.push(matches);
+
+        // Rotasi tim kecuali posisi pertama
+        const fixed = rotation[0];
+        const rest = rotation.slice(1);
+
+        rest.unshift(rest.pop());
+
+        rotation = [fixed, ...rest];
+    }
+
+    /*
+      Putaran kedua
+      Membalik kandang/tandang
+    */
+
+    const secondRounds = rounds.map(round => {
+
+        return round.map(match => ({
+            teamA: match.teamB,
+            teamB: match.teamA
+        }));
+
+    });
+
+    const allRounds = [
+        ...rounds,
+        ...secondRounds
+    ];
+
+    allRounds.forEach((round, roundIndex) => {
+
+        round.forEach(match => {
+
+            game.schedule.push({
+
+                week: roundIndex + 1,
+
+                teamA: match.teamA,
+
+                teamB: match.teamB,
+
+                played: false,
+
+                result: null
+
+            });
+
+        });
+
+    });
+
+    return game.schedule;
+}
+
+
+/* =========================================================
+   CEK JADWAL
+========================================================= */
+
+function ensureMPLSchedule() {
+
+    if (
+        !game.schedule ||
+        game.schedule.length !== 72
+    ) {
+
+        generateMPLSchedule();
+
+        saveGameSilent();
+
+    }
+}
+
+
+/* =========================================================
+   MATCH MINGGU SAAT INI
+========================================================= */
+
+function getCurrentWeekMatches() {
+
+    ensureMPLSchedule();
+
+    return game.schedule.filter(match =>
+        Number(match.week) === Number(game.week)
+    );
+}
+
+
+/* =========================================================
+   CEK APAKAH WEEK SUDAH SELESAI
+========================================================= */
+
+function isCurrentWeekComplete() {
+
+    const matches =
+        getCurrentWeekMatches();
+
+    if (!matches.length) {
+        return true;
+    }
+
+    return matches.every(match => match.played);
+}
+
+
+/* =========================================================
+   CEK MATCH YANG BELUM DIMAINKAN
+========================================================= */
+
+function getNextUnplayedMatch() {
+
+    const matches =
+        getCurrentWeekMatches();
+
+    return matches.find(match =>
+        !match.played
+    );
+}
+
+
+/* =========================================================
+   MAIN MATCH DARI JADWAL
+========================================================= */
+
+function playScheduledMatch(index) {
+
+    ensureMPLSchedule();
+
+    const match =
+        game.schedule[index];
+
+    if (!match) {
+        alert("Pertandingan tidak ditemukan.");
+        return;
+    }
+
+    if (match.played) {
+        alert("Pertandingan ini sudah dimainkan.");
+        return;
+    }
+
+    /*
+      Pastikan pemain cukup stamina
+    */
+
+    const playersA =
+        getTeamPlayers(match.teamA);
+
+    const playersB =
+        getTeamPlayers(match.teamB);
+
+    const avgStaminaA =
+        playersA.reduce(
+            (sum,p) => sum + p.stamina,
+            0
+        ) / playersA.length;
+
+    const avgStaminaB =
+        playersB.reduce(
+            (sum,p) => sum + p.stamina,
+            0
+        ) / playersB.length;
+
+
+    /*
+      Penalti stamina
+    */
+
+    const originalPowerA =
+        calculateTeamPower(match.teamA);
+
+    const originalPowerB =
+        calculateTeamPower(match.teamB);
+
+    const staminaBonusA =
+        (avgStaminaA - 70) * 0.10;
+
+    const staminaBonusB =
+        (avgStaminaB - 70) * 0.10;
+
+
+    /*
+      Simulasi BO3
+    */
+
+    let scoreA = 0;
+    let scoreB = 0;
+
+    const games = [];
+
+    while (
+        scoreA < 2 &&
+        scoreB < 2
+    ) {
+
+        const powerA =
+            originalPowerA +
+            staminaBonusA;
+
+        const powerB =
+            originalPowerB +
+            staminaBonusB;
+
+        const chanceA =
+            powerA /
+            (powerA + powerB);
+
+        const winner =
+            Math.random() < chanceA
+            ? match.teamA
+            : match.teamB;
+
+        const loser =
+            winner === match.teamA
+            ? match.teamB
+            : match.teamA;
+
+        const winnerKills =
+            random(10,24);
+
+        const loserKills =
+            random(
+                3,
+                Math.max(
+                    5,
+                    winnerKills - 3
+                )
+            );
+
+        games.push({
+
+            game:
+                games.length + 1,
+
+            winner:
+                winner,
+
+            loser:
+                loser,
+
+            killsWinner:
+                winnerKills,
+
+            killsLoser:
+                loserKills
+
+        });
+
+        if (
+            winner === match.teamA
+        ) {
+
+            scoreA++;
+
+        } else {
+
+            scoreB++;
+
+        }
+    }
+
+
+    const winner =
+        scoreA > scoreB
+        ? match.teamA
+        : match.teamB;
+
+    const loser =
+        winner === match.teamA
+        ? match.teamB
+        : match.teamA;
+
+
+    const result = {
+
+        teamA:
+            match.teamA,
+
+        teamB:
+            match.teamB,
+
+        scoreA:
+            scoreA,
+
+        scoreB:
+            scoreB,
+
+        winner:
+            winner,
+
+        loser:
+            loser,
+
+        games:
+            games
+
+    };
+
+
+    /*
+      Masukkan hasil ke klasemen
+    */
+
+    applyMatchResult(result);
+
+
+    /*
+      MVP
+    */
+
+    const mvp =
+        calculateMVP(result);
+
+    game.currentMatch =
+        result;
+
+    game.currentMatch.mvp =
+        mvp
+        ? mvp.id
+        : null;
+
+
+    /*
+      Tandai match selesai
+    */
+
+    match.played = true;
+
+    match.result = {
+
+        scoreA:
+            scoreA,
+
+        scoreB:
+            scoreB,
+
+        winner:
+            winner
+
+    };
+
+
+    /*
+      Simpan
+    */
+
+    saveGameSilent();
+
+
+    /*
+      Tampilkan pertandingan
+    */
+
+    renderMatch();
+
+    showPage("match");
+
+}
+
+
+/* =========================================================
+   LANJUT KE WEEK BERIKUTNYA
+========================================================= */
+
+function nextMPLWeek() {
+
+    if (!isCurrentWeekComplete()) {
+
+        alert(
+            "⚠️ Masih ada pertandingan Week " +
+            game.week +
+            " yang belum dimainkan."
+        );
+
+        return;
+
+    }
+
+
+    /*
+      Kalau Week 18 selesai
+    */
+
+    if (game.week >= 18) {
+
+        finishMPLRegularSeason();
+
+        return;
+
+    }
+
+
+    game.week++;
+
+
+    /*
+      Recovery stamina sedikit
+    */
+
+    Object.values(game.teams)
+        .forEach(team => {
+
+            getTeamPlayers(team.id)
+                .forEach(player => {
+
+                    player.stamina =
+                        Math.min(
+                            100,
+                            player.stamina + 35
+                        );
+
+                });
+
+        });
+
+
+    saveGameSilent();
+
+
+    refreshUI();
+
+    showPage("schedule");
+
+
+    alert(
+        "📅 Sekarang Week " +
+        game.week +
+        "!\n\n" +
+        "Pertandingan baru sudah tersedia."
+    );
+
+}
+
+
+/* =========================================================
+   REGULAR SEASON SELESAI
+========================================================= */
+
+function finishMPLRegularSeason() {
+
+    const standings =
+        getSortedStandings();
+
+    const top6 =
+        standings.slice(0,6);
+
+    /*
+      Simpan hasil regular season
+    */
+
+    game.regularSeasonResult = {
+
+        season:
+            game.season,
+
+        standings:
+            standings.map((s,index) => ({
+
+                rank:
+                    index + 1,
+
+                teamId:
+                    s.teamId,
+
+                points:
+                    s.points,
+
+                matchWin:
+                    s.matchWin,
+
+                matchLoss:
+                    s.matchLoss,
+
+                gameWin:
+                    s.gameWin,
+
+                gameLoss:
+                    s.gameLoss
+
+            })),
+
+        top6:
+            top6.map(s => s.teamId)
+
+    };
+
+
+    saveGameSilent();
+
+
+    let text =
+        "🏁 REGULAR SEASON SELESAI!\n\n";
+
+    text +=
+        "🏆 TOP 6 PLAYOFF:\n\n";
+
+    top6.forEach((s,index) => {
+
+        text +=
+            (index + 1) +
+            ". " +
+            getTeam(s.teamId).name +
+            " - " +
+            s.points +
+            " MP\n";
+
+    });
+
+
+    alert(text);
+
+
+    renderStandings();
+
+    showPage("standings");
+
+}
+
+
+/* =========================================================
+   TAMPILKAN JADWAL WEEK SAAT INI
+========================================================= */
+
+function renderSchedule() {
+
+    ensureMPLSchedule();
+
+    const container =
+        document.getElementById(
+            "scheduleContainer"
+        );
+
+    if (!container) return;
+
+
+    const matches =
+        getCurrentWeekMatches();
+
+
+    let html = `
+
+        <div class="card">
+
+            <h3>
+                📅 Week ${game.week}
+                / 18
+            </h3>
+
+            <p class="mini">
+                ${
+                    isCurrentWeekComplete()
+                    ? "✅ Semua pertandingan minggu ini selesai."
+                    : "⚔️ Mainkan semua pertandingan minggu ini."
+                }
+            </p>
+
+        </div>
+
+    `;
+
+
+    matches.forEach(match => {
+
+        const teamA =
+            getTeam(match.teamA);
+
+        const teamB =
+            getTeam(match.teamB);
+
+
+        let resultText = "";
+
+
+        if (match.played) {
+
+            resultText = `
+
+                <div
+                    style="
+                    margin-top:8px;
+                    font-weight:bold;
+                    "
+                >
+
+                    ${
+                        teamA.short
+                    }
+
+                    ${match.result.scoreA}
+
+                    -
+
+                    ${match.result.scoreB}
+
+                    ${
+                        teamB.short
+                    }
+
+                </div>
+
+            `;
+
+        }
+
+
+        html += `
+
+        <div class="card">
+
+            <div class="mini">
+                MPL Indonesia •
+                Week ${game.week}
+            </div>
+
+            <br>
+
+            <div class="schedule-match">
+
+                <div>
+
+                    <b>
+                        ${teamA.short}
+                    </b>
+
+                    &nbsp; VS &nbsp;
+
+                    <b>
+                        ${teamB.short}
+                    </b>
+
+                    ${resultText}
+
+                </div>
+
+
+                ${
+                    match.played
+
+                    ? `
+
+                        <span
+                            class="muted"
+                        >
+                            SELESAI
+                        </span>
+
+                    `
+
+                    : `
+
+                        <button
+                            onclick="
+                            playScheduledMatch(
+                                ${game.schedule.indexOf(match)}
+                            )
+                            "
+                        >
+
+                            🎮 Main
+
+                        </button>
+
+                    `
+                }
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    /*
+      Tombol next week
+    */
+
+    if (
+        isCurrentWeekComplete()
+    ) {
+
+        if (game.week < 18) {
+
+            html += `
+
+            <div class="card">
+
+                <h3>
+                    ✅ Week ${game.week}
+                    selesai
+                </h3>
+
+                <button
+                    class="main-btn"
+                    onclick="nextMPLWeek()"
+                >
+
+                    ➡️ LANJUT WEEK
+                    ${game.week + 1}
+
+                </button>
+
+            </div>
+
+            `;
+
+        } else {
+
+            html += `
+
+            <div class="card">
+
+                <h3>
+                    🏁 Regular Season Selesai
+                </h3>
+
+                <button
+                    class="main-btn"
+                    onclick="finishMPLRegularSeason()"
+                >
+
+                    🏆 LIHAT TOP 6 PLAYOFF
+
+                </button>
+
+            </div>
+
+            `;
+
+        }
+
+    }
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   RESET SEASON
+========================================================= */
+
+function resetMPLSeason() {
+
+    if (
+        !confirm(
+            "Reset Season " +
+            game.season +
+            "?\n\n" +
+            "Semua klasemen dan jadwal " +
+            "regular season akan direset."
+        )
+    ) {
+        return;
+    }
+
+
+    game.week = 1;
+
+    createEmptyStandings();
+
+    generateMPLSchedule();
+
+    game.currentMatch = null;
+
+    game.regularSeasonResult = null;
+
+
+    /*
+      Reset stamina
+    */
+
+    game.players.forEach(player => {
+
+        player.stamina = 100;
+
+    });
+
+
+    saveGameSilent();
+
+    refreshUI();
+
+    showPage("dashboard");
+
+}
+
+
+/* =========================================================
+   SAVE TANPA ALERT
+========================================================= */
+
+function saveGameSilent() {
+
+    localStorage.setItem(
+        "mplWorldManagerSave",
+        JSON.stringify(game)
+    );
+
+}
+
+
+/* =========================================================
+   LOAD SAVE
+========================================================= */
+
+function loadMPLSave() {
+
+    const saved =
+        localStorage.getItem(
+            "mplWorldManagerSave"
+        );
+
+    if (!saved) {
+
+        alert(
+            "Belum ada save game."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const loaded =
+            JSON.parse(saved);
+
+        Object.assign(
+            game,
+            loaded
+        );
+
+
+        /*
+          Pastikan data lama punya schedule
+        */
+
+        if (
+            !game.schedule ||
+            game.schedule.length !== 72
+        ) {
+
+            generateMPLSchedule();
+
+        }
+
+
+        if (
+            !game.standings ||
+            Object.keys(game.standings).length !== 9
+        ) {
+
+            createEmptyStandings();
+
+        }
+
+
+        saveGameSilent();
+
+        refreshUI();
+
+        alert(
+            "📂 Save berhasil dimuat!"
+        );
+
+    } catch(error) {
+
+        alert(
+            "❌ Save game rusak."
+        );
+
+        console.error(error);
+
+    }
+
+}
+
+
+/* =========================================================
+   INITIALIZE MPL SEASON
+========================================================= */
+
+function initializeMPLSeason() {
+
+    /*
+      Kalau schedule lama/random,
+      ganti dengan schedule MPL baru.
+    */
+
+    if (
+        !game.schedule ||
+        game.schedule.length !== 72
+    ) {
+
+        generateMPLSchedule();
+
+    }
+
+
+    if (
+        !game.standings ||
+        Object.keys(game.standings).length !== 9
+    ) {
+
+        createEmptyStandings();
+
+    }
+
+
+    if (!game.week) {
+
+        game.week = 1;
+
+    }
+
+
+    saveGameSilent();
+
+}
+
+
+/* =========================================================
+   JALANKAN
+========================================================= */
+
+initializeMPLSeason();
+
+console.log(
+    "🇮🇩 MPL INDONESIA REGULAR SEASON AKTIF"
+);
+
+console.log(
+    "Season:",
+    game.season
+);
+
+console.log(
+    "Week:",
+    game.week
+);
+
+console.log(
+    "Total Match:",
+    game.schedule.length
+);
