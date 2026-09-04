@@ -1,18 +1,17 @@
 /* =========================================================
    MPL WORLD MANAGER
-   DATABASE MPL INDONESIA - SEASON 18
-   ========================================================= */
+   MPL INDONESIA SEASON 18
+   DATABASE + CAREER ENGINE
+========================================================= */
 
-const SAVE_KEY = "mpl_world_manager_s18";
 
-
-// =========================================================
-// GAME DATA
-// =========================================================
+/* =========================================================
+   GAME DATABASE
+========================================================= */
 
 const game = {
 
-    version: 1,
+    version: "1.0.0",
 
     season: 18,
 
@@ -20,23 +19,1767 @@ const game = {
 
     league: "MPL Indonesia",
 
+    phase: "regular",
+
     week: 1,
 
     managerTeam: null,
 
-    budget: 5000000000,
+    budget: 0,
 
-    phase: "regular",
+    currentMatch: null,
 
-    teams: [],
+    lineup: {
+        exp: null,
+        jungler: null,
+        mid: null,
+        gold: null,
+        roamer: null
+    },
 
-    players: [],
+    teams: {
 
-    staff: [],
+        /* =========================
+           RRQ HOSHI
+        ========================= */
+
+        rrq: {
+
+            id: "rrq",
+
+            name: "RRQ Hoshi",
+
+            shortName: "RRQ",
+
+            reputation: 92,
+
+            budget: 5000000000,
+
+            morale: 75,
+
+            chemistry: 78,
+
+            mplTitles: 4,
+
+            worldTitles: 0
+
+        },
+
+
+        /* =========================
+           ONIC
+        ========================= */
+
+        onic: {
+
+            id: "onic",
+
+            name: "ONIC",
+
+            shortName: "ONIC",
+
+            reputation: 96,
+
+            budget: 5500000000,
+
+            morale: 88,
+
+            chemistry: 90,
+
+            mplTitles: 5,
+
+            worldTitles: 0
+
+        },
+
+
+        /* =========================
+           EVOS
+        ========================= */
+
+        evos: {
+
+            id: "evos",
+
+            name: "EVOS",
+
+            shortName: "EVOS",
+
+            reputation: 86,
+
+            budget: 4500000000,
+
+            morale: 72,
+
+            chemistry: 74,
+
+            mplTitles: 2,
+
+            worldTitles: 1
+
+        },
+
+
+        /* =========================
+           BIGETRON
+        ========================= */
+
+        btr: {
+
+            id: "btr",
+
+            name: "Bigetron by Vitality",
+
+            shortName: "BTR",
+
+            reputation: 91,
+
+            budget: 5000000000,
+
+            morale: 86,
+
+            chemistry: 88,
+
+            mplTitles: 1,
+
+            worldTitles: 0
+
+        },
+
+
+        /* =========================
+           ALTER EGO
+        ========================= */
+
+        alterego: {
+
+            id: "alterego",
+
+            name: "Alter Ego Esports",
+
+            shortName: "AE",
+
+            reputation: 84,
+
+            budget: 4200000000,
+
+            morale: 70,
+
+            chemistry: 73,
+
+            mplTitles: 0,
+
+            worldTitles: 0
+
+        },
+
+
+        /* =========================
+           DEWA UNITED
+        ========================= */
+
+        dewa: {
+
+            id: "dewa",
+
+            name: "Dewa United Esports",
+
+            shortName: "DEWA",
+
+            reputation: 80,
+
+            budget: 4000000000,
+
+            morale: 68,
+
+            chemistry: 72,
+
+            mplTitles: 0,
+
+            worldTitles: 0
+
+        },
+
+
+        /* =========================
+           GEEK FAM
+        ========================= */
+
+        geek: {
+
+            id: "geek",
+
+            name: "Geek Fam ID",
+
+            shortName: "GEEK",
+
+            reputation: 82,
+
+            budget: 4000000000,
+
+            morale: 69,
+
+            chemistry: 75,
+
+            mplTitles: 0,
+
+            worldTitles: 0
+
+        },
+
+
+        /* =========================
+           NAVI
+        ========================= */
+
+        navi: {
+
+            id: "navi",
+
+            name: "Natus Vincere",
+
+            shortName: "NAVI",
+
+            reputation: 83,
+
+            budget: 4300000000,
+
+            morale: 71,
+
+            chemistry: 74,
+
+            mplTitles: 0,
+
+            worldTitles: 0
+
+        },
+
+
+        /* =========================
+           TEAM LIQUID ID
+        ========================= */
+
+        tlid: {
+
+            id: "tlid",
+
+            name: "Team Liquid ID",
+
+            shortName: "TLID",
+
+            reputation: 89,
+
+            budget: 4800000000,
+
+            morale: 84,
+
+            chemistry: 86,
+
+            mplTitles: 1,
+
+            worldTitles: 0
+
+        }
+
+    },
+
+
+    /* =====================================================
+       PLAYER DATABASE
+    ===================================================== */
+
+    players: {
+
+
+        /* =================================================
+           RRQ
+        ================================================= */
+
+        rrq_lynch: {
+
+            id: "rrq_lynch",
+
+            name: "Lynch",
+
+            team: "rrq",
+
+            role: "EXP",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 350000000,
+
+            status: "Active"
+
+        },
+
+        rrq_demonkite: {
+
+            id: "rrq_demonkite",
+
+            name: "Demonkite",
+
+            team: "rrq",
+
+            role: "Jungler",
+
+            ovr: 91,
+
+            potential: 94,
+
+            salary: 550000000,
+
+            status: "Active"
+
+        },
+
+        rrq_rinz: {
+
+            id: "rrq_rinz",
+
+            name: "Rinz",
+
+            team: "rrq",
+
+            role: "Mid",
+
+            ovr: 88,
+
+            potential: 92,
+
+            salary: 450000000,
+
+            status: "Active"
+
+        },
+
+        rrq_clayyy: {
+
+            id: "rrq_clayyy",
+
+            name: "Clayyy",
+
+            team: "rrq",
+
+            role: "Mid",
+
+            ovr: 86,
+
+            potential: 88,
+
+            salary: 400000000,
+
+            status: "Active"
+
+        },
+
+        rrq_kuroky: {
+
+            id: "rrq_kuroky",
+
+            name: "Kuroky",
+
+            team: "rrq",
+
+            role: "Gold",
+
+            ovr: 86,
+
+            potential: 90,
+
+            salary: 400000000,
+
+            status: "Active"
+
+        },
+
+        rrq_arthur: {
+
+            id: "rrq_arthur",
+
+            name: "Arthur",
+
+            team: "rrq",
+
+            role: "Gold",
+
+            ovr: 84,
+
+            potential: 88,
+
+            salary: 350000000,
+
+            status: "Active"
+
+        },
+
+        rrq_idok: {
+
+            id: "rrq_idok",
+
+            name: "Idok",
+
+            team: "rrq",
+
+            role: "Roamer",
+
+            ovr: 85,
+
+            potential: 89,
+
+            salary: 350000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           ONIC
+        ================================================= */
+
+        onic_kiboy: {
+
+            id: "onic_kiboy",
+
+            name: "Kiboy",
+
+            team: "onic",
+
+            role: "Roamer",
+
+            ovr: 93,
+
+            potential: 95,
+
+            salary: 600000000,
+
+            status: "Active"
+
+        },
+
+        onic_sanz: {
+
+            id: "onic_sanz",
+
+            name: "Sanz",
+
+            team: "onic",
+
+            role: "Mid",
+
+            ovr: 94,
+
+            potential: 96,
+
+            salary: 650000000,
+
+            status: "Active"
+
+        },
+
+        onic_kairi: {
+
+            id: "onic_kairi",
+
+            name: "Kairi",
+
+            team: "onic",
+
+            role: "Jungler",
+
+            ovr: 95,
+
+            potential: 97,
+
+            salary: 700000000,
+
+            status: "Active"
+
+        },
+
+        onic_lutpi: {
+
+            id: "onic_lutpi",
+
+            name: "Lutpi",
+
+            team: "onic",
+
+            role: "EXP",
+
+            ovr: 91,
+
+            potential: 94,
+
+            salary: 500000000,
+
+            status: "Active"
+
+        },
+
+        onic_kelra: {
+
+            id: "onic_kelra",
+
+            name: "Kelra",
+
+            team: "onic",
+
+            role: "Gold",
+
+            ovr: 95,
+
+            potential: 97,
+
+            salary: 750000000,
+
+            status: "Active"
+
+        },
+
+        onic_ssamuel: {
+
+            id: "onic_ssamuel",
+
+            name: "SsamueL",
+
+            team: "onic",
+
+            role: "Roamer",
+
+            ovr: 84,
+
+            potential: 90,
+
+            salary: 300000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           EVOS
+        ================================================= */
+
+        evos_alberttt: {
+
+            id: "evos_alberttt",
+
+            name: "Alberttt",
+
+            team: "evos",
+
+            role: "Jungler",
+
+            ovr: 91,
+
+            potential: 93,
+
+            salary: 550000000,
+
+            status: "Active"
+
+        },
+
+        evos_erlan: {
+
+            id: "evos_erlan",
+
+            name: "Erlan",
+
+            team: "evos",
+
+            role: "Gold",
+
+            ovr: 87,
+
+            potential: 91,
+
+            salary: 400000000,
+
+            status: "Active"
+
+        },
+
+        evos_vell: {
+
+            id: "evos_vell",
+
+            name: "Vell",
+
+            team: "evos",
+
+            role: "EXP",
+
+            ovr: 86,
+
+            potential: 90,
+
+            salary: 380000000,
+
+            status: "Active"
+
+        },
+
+        evos_muezza: {
+
+            id: "evos_muezza",
+
+            name: "Muezza",
+
+            team: "evos",
+
+            role: "Roamer",
+
+            ovr: 86,
+
+            potential: 90,
+
+            salary: 380000000,
+
+            status: "Active"
+
+        },
+
+        evos_rendyyy: {
+
+            id: "evos_rendyyy",
+
+            name: "Rendyyy",
+
+            team: "evos",
+
+            role: "EXP",
+
+            ovr: 82,
+
+            potential: 88,
+
+            salary: 280000000,
+
+            status: "Active"
+
+        },
+
+        evos_ryzaa: {
+
+            id: "evos_ryzaa",
+
+            name: "Ryzaa",
+
+            team: "evos",
+
+            role: "Mid",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        evos_dojo: {
+
+            id: "evos_dojo",
+
+            name: "Dojo",
+
+            team: "evos",
+
+            role: "Flex",
+
+            ovr: 80,
+
+            potential: 87,
+
+            salary: 250000000,
+
+            status: "Active"
+
+        },
+
+        evos_drianw: {
+
+            id: "evos_drianw",
+
+            name: "DrianW",
+
+            team: "evos",
+
+            role: "Flex",
+
+            ovr: 79,
+
+            potential: 86,
+
+            salary: 240000000,
+
+            status: "Active"
+
+        },
+
+        evos_bravo: {
+
+            id: "evos_bravo",
+
+            name: "Bravo",
+
+            team: "evos",
+
+            role: "Flex",
+
+            ovr: 78,
+
+            potential: 85,
+
+            salary: 230000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           BIGETRON
+        ================================================= */
+
+        btr_shogun: {
+
+            id: "btr_shogun",
+
+            name: "Shogun",
+
+            team: "btr",
+
+            role: "EXP",
+
+            ovr: 91,
+
+            potential: 94,
+
+            salary: 500000000,
+
+            status: "Active"
+
+        },
+
+        btr_nnael: {
+
+            id: "btr_nnael",
+
+            name: "Nnael",
+
+            team: "btr",
+
+            role: "Jungler",
+
+            ovr: 92,
+
+            potential: 95,
+
+            salary: 550000000,
+
+            status: "Active"
+
+        },
+
+        btr_morenooo: {
+
+            id: "btr_morenooo",
+
+            name: "Moreno",
+
+            team: "btr",
+
+            role: "Mid",
+
+            ovr: 91,
+
+            potential: 94,
+
+            salary: 500000000,
+
+            status: "Active"
+
+        },
+
+        btr_emann: {
+
+            id: "btr_emann",
+
+            name: "Emann",
+
+            team: "btr",
+
+            role: "Gold",
+
+            ovr: 93,
+
+            potential: 95,
+
+            salary: 600000000,
+
+            status: "Active"
+
+        },
+
+        btr_finn: {
+
+            id: "btr_finn",
+
+            name: "Finn",
+
+            team: "btr",
+
+            role: "Roamer",
+
+            ovr: 89,
+
+            potential: 92,
+
+            salary: 450000000,
+
+            status: "Active"
+
+        },
+
+        btr_miguel: {
+
+            id: "btr_miguel",
+
+            name: "Miguel",
+
+            team: "btr",
+
+            role: "Gold",
+
+            ovr: 82,
+
+            potential: 89,
+
+            salary: 280000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           ALTER EGO
+        ================================================= */
+
+        ae_nino: {
+
+            id: "ae_nino",
+
+            name: "Nino",
+
+            team: "alterego",
+
+            role: "EXP",
+
+            ovr: 88,
+
+            potential: 92,
+
+            salary: 420000000,
+
+            status: "Active"
+
+        },
+
+        ae_alexander: {
+
+            id: "ae_alexander",
+
+            name: "Alexander",
+
+            team: "alterego",
+
+            role: "Roamer",
+
+            ovr: 85,
+
+            potential: 90,
+
+            salary: 350000000,
+
+            status: "Active"
+
+        },
+
+        ae_dingarai: {
+
+            id: "ae_dingarai",
+
+            name: "Dingarai",
+
+            team: "alterego",
+
+            role: "Gold",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        ae_dalvin: {
+
+            id: "ae_dalvin",
+
+            name: "Dalvin",
+
+            team: "alterego",
+
+            role: "Mid",
+
+            ovr: 85,
+
+            potential: 91,
+
+            salary: 350000000,
+
+            status: "Active"
+
+        },
+
+        ae_halim: {
+
+            id: "ae_halim",
+
+            name: "Halim",
+
+            team: "alterego",
+
+            role: "Mid",
+
+            ovr: 82,
+
+            potential: 88,
+
+            salary: 280000000,
+
+            status: "Active"
+
+        },
+
+        ae_reyy: {
+
+            id: "ae_reyy",
+
+            name: "Reyy",
+
+            team: "alterego",
+
+            role: "Jungler",
+
+            ovr: 86,
+
+            potential: 91,
+
+            salary: 380000000,
+
+            status: "Active"
+
+        },
+
+        ae_affan: {
+
+            id: "ae_affan",
+
+            name: "Affan",
+
+            team: "alterego",
+
+            role: "Jungler",
+
+            ovr: 81,
+
+            potential: 88,
+
+            salary: 260000000,
+
+            status: "Active"
+
+        },
+
+        ae_ivann: {
+
+            id: "ae_ivann",
+
+            name: "Ivann",
+
+            team: "alterego",
+
+            role: "Roamer",
+
+            ovr: 80,
+
+            potential: 87,
+
+            salary: 250000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           DEWA UNITED
+        ================================================= */
+
+        dewa_qinn: {
+
+            id: "dewa_qinn",
+
+            name: "QINN",
+
+            team: "dewa",
+
+            role: "EXP",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 330000000,
+
+            status: "Active"
+
+        },
+
+        dewa_kayn: {
+
+            id: "dewa_kayn",
+
+            name: "Kayn",
+
+            team: "dewa",
+
+            role: "Jungler",
+
+            ovr: 83,
+
+            potential: 90,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        dewa_octa: {
+
+            id: "dewa_octa",
+
+            name: "Octa",
+
+            team: "dewa",
+
+            role: "Mid",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        dewa_maybeee: {
+
+            id: "dewa_maybeee",
+
+            name: "Maybeee",
+
+            team: "dewa",
+
+            role: "Gold",
+
+            ovr: 84,
+
+            potential: 90,
+
+            salary: 330000000,
+
+            status: "Active"
+
+        },
+
+        dewa_itoshi_kesu: {
+
+            id: "dewa_itoshi_kesu",
+
+            name: "Itoshi Kesu",
+
+            team: "dewa",
+
+            role: "Roamer",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        dewa_rul_good: {
+
+            id: "dewa_rul_good",
+
+            name: "Rul Good",
+
+            team: "dewa",
+
+            role: "Roamer",
+
+            ovr: 79,
+
+            potential: 86,
+
+            salary: 240000000,
+
+            status: "Active"
+
+        },
+
+        dewa_hazle: {
+
+            id: "dewa_hazle",
+
+            name: "Hazle",
+
+            team: "dewa",
+
+            role: "Jungler",
+
+            ovr: 78,
+
+            potential: 87,
+
+            salary: 230000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           GEEK FAM
+        ================================================= */
+
+        geek_marcel: {
+
+            id: "geek_marcel",
+
+            name: "Marcel",
+
+            team: "geek",
+
+            role: "EXP",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        geek_febriii: {
+
+            id: "geek_febriii",
+
+            name: "Febriii",
+
+            team: "geek",
+
+            role: "EXP",
+
+            ovr: 80,
+
+            potential: 87,
+
+            salary: 250000000,
+
+            status: "Active"
+
+        },
+
+        geek_nazara: {
+
+            id: "geek_nazara",
+
+            name: "Nazara",
+
+            team: "geek",
+
+            role: "Jungler",
+
+            ovr: 84,
+
+            potential: 91,
+
+            salary: 330000000,
+
+            status: "Active"
+
+        },
+
+        geek_aboyy: {
+
+            id: "geek_aboyy",
+
+            name: "ABOYY",
+
+            team: "geek",
+
+            role: "Mid",
+
+            ovr: 85,
+
+            potential: 90,
+
+            salary: 350000000,
+
+            status: "Active"
+
+        },
+
+        geek_kennzyyskie: {
+
+            id: "geek_kennzyyskie",
+
+            name: "KENNZYYSKIE",
+
+            team: "geek",
+
+            role: "Gold",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        geek_frenzyy: {
+
+            id: "geek_frenzyy",
+
+            name: "Frenzyy",
+
+            team: "geek",
+
+            role: "Roamer",
+
+            ovr: 81,
+
+            potential: 87,
+
+            salary: 260000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           NAVI
+        ================================================= */
+
+        navi_karss: {
+
+            id: "navi_karss",
+
+            name: "Karss",
+
+            team: "navi",
+
+            role: "EXP",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        navi_andoryuuu: {
+
+            id: "navi_andoryuuu",
+
+            name: "Andoryuuu",
+
+            team: "navi",
+
+            role: "Jungler",
+
+            ovr: 84,
+
+            potential: 90,
+
+            salary: 330000000,
+
+            status: "Active"
+
+        },
+
+        navi_aprho: {
+
+            id: "navi_aprho",
+
+            name: "APRHO",
+
+            team: "navi",
+
+            role: "Roamer",
+
+            ovr: 84,
+
+            potential: 89,
+
+            salary: 320000000,
+
+            status: "Active"
+
+        },
+
+        navi_zeonn: {
+
+            id: "navi_zeonn",
+
+            name: "ZEONN",
+
+            team: "navi",
+
+            role: "Gold",
+
+            ovr: 83,
+
+            potential: 90,
+
+            salary: 310000000,
+
+            status: "Active"
+
+        },
+
+        navi_jiizee: {
+
+            id: "navi_jiizee",
+
+            name: "JIIZEE",
+
+            team: "navi",
+
+            role: "Mid",
+
+            ovr: 83,
+
+            potential: 90,
+
+            salary: 310000000,
+
+            status: "Active"
+
+        },
+
+        navi_febbb: {
+
+            id: "navi_febbb",
+
+            name: "FEBBB",
+
+            team: "navi",
+
+            role: "EXP",
+
+            ovr: 79,
+
+            potential: 87,
+
+            salary: 240000000,
+
+            status: "Active"
+
+        },
+
+        navi_joshuaa: {
+
+            id: "navi_joshuaa",
+
+            name: "Joshuaa",
+
+            team: "navi",
+
+            role: "Jungler",
+
+            ovr: 78,
+
+            potential: 87,
+
+            salary: 230000000,
+
+            status: "Active"
+
+        },
+
+
+        /* =================================================
+           TEAM LIQUID ID
+        ================================================= */
+
+        tlid_aran: {
+
+            id: "tlid_aran",
+
+            name: "Aran",
+
+            team: "tlid",
+
+            role: "EXP",
+
+            ovr: 88,
+
+            potential: 92,
+
+            salary: 420000000,
+
+            status: "Active"
+
+        },
+
+        tlid_drichel: {
+
+            id: "tlid_drichel",
+
+            name: "Drichel",
+
+            team: "tlid",
+
+            role: "Mid",
+
+            ovr: 87,
+
+            potential: 91,
+
+            salary: 400000000,
+
+            status: "Active"
+
+        },
+
+        tlid_lyoni: {
+
+            id: "tlid_lyoni",
+
+            name: "Lyoni",
+
+            team: "tlid",
+
+            role: "Roamer",
+
+            ovr: 87,
+
+            potential: 91,
+
+            salary: 400000000,
+
+            status: "Active"
+
+        },
+
+        tlid_keven: {
+
+            id: "tlid_keven",
+
+            name: "Keven",
+
+            team: "tlid",
+
+            role: "Gold",
+
+            ovr: 87,
+
+            potential: 92,
+
+            salary: 420000000,
+
+            status: "Active"
+
+        },
+
+        tlid_anaver: {
+
+            id: "tlid_anaver",
+
+            name: "Anaver",
+
+            team: "tlid",
+
+            role: "Mid",
+
+            ovr: 82,
+
+            potential: 89,
+
+            salary: 280000000,
+
+            status: "Active"
+
+        },
+
+        tlid_kevin: {
+
+            id: "tlid_kevin",
+
+            name: "Kevin",
+
+            team: "tlid",
+
+            role: "Jungler",
+
+            ovr: 87,
+
+            potential: 92,
+
+            salary: 420000000,
+
+            status: "Active"
+
+        }
+
+    },
+
+
+    /* =====================================================
+       STAFF DATABASE
+    ===================================================== */
+
+    staff: {
+
+        rrq_adi: {
+            id: "rrq_adi",
+            name: "Coach Adi",
+            team: "rrq",
+            role: "Head Coach",
+            rating: 88
+        },
+
+        rrq_kayleb: {
+            id: "rrq_kayleb",
+            name: "Coach Kayleb",
+            team: "rrq",
+            role: "Assistant Coach",
+            rating: 84
+        },
+
+
+        onic_cw: {
+            id: "onic_cw",
+            name: "CW",
+            team: "onic",
+            role: "Head Coach",
+            rating: 91
+        },
+
+        onic_baloy: {
+            id: "onic_baloy",
+            name: "Baloy",
+            team: "onic",
+            role: "Assistant Coach",
+            rating: 87
+        },
+
+
+        evos_aldo: {
+            id: "evos_aldo",
+            name: "Aldo",
+            team: "evos",
+            role: "Head Coach",
+            rating: 85
+        },
+
+        evos_bravo: {
+            id: "evos_bravo_staff",
+            name: "Bravo",
+            team: "evos",
+            role: "Analyst",
+            rating: 80
+        },
+
+
+        btr_kdot: {
+            id: "btr_kdot",
+            name: "K Dot",
+            team: "btr",
+            role: "Head Coach",
+            rating: 88
+        },
+
+        btr_rubenhood: {
+            id: "btr_rubenhood",
+            name: "Rubenhood",
+            team: "btr",
+            role: "Assistant Coach",
+            rating: 83
+        },
+
+        btr_her: {
+            id: "btr_her",
+            name: "HER",
+            team: "btr",
+            role: "Analyst",
+            rating: 82
+        },
+
+
+        ae_xepher: {
+            id: "ae_xepher",
+            name: "Xepher",
+            team: "alterego",
+            role: "Head Coach",
+            rating: 84
+        },
+
+        ae_styx: {
+            id: "ae_styx",
+            name: "STYX",
+            team: "alterego",
+            role: "Assistant Coach",
+            rating: 81
+        },
+
+
+        dewa_right: {
+            id: "dewa_right",
+            name: "Coach Right",
+            team: "dewa",
+            role: "Head Coach",
+            rating: 82
+        },
+
+        dewa_laufeyson: {
+            id: "dewa_laufeyson",
+            name: "Laufeyson",
+            team: "dewa",
+            role: "Analyst",
+            rating: 78
+        },
+
+
+        geek_erpang: {
+            id: "geek_erpang",
+            name: "Erpang",
+            team: "geek",
+            role: "Head Coach",
+            rating: 82
+        },
+
+        geek_vivy: {
+            id: "geek_vivy",
+            name: "Vivy",
+            team: "geek",
+            role: "Assistant Coach",
+            rating: 79
+        },
+
+
+        navi_ynot: {
+            id: "navi_ynot",
+            name: "YNOT",
+            team: "navi",
+            role: "Head Coach",
+            rating: 82
+        },
+
+        navi_jacklee: {
+            id: "navi_jacklee",
+            name: "Jacklee",
+            team: "navi",
+            role: "Assistant Coach",
+            rating: 80
+        },
+
+        navi_han: {
+            id: "navi_han",
+            name: "HAN",
+            team: "navi",
+            role: "Analyst",
+            rating: 78
+        },
+
+
+        tlid_honjaw: {
+            id: "tlid_honjaw",
+            name: "Honjaw",
+            team: "tlid",
+            role: "Head Coach",
+            rating: 87
+        },
+
+        tlid_pahlevi: {
+            id: "tlid_pahlevi",
+            name: "Pahlevi",
+            team: "tlid",
+            role: "Assistant Coach",
+            rating: 83
+        },
+
+        tlid_facehugger: {
+            id: "tlid_facehugger",
+            name: "Facehugger",
+            team: "tlid",
+            role: "Analyst",
+            rating: 82
+        }
+
+    },
+
+
+    /* =====================================================
+       STANDINGS
+    ===================================================== */
 
     standings: [],
 
+
+    /* =====================================================
+       SCHEDULE
+    ===================================================== */
+
     schedule: [],
+
+
+    /* =====================================================
+       HISTORY
+    ===================================================== */
 
     history: [],
 
@@ -45,1308 +1788,449 @@ const game = {
 };
 
 
-// =========================================================
-// TEAMS
-// =========================================================
-
-game.teams = [
-
-    {
-        id: "rrq",
-        name: "RRQ Hoshi",
-        short: "RRQ",
-
-        region: "Indonesia",
-
-        reputation: 94,
-
-        budget: 5000000000,
-
-        morale: 85,
-
-        chemistry: 82,
-
-        mplTitles: 5,
-
-        worldTitles: 0,
-
-        active: true
-    },
-
-    {
-        id: "onic",
-        name: "ONIC",
-        short: "ONIC",
-
-        region: "Indonesia",
-
-        reputation: 96,
-
-        budget: 5000000000,
-
-        morale: 87,
-
-        chemistry: 88,
-
-        mplTitles: 5,
-
-        worldTitles: 1,
-
-        active: true
-    },
-
-    {
-        id: "evos",
-        name: "EVOS",
-        short: "EVOS",
-
-        region: "Indonesia",
-
-        reputation: 90,
-
-        budget: 4500000000,
-
-        morale: 82,
-
-        chemistry: 80,
-
-        mplTitles: 2,
-
-        worldTitles: 1,
-
-        active: true
-    },
-
-    {
-        id: "btr",
-        name: "Bigetron by Vitality",
-        short: "BTR",
-
-        region: "Indonesia",
-
-        reputation: 91,
-
-        budget: 4500000000,
-
-        morale: 86,
-
-        chemistry: 87,
-
-        mplTitles: 1,
-
-        worldTitles: 0,
-
-        active: true
-    },
-
-    {
-        id: "alterego",
-        name: "Alter Ego",
-        short: "AE",
-
-        region: "Indonesia",
-
-        reputation: 84,
-
-        budget: 4000000000,
-
-        morale: 80,
-
-        chemistry: 79,
-
-        mplTitles: 0,
-
-        worldTitles: 0,
-
-        active: true
-    },
-
-    {
-        id: "dewa",
-        name: "Dewa United Esports",
-        short: "DEWA",
-
-        region: "Indonesia",
-
-        reputation: 78,
-
-        budget: 3500000000,
-
-        morale: 76,
-
-        chemistry: 77,
-
-        mplTitles: 0,
-
-        worldTitles: 0,
-
-        active: true
-    },
-
-    {
-        id: "geek",
-        name: "Geek Fam ID",
-        short: "GEEK",
-
-        region: "Indonesia",
-
-        reputation: 79,
-
-        budget: 3500000000,
-
-        morale: 78,
-
-        chemistry: 76,
-
-        mplTitles: 0,
-
-        worldTitles: 0,
-
-        active: true
-    },
-
-    {
-        id: "navi",
-        name: "Natus Vincere",
-        short: "NAVI",
-
-        region: "Indonesia",
-
-        reputation: 82,
-
-        budget: 4000000000,
-
-        morale: 80,
-
-        chemistry: 78,
-
-        mplTitles: 0,
-
-        worldTitles: 0,
-
-        active: true
-    },
-
-    {
-        id: "tlid",
-        name: "Team Liquid ID",
-        short: "TLID",
-
-        region: "Indonesia",
-
-        reputation: 88,
-
-        budget: 4500000000,
-
-        morale: 83,
-
-        chemistry: 84,
-
-        mplTitles: 1,
-
-        worldTitles: 0,
-
-        active: true
-    }
-
-];
-
-
-// =========================================================
-// PLAYER DATABASE
-// =========================================================
-
-game.players = [
-
-    // =====================================================
-    // RRQ
-    // =====================================================
-
-    {
-        id: "rrq_l =",
-        name: "Lynchh",
-        teamId: "rrq",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 84,
-        potential: 90,
-        salary: 180000000,
-        morale: 85,
-        status: "active"
-    },
-
-    {
-        id: "rrq_demonkite",
-        name: "Demonkite",
-        teamId: "rrq",
-        role: "Jungler",
-        nationality: "Philippines",
-        rating: 91,
-        potential: 94,
-        salary: 250000000,
-        morale: 88,
-        status: "active"
-    },
-
-    {
-        id: "rrq_rinz",
-        name: "Rinz",
-        teamId: "rrq",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 86,
-        potential: 93,
-        salary: 190000000,
-        morale: 85,
-        status: "active"
-    },
-
-    {
-        id: "rrq_sutsujin",
-        name: "Sutsujin",
-        teamId: "rrq",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 88,
-        potential: 91,
-        salary: 210000000,
-        morale: 84,
-        status: "active"
-    },
-
-    {
-        id: "rrq_kuroky",
-        name: "Kuroky",
-        teamId: "rrq",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 80,
-        potential: 88,
-        salary: 140000000,
-        morale: 82,
-        status: "active"
-    },
-
-    {
-        id: "rrq_idok",
-        name: "Idok",
-        teamId: "rrq",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 87,
-        potential: 92,
-        salary: 200000000,
-        morale: 86,
-        status: "active"
-    },
-
-    // =====================================================
-    // ONIC
-    // =====================================================
-
-    {
-        id: "onic_lutpiii",
-        name: "Lutpiii",
-        teamId: "onic",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 89,
-        potential: 93,
-        salary: 220000000,
-        morale: 88,
-        status: "active"
-    },
-
-    {
-        id: "onic_kairi",
-        name: "Kairi",
-        teamId: "onic",
-        role: "Jungler",
-        nationality: "Philippines",
-        rating: 96,
-        potential: 97,
-        salary: 350000000,
-        morale: 91,
-        status: "active"
-    },
-
-    {
-        id: "onic_sanz",
-        name: "S A N Z",
-        teamId: "onic",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 94,
-        potential: 95,
-        salary: 320000000,
-        morale: 90,
-        status: "active"
-    },
-
-    {
-        id: "onic_kelra",
-        name: "Kelra",
-        teamId: "onic",
-        role: "Gold",
-        nationality: "Philippines",
-        rating: 96,
-        potential: 98,
-        salary: 350000000,
-        morale: 92,
-        status: "active"
-    },
-
-    {
-        id: "onic_kiboy",
-        name: "Kiboy",
-        teamId: "onic",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 94,
-        potential: 96,
-        salary: 310000000,
-        morale: 91,
-        status: "active"
-    },
-
-    {
-        id: "onic_samuel",
-        name: "SamueL",
-        teamId: "onic",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 82,
-        potential: 89,
-        salary: 150000000,
-        morale: 83,
-        status: "active"
-    },
-
-    // =====================================================
-    // EVOS
-    // =====================================================
-
-    {
-        id: "evos_vell",
-        name: "Vell",
-        teamId: "evos",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 84,
-        potential: 90,
-        salary: 170000000,
-        morale: 82,
-        status: "active"
-    },
-
-    {
-        id: "evos_alberttt",
-        name: "Alberttt",
-        teamId: "evos",
-        role: "Jungler",
-        nationality: "Indonesia",
-        rating: 92,
-        potential: 94,
-        salary: 280000000,
-        morale: 88,
-        status: "active"
-    },
-
-    {
-        id: "evos_treacky",
-        name: "Treacky",
-        teamId: "evos",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 83,
-        potential: 91,
-        salary: 170000000,
-        morale: 82,
-        status: "active"
-    },
-
-    {
-        id: "evos_erlan",
-        name: "Erlan",
-        teamId: "evos",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 85,
-        potential: 91,
-        salary: 180000000,
-        morale: 83,
-        status: "active"
-    },
-
-    {
-        id: "evos_muezzaa",
-        name: "Muezzaa",
-        teamId: "evos",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 82,
-        potential: 88,
-        salary: 150000000,
-        morale: 80,
-        status: "active"
-    },
-
-    {
-        id: "evos_rendyy",
-        name: "Rendyy",
-        teamId: "evos",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 78,
-        potential: 87,
-        salary: 120000000,
-        morale: 80,
-        status: "active"
-    },
-
-    // =====================================================
-    // BIGETRON
-    // =====================================================
-
-    {
-        id: "btr_shogun",
-        name: "Shogun",
-        teamId: "btr",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 89,
-        potential: 93,
-        salary: 210000000,
-        morale: 88,
-        status: "active"
-    },
-
-    {
-        id: "btr_nnael",
-        name: "Nnael",
-        teamId: "btr",
-        role: "Jungler",
-        nationality: "Indonesia",
-        rating: 91,
-        potential: 94,
-        salary: 240000000,
-        morale: 89,
-        status: "active"
-    },
-
-    {
-        id: "btr_moreno",
-        name: "Moreno",
-        teamId: "btr",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 90,
-        potential: 94,
-        salary: 230000000,
-        morale: 88,
-        status: "active"
-    },
-
-    {
-        id: "btr_ryzaa",
-        name: "Ryzaa",
-        teamId: "btr",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 82,
-        potential: 90,
-        salary: 150000000,
-        morale: 82,
-        status: "active"
-    },
-
-    {
-        id: "btr_emann",
-        name: "EMANN",
-        teamId: "btr",
-        role: "Gold",
-        nationality: "Philippines",
-        rating: 90,
-        potential: 93,
-        salary: 250000000,
-        morale: 87,
-        status: "active"
-    },
-
-    {
-        id: "btr_pinnn",
-        name: "Pinnn",
-        teamId: "btr",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 81,
-        potential: 89,
-        salary: 140000000,
-        morale: 81,
-        status: "active"
-    },
-
-    {
-        id: "btr_finn",
-        name: "Finn",
-        teamId: "btr",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 88,
-        potential: 92,
-        salary: 200000000,
-        morale: 87,
-        status: "active"
-    },
-
-    // =====================================================
-    // ALTER EGO
-    // =====================================================
-
-    {
-        id: "ae_nino",
-        name: "Nino",
-        teamId: "alterego",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 88,
-        potential: 91,
-        salary: 190000000,
-        morale: 83,
-        status: "active"
-    },
-
-    {
-        id: "ae_yazukee",
-        name: "Yazukee",
-        teamId: "alterego",
-        role: "Jungler",
-        nationality: "Indonesia",
-        rating: 84,
-        potential: 92,
-        salary: 170000000,
-        morale: 82,
-        status: "active"
-    },
-
-    {
-        id: "ae_reyy",
-        name: "Reyy",
-        teamId: "alterego",
-        role: "Jungler",
-        nationality: "Indonesia",
-        rating: 79,
-        potential: 88,
-        salary: 130000000,
-        morale: 80,
-        status: "active"
-    },
-
-    {
-        id: "ae_hijumee",
-        name: "Hijumee",
-        teamId: "alterego",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 86,
-        potential: 92,
-        salary: 180000000,
-        morale: 84,
-        status: "active"
-    },
-
-    {
-        id: "ae_nathzz",
-        name: "Nathzz",
-        teamId: "alterego",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 84,
-        potential: 90,
-        salary: 170000000,
-        morale: 82,
-        status: "active"
-    },
-
-    {
-        id: "ae_roamer",
-        name: "Yume",
-        teamId: "alterego",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 80,
-        potential: 88,
-        salary: 140000000,
-        morale: 79,
-        status: "active"
-    },
-
-    // =====================================================
-    // DEWA UNITED
-    // =====================================================
-
-    {
-        id: "dewa_qinn",
-        name: "QINN",
-        teamId: "dewa",
-        role: "EXP",
-        nationality: "Philippines",
-        rating: 82,
-        potential: 88,
-        salary: 150000000,
-        morale: 78,
-        status: "active"
-    },
-
-    {
-        id: "dewa_kayn",
-        name: "Kayn",
-        teamId: "dewa",
-        role: "Jungler",
-        nationality: "Philippines",
-        rating: 81,
-        potential: 89,
-        salary: 150000000,
-        morale: 78,
-        status: "active"
-    },
-
-    {
-        id: "dewa_octa",
-        name: "Octa",
-        teamId: "dewa",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 80,
-        potential: 87,
-        salary: 140000000,
-        morale: 77,
-        status: "active"
-    },
-
-    {
-        id: "dewa_maybeee",
-        name: "Maybeee",
-        teamId: "dewa",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 81,
-        potential: 89,
-        salary: 150000000,
-        morale: 78,
-        status: "active"
-    },
-
-    {
-        id: "dewa_kesuuu",
-        name: "KESUUU",
-        teamId: "dewa",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 79,
-        potential: 87,
-        salary: 130000000,
-        morale: 77,
-        status: "active"
-    },
-
-    // =====================================================
-    // GEEK FAM
-    // =====================================================
-
-    {
-        id: "geek_marcel",
-        name: "MarceL",
-        teamId: "geek",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 81,
-        potential: 89,
-        salary: 140000000,
-        morale: 78,
-        status: "active"
-    },
-
-    {
-        id: "geek_febriii",
-        name: "Febriii",
-        teamId: "geek",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 77,
-        potential: 87,
-        salary: 110000000,
-        morale: 76,
-        status: "active"
-    },
-
-    {
-        id: "geek_nazara",
-        name: "Nazara",
-        teamId: "geek",
-        role: "Jungler",
-        nationality: "Indonesia",
-        rating: 81,
-        potential: 90,
-        salary: 140000000,
-        morale: 79,
-        status: "active"
-    },
-
-    {
-        id: "geek_aboy",
-        name: "A B O Y",
-        teamId: "geek",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 84,
-        potential: 89,
-        salary: 160000000,
-        morale: 80,
-        status: "active"
-    },
-
-    {
-        id: "geek_kennzyy",
-        name: "KennzyySkie",
-        teamId: "geek",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 80,
-        potential: 88,
-        salary: 130000000,
-        morale: 77,
-        status: "active"
-    },
-
-    {
-        id: "geek_audytzy",
-        name: "AudyTzy",
-        teamId: "geek",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 79,
-        potential: 87,
-        salary: 120000000,
-        morale: 77,
-        status: "active"
-    },
-
-    // =====================================================
-    // NAVI
-    // =====================================================
-
-    {
-        id: "navi_xmagic",
-        name: "XMagic",
-        teamId: "navi",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 81,
-        potential: 89,
-        salary: 140000000,
-        morale: 80,
-        status: "active"
-    },
-
-    {
-        id: "navi_jungler",
-        name: "Yve",
-        teamId: "navi",
-        role: "Jungler",
-        nationality: "Indonesia",
-        rating: 82,
-        potential: 90,
-        salary: 150000000,
-        morale: 80,
-        status: "active"
-    },
-
-    {
-        id: "navi_uk1r",
-        name: "UK1R",
-        teamId: "navi",
-        role: "Mid",
-        nationality: "Philippines",
-        rating: 84,
-        potential: 91,
-        salary: 170000000,
-        morale: 82,
-        status: "active"
-    },
-
-    {
-        id: "navi_gold",
-        name: "Yve",
-        teamId: "navi",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 80,
-        potential: 88,
-        salary: 130000000,
-        morale: 78,
-        status: "active"
-    },
-
-    {
-        id: "navi_roamer",
-        name: "Kyyro",
-        teamId: "navi",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 79,
-        potential: 88,
-        salary: 130000000,
-        morale: 78,
-        status: "active"
-    },
-
-    // =====================================================
-    // TEAM LIQUID ID
-    // =====================================================
-
-    {
-        id: "tlid_aran",
-        name: "Aran",
-        teamId: "tlid",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 87,
-        potential: 91,
-        salary: 190000000,
-        morale: 85,
-        status: "active"
-    },
-
-    {
-        id: "tlid_aredlavv",
-        name: "Aredlavv",
-        teamId: "tlid",
-        role: "EXP",
-        nationality: "Indonesia",
-        rating: 80,
-        potential: 88,
-        salary: 130000000,
-        morale: 80,
-        status: "active"
-    },
-
-    {
-        id: "tlid_kevinn",
-        name: "Kevinn",
-        teamId: "tlid",
-        role: "Jungler",
-        nationality: "Indonesia",
-        rating: 87,
-        potential: 92,
-        salary: 190000000,
-        morale: 85,
-        status: "active"
-    },
-
-    {
-        id: "tlid_drichel",
-        name: "Drichel",
-        teamId: "tlid",
-        role: "Mid",
-        nationality: "Indonesia",
-        rating: 84,
-        potential: 91,
-        salary: 170000000,
-        morale: 83,
-        status: "active"
-    },
-
-    {
-        id: "tlid_kyou",
-        name: "Kyou",
-        teamId: "tlid",
-        role: "Gold",
-        nationality: "Indonesia",
-        rating: 88,
-        potential: 92,
-        salary: 200000000,
-        morale: 86,
-        status: "active"
-    },
-
-    {
-        id: "tlid_lyoni",
-        name: "Lyoni",
-        teamId: "tlid",
-        role: "Roamer",
-        nationality: "Indonesia",
-        rating: 85,
-        potential: 90,
-        salary: 180000000,
-        morale: 84,
-        status: "active"
-    }
-
-];
-
-
-// =========================================================
-// STAFF DATABASE
-// =========================================================
-
-game.staff = [
-
-    {
-        id: "rrq_adi",
-        name: "Adi",
-        teamId: "rrq",
-        role: "Head Coach",
-        nationality: "Indonesia",
-        rating: 90
-    },
-
-    {
-        id: "rrq_caleb",
-        name: "Caleb",
-        teamId: "rrq",
-        role: "Assistant Coach",
-        nationality: "Indonesia",
-        rating: 84
-    },
-
-    {
-        id: "evos_aldo",
-        name: "Aldo",
-        teamId: "evos",
-        role: "Head Coach",
-        nationality: "Indonesia",
-        rating: 86
-    },
-
-    {
-        id: "btr_theonael",
-        name: "Theonael",
-        teamId: "btr",
-        role: "Head Coach",
-        nationality: "Indonesia",
-        rating: 88
-    },
-
-    {
-        id: "tlid_honjaw",
-        name: "Honjaw",
-        teamId: "tlid",
-        role: "Head Coach",
-        nationality: "Indonesia",
-        rating: 87
-    },
-
-    {
-        id: "tlid_pahlevi",
-        name: "Pahlevi",
-        teamId: "tlid",
-        role: "Assistant Coach",
-        nationality: "Indonesia",
-        rating: 82
-    }
-
-];
-
-
-// =========================================================
-// STANDINGS
-// =========================================================
+/* =========================================================
+   CREATE STANDINGS
+========================================================= */
 
 function createStandings(){
 
-    game.standings =
-        game.teams.map(function(team){
+    game.standings = [];
 
-            return {
+    Object.values(game.teams).forEach(team => {
 
-                teamId: team.id,
+        game.standings.push({
 
-                played: 0,
+            teamId: team.id,
 
-                wins: 0,
+            teamName: team.name,
 
-                losses: 0,
+            wins: 0,
 
-                gameWins: 0,
+            losses: 0,
 
-                gameLosses: 0,
+            gamesWon: 0,
 
-                points: 0,
+            gamesLost: 0,
 
-                diff: 0
+            gameDiff: 0,
 
-            };
+            points: 0
 
         });
 
-}
-
-
-function getTeam(teamId){
-
-    return game.teams.find(function(team){
-
-        return team.id === teamId;
-
     });
 
 }
 
 
-function getPlayer(playerId){
+/* =========================================================
+   GENERATE DOUBLE ROUND ROBIN
+========================================================= */
 
-    return game.players.find(function(player){
+function generateSchedule(){
 
-        return player.id === playerId;
+    const teamIds =
+        Object.keys(game.teams);
 
-    });
+    const matches = [];
 
-}
+    let matchId = 1;
 
+    /*
+       9 tim = 8 pertandingan per tim
+       Setiap pasangan bertemu 2 kali.
+    */
 
-function getTeamPlayers(teamId){
+    for(let i = 0; i < teamIds.length; i++){
 
-    return game.players.filter(function(player){
+        for(let j = i + 1; j < teamIds.length; j++){
 
-        return player.teamId === teamId;
+            const home =
+                teamIds[i];
 
-    });
-
-}
-
-
-function getTeamStaff(teamId){
-
-    return game.staff.filter(function(staff){
-
-        return staff.teamId === teamId;
-
-    });
-
-}
+            const away =
+                teamIds[j];
 
 
-// =========================================================
-// MONEY
-// =========================================================
+            matches.push({
 
-function formatMoney(value){
+                id: "match_" + matchId++,
 
-    return new Intl.NumberFormat(
-        "id-ID",
-        {
-            style: "currency",
-            currency: "IDR",
-            maximumFractionDigits: 0
+                week: 0,
+
+                home: home,
+
+                away: away,
+
+                played: false,
+
+                homeScore: null,
+
+                awayScore: null
+
+            });
+
+
+            matches.push({
+
+                id: "match_" + matchId++,
+
+                week: 0,
+
+                home: away,
+
+                away: home,
+
+                played: false,
+
+                homeScore: null,
+
+                awayScore: null
+
+            });
+
         }
-    ).format(value);
-
-}
-
-
-// =========================================================
-// RANDOM
-// =========================================================
-
-function random(min, max){
-
-    return Math.floor(
-        Math.random() * (max - min + 1)
-    ) + min;
-
-}
-
-
-// =========================================================
-// TEAM POWER
-// =========================================================
-
-function teamPower(teamId){
-
-    const players =
-        getTeamPlayers(teamId)
-        .filter(function(player){
-
-            return player.status === "active";
-
-        });
-
-    if(players.length === 0){
-
-        return 50;
 
     }
 
+
+    /*
+       72 pertandingan total.
+       18 minggu.
+       4 pertandingan setiap minggu.
+    */
+
+    matches.forEach((match, index) => {
+
+        match.week =
+            Math.floor(index / 4) + 1;
+
+    });
+
+
+    game.schedule = matches;
+
+}
+
+
+/* =========================================================
+   GET TEAM PLAYERS
+========================================================= */
+
+function getTeamPlayers(teamId){
+
+    return Object.values(game.players)
+        .filter(player =>
+            player.team === teamId
+        );
+
+}
+
+
+/* =========================================================
+   GET TEAM STAFF
+========================================================= */
+
+function getTeamStaff(teamId){
+
+    return Object.values(game.staff)
+        .filter(staff =>
+            staff.team === teamId
+        );
+
+}
+
+
+/* =========================================================
+   GET TEAM OVR
+========================================================= */
+
+function getTeamStrength(teamId){
+
+    const players =
+        getTeamPlayers(teamId);
+
+
+    if(players.length === 0){
+
+        return 70;
+
+    }
+
+
+    /*
+       Ambil pemain terbaik
+       berdasarkan role utama.
+
+       Ini masih sederhana.
+       Nanti akan diganti dengan
+       Match Engine yang lebih detail.
+    */
+
+    const bestByRole = {
+
+        EXP: 0,
+
+        Jungler: 0,
+
+        Mid: 0,
+
+        Gold: 0,
+
+        Roamer: 0
+
+    };
+
+
+    players.forEach(player => {
+
+        const role =
+            player.role;
+
+
+        if(
+            bestByRole[role] !== undefined
+        ){
+
+            bestByRole[role] =
+                Math.max(
+                    bestByRole[role],
+                    player.ovr
+                );
+
+        }
+
+    });
+
+
+    const values =
+        Object.values(bestByRole);
+
+
     const total =
-        players.reduce(
-            function(sum, player){
-
-                return sum + player.rating;
-
-            },
+        values.reduce(
+            (sum,value) =>
+                sum + value,
             0
         );
 
-    const average =
-        total / players.length;
 
-    const team =
-        getTeam(teamId);
-
-    return (
-
-        average
-
-        + (team.chemistry * 0.08)
-
-        + (team.morale * 0.05)
-
-        + (team.reputation * 0.04)
-
-        + random(-3, 3)
-
+    return Math.round(
+        total / 5
     );
 
 }
 
 
-// =========================================================
-// BO3 SIMULATION
-// =========================================================
+/* =========================================================
+   GET MANAGER LINEUP STRENGTH
+========================================================= */
 
-function simulateBo3(homeId, awayId){
+function getManagerLineupStrength(){
 
-    let homeGames = 0;
+    if(!game.managerTeam){
 
-    let awayGames = 0;
-
-    const games = [];
-
-    while(
-        homeGames < 2 &&
-        awayGames < 2
-    ){
-
-        const homePower =
-            teamPower(homeId);
-
-        const awayPower =
-            teamPower(awayId);
-
-        const homeWin =
-            homePower >= awayPower;
-
-        if(homeWin){
-
-            homeGames++;
-
-        }else{
-
-            awayGames++;
-
-        }
-
-        games.push({
-
-            game:
-                games.length + 1,
-
-            winner:
-                homeWin
-                    ? homeId
-                    : awayId
-
-        });
+        return 70;
 
     }
 
-    const winner =
-        homeGames === 2
-            ? homeId
-            : awayId;
 
-    const losingTeam =
-        winner === homeId
-            ? awayId
-            : homeId;
+    const lineup =
+        game.lineup;
 
-    const winnerPlayers =
-        getTeamPlayers(winner)
-        .filter(function(player){
 
-            return player.status === "active";
+    const roles = [
+        "exp",
+        "jungler",
+        "mid",
+        "gold",
+        "roamer"
+    ];
 
-        });
 
-    let mvp =
-        winnerPlayers[0];
+    let total = 0;
 
-    winnerPlayers.forEach(function(player){
+    let count = 0;
 
-        if(
-            player.rating >
-            mvp.rating
-        ){
 
-            mvp = player;
+    roles.forEach(role => {
 
+        const playerId =
+            lineup[role];
+
+
+        if(!playerId){
+            return;
         }
+
+
+        const player =
+            game.players[playerId];
+
+
+        if(!player){
+            return;
+        }
+
+
+        total += player.ovr;
+
+        count++;
 
     });
 
+
+    if(count < 5){
+
+        return getTeamStrength(
+            game.managerTeam
+        );
+
+    }
+
+
+    return Math.round(
+        total / 5
+    );
+
+}
+
+
+/* =========================================================
+   FIND NEXT MANAGER MATCH
+========================================================= */
+
+function getNextManagerMatch(){
+
+    if(!game.managerTeam){
+
+        return null;
+
+    }
+
+
+    return game.schedule.find(match => {
+
+        return !match.played &&
+        (
+            match.home === game.managerTeam ||
+            match.away === game.managerTeam
+        );
+
+    }) || null;
+
+}
+
+
+/* =========================================================
+   SIMULATE BO3
+========================================================= */
+
+function simulateBo3(homeId, awayId){
+
+    const homeTeam =
+        game.teams[homeId];
+
+    const awayTeam =
+        game.teams[awayId];
+
+
+    let homeStrength =
+        getTeamStrength(homeId);
+
+    let awayStrength =
+        getTeamStrength(awayId);
+
+
+    /*
+       Morale memengaruhi kekuatan.
+    */
+
+    homeStrength +=
+        (homeTeam.morale - 70) * 0.15;
+
+    awayStrength +=
+        (awayTeam.morale - 70) * 0.15;
+
+
+    /*
+       Chemistry memengaruhi performa.
+    */
+
+    homeStrength +=
+        (homeTeam.chemistry - 70) * 0.10;
+
+    awayStrength +=
+        (awayTeam.chemistry - 70) * 0.10;
+
+
+    let homeWins = 0;
+
+    let awayWins = 0;
+
+
+    while(
+        homeWins < 2 &&
+        awayWins < 2
+    ){
+
+        const homeRoll =
+            homeStrength +
+            Math.random() * 25;
+
+        const awayRoll =
+            awayStrength +
+            Math.random() * 25;
+
+
+        if(homeRoll >= awayRoll){
+
+            homeWins++;
+
+        }else{
+
+            awayWins++;
+
+        }
+
+    }
+
+
     return {
 
-        homeId: homeId,
+        home: homeWins,
 
-        awayId: awayId,
-
-        homeGames: homeGames,
-
-        awayGames: awayGames,
-
-        winner: winner,
-
-        loser: losingTeam,
-
-        mvp: mvp
-            ? mvp.name
-            : "-",
-
-        games: games
+        away: awayWins
 
     };
 
 }
 
 
-// =========================================================
-// APPLY RESULT
-// =========================================================
+/* =========================================================
+   UPDATE STANDINGS
+========================================================= */
 
-function applyMatchResult(
+function updateStandings(
     homeId,
     awayId,
-    result
+    homeScore,
+    awayScore
 ){
 
     const home =
         game.standings.find(
-            function(row){
-
-                return row.teamId === homeId;
-
-            }
+            team =>
+                team.teamId === homeId
         );
+
 
     const away =
         game.standings.find(
-            function(row){
-
-                return row.teamId === awayId;
-
-            }
+            team =>
+                team.teamId === awayId
         );
+
 
     if(!home || !away){
 
@@ -1354,32 +2238,32 @@ function applyMatchResult(
 
     }
 
-    home.played++;
 
-    away.played++;
+    home.gamesWon +=
+        homeScore;
 
-    home.gameWins +=
-        result.homeGames;
-
-    home.gameLosses +=
-        result.awayGames;
-
-    away.gameWins +=
-        result.awayGames;
-
-    away.gameLosses +=
-        result.homeGames;
-
-    home.diff =
-        home.gameWins -
-        home.gameLosses;
-
-    away.diff =
-        away.gameWins -
-        away.gameLosses;
+    home.gamesLost +=
+        awayScore;
 
 
-    if(result.winner === homeId){
+    away.gamesWon +=
+        awayScore;
+
+    away.gamesLost +=
+        homeScore;
+
+
+    home.gameDiff =
+        home.gamesWon -
+        home.gamesLost;
+
+
+    away.gameDiff =
+        away.gamesWon -
+        away.gamesLost;
+
+
+    if(homeScore > awayScore){
 
         home.wins++;
 
@@ -1398,42 +2282,23 @@ function applyMatchResult(
     }
 
 
-    game.history.push({
-
-        type: "match",
-
-        season: game.season,
-
-        week: game.week,
-
-        home: homeId,
-
-        away: awayId,
-
-        homeGames: result.homeGames,
-
-        awayGames: result.awayGames,
-
-        winner: result.winner,
-
-        mvp: result.mvp
-
-    });
+    sortStandings();
 
 }
 
 
-// =========================================================
-// SORT STANDINGS
-// =========================================================
+/* =========================================================
+   SORT STANDINGS
+========================================================= */
 
 function sortStandings(){
 
     game.standings.sort(
-        function(a, b){
+        (a,b) => {
 
             if(
-                b.points !== a.points
+                b.points !==
+                a.points
             ){
 
                 return (
@@ -1443,185 +2308,23 @@ function sortStandings(){
 
             }
 
+
             if(
-                b.diff !== a.diff
+                b.gameDiff !==
+                a.gameDiff
             ){
 
                 return (
-                    b.diff -
-                    a.diff
+                    b.gameDiff -
+                    a.gameDiff
                 );
 
             }
 
-            return (
-                b.gameWins -
-                a.gameWins
-            );
-
-        }
-    );
-
-}
-
-
-// =========================================================
-// SCHEDULE GENERATOR
-// =========================================================
-
-function generateSchedule(){
-
-    game.schedule = [];
-
-    const ids =
-        game.teams.map(function(team){
-
-            return team.id;
-
-        });
-
-
-    let teams = ids.slice();
-
-    teams.push(null);
-
-
-    const totalTeams =
-        teams.length;
-
-    const rounds =
-        totalTeams - 1;
-
-
-    const firstHalf = [];
-
-
-    for(
-        let round = 0;
-        round < rounds;
-        round++
-    ){
-
-        const matches = [];
-
-        for(
-            let i = 0;
-            i < totalTeams / 2;
-            i++
-        ){
-
-            const home =
-                teams[i];
-
-            const away =
-                teams[
-                    totalTeams - 1 - i
-                ];
-
-
-            if(
-                home !== null &&
-                away !== null
-            ){
-
-                matches.push({
-
-                    week:
-                        round + 1,
-
-                    home:
-                        home,
-
-                    away:
-                        away,
-
-                    played: false
-
-                });
-
-            }
-
-        }
-
-
-        firstHalf.push(matches);
-
-
-        const fixed =
-            teams[0];
-
-        const rest =
-            teams.slice(1);
-
-        rest.unshift(
-            rest.pop()
-        );
-
-        teams =
-            [fixed].concat(rest);
-
-    }
-
-
-    firstHalf.forEach(
-        function(week){
-
-            week.forEach(
-                function(match){
-
-                    game.schedule.push(
-                        match
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    const secondHalf =
-        game.schedule.map(
-            function(match){
-
-                return {
-
-                    week:
-                        match.week + rounds,
-
-                    home:
-                        match.away,
-
-                    away:
-                        match.home,
-
-                    played: false
-
-                };
-
-            }
-        );
-
-
-    game.schedule =
-        game.schedule.concat(
-            secondHalf
-        );
-
-}
-
-
-// =========================================================
-// GET CURRENT WEEK
-// =========================================================
-
-function getCurrentWeekMatches(){
-
-    return game.schedule.filter(
-        function(match){
 
             return (
-                match.week === game.week
+                b.gamesWon -
+                a.gamesWon
             );
 
         }
@@ -1630,32 +2333,76 @@ function getCurrentWeekMatches(){
 }
 
 
-// =========================================================
-// PLAY SCHEDULED MATCH
-// =========================================================
+/* =========================================================
+   PLAY MATCH
+========================================================= */
 
-function playScheduledMatch(index){
-
-    const matches =
-        getCurrentWeekMatches();
+function playMatch(matchId){
 
     const match =
-        matches[index];
+        game.schedule.find(
+            m => m.id === matchId
+        );
+
 
     if(!match){
 
-        alert("Pertandingan tidak ditemukan.");
-
-        return;
+        return null;
 
     }
 
 
     if(match.played){
 
-        alert("Pertandingan sudah dimainkan.");
+        return null;
 
-        return;
+    }
+
+
+    /*
+       Kalau manager yang bermain,
+       gunakan lineup manager.
+    */
+
+    if(
+        match.home ===
+        game.managerTeam
+    ){
+
+        const strength =
+            getManagerLineupStrength();
+
+        const team =
+            game.teams[
+                game.managerTeam
+            ];
+
+        /*
+           Temporary override
+           untuk kekuatan manager.
+        */
+
+        team._matchStrength =
+            strength;
+
+    }
+
+
+    if(
+        match.away ===
+        game.managerTeam
+    ){
+
+        const strength =
+            getManagerLineupStrength();
+
+        const team =
+            game.teams[
+                game.managerTeam
+            ];
+
+        team._matchStrength =
+            strength;
 
     }
 
@@ -1667,313 +2414,126 @@ function playScheduledMatch(index){
         );
 
 
-    applyMatchResult(
-        match.home,
-        match.away,
-        result
-    );
+    match.homeScore =
+        result.home;
 
+    match.awayScore =
+        result.away;
 
     match.played = true;
 
 
+    updateStandings(
+        match.home,
+        match.away,
+        result.home,
+        result.away
+    );
+
+
     game.currentMatch = {
 
-        ...result,
+        id: match.id,
 
-        format: "BO3",
+        home: match.home,
 
-        week: game.week
+        away: match.away,
+
+        homeScore: result.home,
+
+        awayScore: result.away
 
     };
 
 
-    sortStandings();
-
     saveGame();
 
 
-    if(
-        typeof renderMatchResult ===
-        "function"
-    ){
-
-        renderMatchResult(
-            getTeam(match.home),
-            getTeam(match.away),
-            result
-        );
-
-    }
-
-
-    if(
-        typeof refreshUI ===
-        "function"
-    ){
-
-        refreshUI();
-
-    }
-
-
-    if(
-        typeof showPage ===
-        "function"
-    ){
-
-        showPage("match");
-
-    }
+    return result;
 
 }
 
 
-// =========================================================
-// NEXT WEEK
-// =========================================================
+/* =========================================================
+   QUICK AI SIMULATION
+========================================================= */
 
-function nextMPLWeek(){
+function simulateAllAI(){
 
-    const current =
-        getCurrentWeekMatches();
+    game.schedule.forEach(match => {
 
-
-    const unfinished =
-        current.some(
-            function(match){
-
-                return !match.played;
-
-            }
-        );
+        if(match.played){
+            return;
+        }
 
 
-    if(unfinished){
+        /*
+           Jangan memainkan pertandingan
+           manager secara otomatis.
+        */
 
-        alert(
-            "Selesaikan semua pertandingan minggu ini terlebih dahulu."
-        );
+        if(
+            match.home === game.managerTeam ||
+            match.away === game.managerTeam
+        ){
 
-        return;
+            return;
 
-    }
-
-
-    if(game.week >= 18){
-
-        finishMPLRegularSeason();
-
-        return;
-
-    }
+        }
 
 
-    game.week++;
-
-    saveGame();
-
-
-    if(
-        typeof refreshUI ===
-        "function"
-    ){
-
-        refreshUI();
-
-    }
-
-
-    if(
-        typeof showPage ===
-        "function"
-    ){
-
-        showPage("schedule");
-
-    }
-
-}
-
-
-// =========================================================
-// REGULAR SEASON FINISH
-// =========================================================
-
-function finishMPLRegularSeason(){
-
-    sortStandings();
-
-    game.phase =
-        "playoffs";
-
-    game.history.push({
-
-        type: "regular-season-end",
-
-        season: game.season,
-
-        standings:
-            JSON.parse(
-                JSON.stringify(
-                    game.standings
-                )
-            )
+        playMatch(match.id);
 
     });
 
-
-    saveGame();
-
-
-    alert(
-        "Regular Season selesai! Top 6 masuk Playoff."
-    );
-
-
-    if(
-        typeof refreshUI ===
-        "function"
-    ){
-
-        refreshUI();
-
-    }
-
-
-    if(
-        typeof showPage ===
-        "function"
-    ){
-
-        showPage("standings");
-
-    }
-
 }
 
 
-// =========================================================
-// QUICK MATCH
-// =========================================================
-
-function startQuickMatch(){
-
-    const homeId =
-        document.getElementById(
-            "quickHome"
-        ).value;
-
-
-    const awayId =
-        document.getElementById(
-            "quickAway"
-        ).value;
-
-
-    if(!homeId || !awayId){
-
-        alert(
-            "Pilih kedua tim terlebih dahulu."
-        );
-
-        return;
-
-    }
-
-
-    if(homeId === awayId){
-
-        alert(
-            "Tim 1 dan Tim 2 harus berbeda."
-        );
-
-        return;
-
-    }
-
-
-    const result =
-        simulateBo3(
-            homeId,
-            awayId
-        );
-
-
-    game.currentMatch = {
-
-        ...result,
-
-        format: "BO3",
-
-        week: game.week
-
-    };
-
-
-    if(
-        typeof renderMatchResult ===
-        "function"
-    ){
-
-        renderMatchResult(
-            getTeam(homeId),
-            getTeam(awayId),
-            result
-        );
-
-    }
-
-
-    if(
-        typeof showPage ===
-        "function"
-    ){
-
-        showPage("match");
-
-    }
-
-}
-
-
-// =========================================================
-// SAVE
-// =========================================================
+/* =========================================================
+   SAVE GAME
+========================================================= */
 
 function saveGame(){
 
-    localStorage.setItem(
+    try{
 
-        SAVE_KEY,
+        localStorage.setItem(
+            "mpl_world_manager",
+            JSON.stringify(game)
+        );
 
-        JSON.stringify(game)
+    }catch(error){
 
-    );
+        console.error(
+            "Gagal menyimpan game:",
+            error
+        );
+
+    }
 
 }
 
 
-// =========================================================
-// LOAD
-// =========================================================
+/* =========================================================
+   LOAD GAME
+========================================================= */
 
 function loadGame(){
 
-    const saved =
-        localStorage.getItem(
-            SAVE_KEY
-        );
-
-
-    if(!saved){
-
-        return false;
-
-    }
-
-
     try{
+
+        const saved =
+            localStorage.getItem(
+                "mpl_world_manager"
+            );
+
+
+        if(!saved){
+
+            return false;
+
+        }
+
 
         const data =
             JSON.parse(saved);
@@ -1990,9 +2550,10 @@ function loadGame(){
     }catch(error){
 
         console.error(
-            "Gagal memuat save:",
+            "Gagal load game:",
             error
         );
+
 
         return false;
 
@@ -2001,49 +2562,145 @@ function loadGame(){
 }
 
 
-// =========================================================
-// RESET
-// =========================================================
+/* =========================================================
+   RESET GAME
+========================================================= */
 
 function resetGame(){
 
     localStorage.removeItem(
-        SAVE_KEY
+        "mpl_world_manager"
     );
+
 
     location.reload();
 
 }
 
 
-// =========================================================
-// INITIALIZE
-// =========================================================
+/* =========================================================
+   START NEW CAREER
+========================================================= */
+
+function startNewCareer(teamId){
+
+    if(!game.teams[teamId]){
+
+        return false;
+
+    }
+
+
+    game.managerTeam =
+        teamId;
+
+
+    game.budget =
+        game.teams[
+            teamId
+        ].budget;
+
+
+    game.phase =
+        "regular";
+
+
+    game.week =
+        1;
+
+
+    game.lineup = {
+
+        exp: null,
+
+        jungler: null,
+
+        mid: null,
+
+        gold: null,
+
+        roamer: null
+
+    };
+
+
+    createStandings();
+
+    generateSchedule();
+
+    saveGame();
+
+
+    return true;
+
+}
+
+
+/* =========================================================
+   INITIALIZE DATABASE
+========================================================= */
 
 function initializeGame(){
+
+    /*
+       Coba load save.
+    */
 
     const loaded =
         loadGame();
 
 
-    if(!loaded){
+    if(loaded){
 
-        createStandings();
-
-        generateSchedule();
-
-        saveGame();
+        return;
 
     }
 
 
-    sortStandings();
+    /*
+       New database.
+    */
+
+    createStandings();
+
+    generateSchedule();
+
+    saveGame();
 
 }
 
 
-// =========================================================
-// AUTO INITIALIZE
-// =========================================================
+/* =========================================================
+   START GAME
+========================================================= */
 
 initializeGame();
+
+
+/* =========================================================
+   DEBUG HELPER
+========================================================= */
+
+console.log(
+    "MPL World Manager Season 18 loaded."
+);
+
+console.log(
+    "Teams:",
+    Object.keys(game.teams).length
+);
+
+console.log(
+    "Players:",
+    Object.keys(game.players).length
+);
+
+console.log(
+    "Staff:",
+    Object.keys(game.staff).length
+);
+
+console.log(
+    "Matches:",
+    game.schedule.length
+);
