@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,6 +23,11 @@
 
         header h1 {
             margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            color: #aaa;
         }
 
         .container {
@@ -35,6 +41,20 @@
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 15px;
+            box-sizing: border-box;
+        }
+
+        .card h2 {
+            margin-top: 0;
+        }
+
+        .card h3 {
+            margin-bottom: 8px;
+        }
+
+        .card p {
+            color: #ccc;
+            line-height: 1.5;
         }
 
         button {
@@ -43,6 +63,7 @@
             border: none;
             border-radius: 8px;
             background: #f5c542;
+            color: #111;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -52,60 +73,81 @@
             transform: scale(0.98);
         }
 
-        .team {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #303642;
+        #result {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
         }
     </style>
 </head>
 
 <body>
 
-<header>
-    <h1>🌍 MPL World Manager</h1>
-    <p>Esports Management Simulator</p>
-</header>
+    <!-- HEADER -->
+    <header>
+        <h1>🌍 MPL World Manager</h1>
+        <p>Esports Management Simulator</p>
+    </header>
 
-<div class="container">
-<div id="leagueList"></div>
-    <div class="card">
-        <h2>⚔️ Pertandingan</h2>
 
-        <p id="match">
-            RRQ vs ONIC
-        </p>
+    <!-- ISI GAME -->
+    <div class="container">
 
-        <button onclick="mainMatch()">
-            MAINKAN MATCH
-        </button>
+        <!-- DAFTAR REGION DAN LIGA -->
+        <div id="leagueList"></div>
 
-        <p id="result"></p>
+
+        <!-- PERTANDINGAN -->
+        <div class="card">
+
+            <h2>⚔️ Pertandingan</h2>
+
+            <p id="match">
+                RRQ vs ONIC
+            </p>
+
+            <button onclick="mainMatch()">
+                MAINKAN MATCH
+            </button>
+
+            <p id="result"></p>
+
+        </div>
+
     </div>
 
-</div>
 
-<script>
+    <!-- MATCH ENGINE -->
+    <script>
 
-function mainMatch() {
+        function mainMatch() {
 
-    const rrq = 85;
-    const onic = 88;
+            const rrq = 85;
+            const onic = 88;
 
-    const rrqPower = rrq + Math.random() * 20;
-    const onicPower = onic + Math.random() * 20;
+            const rrqPower = rrq + Math.random() * 20;
+            const onicPower = onic + Math.random() * 20;
 
-    const result = document.getElementById("result");
+            const result = document.getElementById("result");
 
-    if (rrqPower > onicPower) {
-        result.innerHTML = "🏆 RRQ MENANG!";
-    } else {
-        result.innerHTML = "🏆 ONIC MENANG!";
-    }
-}
+            if (rrqPower > onicPower) {
 
-<script src="game.js"></script>
+                result.innerHTML = "🏆 RRQ MENANG!";
+
+            } else {
+
+                result.innerHTML = "🏆 ONIC MENANG!";
+
+            }
+        }
+
+    </script>
+
+
+    <!-- DATABASE GAME -->
+    <script src="game.js"></script>
 
 </body>
+
 </html>
