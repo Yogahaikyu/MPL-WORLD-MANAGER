@@ -57,6 +57,30 @@
             line-height: 1.5;
         }
 
+        .player {
+            background: #222936;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 12px;
+        }
+
+        .player-name {
+            font-size: 19px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .player-info {
+            color: #bbb;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .rating {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
         button {
             width: 100%;
             padding: 15px;
@@ -67,6 +91,7 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         button:active {
@@ -91,11 +116,20 @@
     </header>
 
 
-    <!-- ISI GAME -->
     <div class="container">
 
-        <!-- DAFTAR REGION DAN LIGA -->
+        <!-- REGION DAN LIGA -->
         <div id="leagueList"></div>
+
+
+        <!-- ROSTER RRQ -->
+        <div class="card">
+
+            <h2>👑 RRQ — Roster</h2>
+
+            <div id="rrqRoster"></div>
+
+        </div>
 
 
         <!-- PERTANDINGAN -->
@@ -141,6 +175,72 @@
 
             }
         }
+
+
+        // ========================================
+        // TAMPILKAN ROSTER RRQ
+        // ========================================
+
+        function tampilkanRosterRRQ() {
+
+            const container = document.getElementById("rrqRoster");
+
+            container.innerHTML = "";
+
+            for (const id in game.players) {
+
+                const player = game.players[id];
+
+                if (player.team !== "RRQ") {
+                    continue;
+                }
+
+                const playerBox = document.createElement("div");
+
+                playerBox.className = "player";
+
+                playerBox.innerHTML = `
+                    <div class="player-name">
+                        👤 ${player.name}
+                    </div>
+
+                    <div class="player-info">
+
+                        🎯 Role: ${player.role}<br>
+
+                        🎂 Umur: ${player.age} tahun<br>
+
+                        ⭐ Rating:
+                        <span class="rating">
+                            ${player.rating}
+                        </span>
+                        <br>
+
+                        📈 Potential: ${player.potential}<br>
+
+                        💰 Gaji:
+                        Rp ${player.salary.toLocaleString("id-ID")}
+                        / bulan<br>
+
+                        😊 Morale: ${player.morale}
+
+                    </div>
+                `;
+
+                container.appendChild(playerBox);
+            }
+        }
+
+
+        // ========================================
+        // START GAME
+        // ========================================
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            tampilkanRosterRRQ();
+
+        });
 
     </script>
 
