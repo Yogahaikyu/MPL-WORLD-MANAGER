@@ -1,1 +1,1 @@
-# MPL-WORLD-MANAGER
+# MPL Manager
