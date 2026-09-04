@@ -1,0 +1,119 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: white;
+}
+
+header {
+    background: linear-gradient(135deg, #ff7a00, #ff2600);
+    padding: 30px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+main {
+    width: 90%;
+    max-width: 1000px;
+    margin: 30px auto;
+}
+
+#dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.card,
+.panel {
+    background: #151c32;
+    border: 1px solid #283352;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 16px;
+    color: #aeb9d6;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.panel h2 {
+    margin-bottom: 15px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    background: #0b1020;
+    color: white;
+    border: 1px solid #39476d;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+button {
+    background: #ff7a00;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #ff9500;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #283352;
+}
+
+th {
+    color: #ff9d42;
+}
+
+footer {
+    text-align: center;
+    color: #7180a5;
+    padding: 30px;
+}
+
+@media (max-width: 700px) {
+
+    #dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    main {
+        width: 94%;
+    }
+
+    header h1 {
+        font-size: 25px;
+    }
+}
