@@ -2,1370 +2,2453 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MPL WORLD MANAGER</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
-body{background:#080b14;color:#fff;min-height:100vh}
-button{border:0;cursor:pointer}
-.header{background:#111625;padding:18px;text-align:center;border-bottom:1px solid #252d42}
-.header h1{color:#ffd84d;font-size:25px}
-.header p{color:#8d96aa;font-size:13px;margin-top:5px}
-.container{width:94%;max-width:900px;margin:25px auto}
-.screen{display:none}.screen.active{display:block}
-.title{font-size:24px;margin-bottom:8px}
-.subtitle{color:#929bad;margin-bottom:20px}
-.menu-btn{width:100%;padding:16px;margin:8px 0;border-radius:12px;background:#171d2d;color:#fff;text-align:left;font-size:15px;border:1px solid #252d42}
-.primary{background:#ffd84d;color:#111;font-weight:bold}
-.back{background:#252c3e;color:#fff;padding:10px 15px;border-radius:8px;margin-bottom:20px}
-.card{background:#121827;border:1px solid #252d42;border-radius:14px;padding:17px;margin-bottom:12px}
-.card h3{margin-bottom:7px}.card p{color:#929bad;font-size:14px}
-.card:hover{background:#1b2335}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.small-card{background:#151c2c;border:1px solid #293248;padding:16px;border-radius:13px}
-.small-card h3{margin-bottom:6px}.small-card p{color:#929bad;font-size:13px}
-.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#272f43;color:#ffd84d;font-size:11px;margin-top:8px}
-.info{background:#0e1320;border:1px solid #252d42;border-radius:13px;padding:16px;margin-bottom:18px}
-.info-row{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #202637}
-.info-row:last-child{border:0}.info-row span{color:#8992a6}
-.active-team{border-color:#ffd84d}
-.notice{background:#171d2d;border-radius:10px;padding:13px;color:#aab2c2;font-size:13px;margin:12px 0}
-.stat{margin-top:8px}
-.bar{height:8px;background:#252d42;border-radius:10px;overflow:hidden;margin-top:5px}
-.bar div{height:100%;background:#ffd84d}
-.player{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.player-left{display:flex;align-items:center;gap:12px}
-.player-icon{width:44px;height:44px;border-radius:10px;background:#252d42;display:flex;align-items:center;justify-content:center}
-.player-info strong{display:block;margin-bottom:4px}.player-info span{color:#929bad;font-size:12px}
-.ovr{font-size:22px;font-weight:bold;color:#ffd84d}
-.lineup-slot{background:#101625;border:1px dashed #38445d;padding:13px;border-radius:10px;margin-bottom:8px}
-.lineup-slot strong{color:#ffd84d}
-.train-card{background:#121827;border:1px solid #293248;padding:16px;border-radius:13px;margin-bottom:12px}
-.train-card h3{margin-bottom:6px}
-.train-card p{color:#929bad;font-size:13px;line-height:1.5}
-.train-cost{color:#ffd84d;font-weight:bold;margin:10px 0}
-.week-box{text-align:center;background:#111827;border:1px solid #293248;border-radius:12px;padding:15px;margin-bottom:15px}
-.big{font-size:26px;color:#ffd84d;font-weight:bold}
-@media(max-width:600px){.grid{grid-template-columns:1fr}}
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b1020;
+  color:white;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:12px 16px;
+  background:#5865f2;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  margin:4px;
+}
+
+button:hover{
+  opacity:.85;
+}
+
+button.danger{
+  background:#e74c3c;
+}
+
+button.green{
+  background:#27ae60;
+}
+
+button.gold{
+  background:#d99b20;
+}
+
+button.dark{
+  background:#252b40;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.header{
+  background:#11182d;
+  padding:18px;
+  border-bottom:1px solid #29314d;
+  position:sticky;
+  top:0;
+  z-index:5;
+}
+
+.header h1{
+  margin:0 0 8px;
+  font-size:24px;
+}
+
+.nav{
+  display:flex;
+  flex-wrap:wrap;
+}
+
+.card{
+  background:#151d34;
+  border:1px solid #29314d;
+  border-radius:15px;
+  padding:18px;
+  margin:12px 0;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:14px;
+}
+
+.team-card,
+.org-card,
+.player-card,
+.market-card{
+  background:#1b2540;
+  border-radius:14px;
+  padding:16px;
+  border:1px solid #303b5c;
+}
+
+.team-card:hover,
+.org-card:hover{
+  transform:translateY(-2px);
+}
+
+h2{
+  margin-top:5px;
+}
+
+h3{
+  margin-top:5px;
+}
+
+.stat{
+  display:inline-block;
+  background:#252f4c;
+  padding:8px 12px;
+  border-radius:8px;
+  margin:3px;
+}
+
+.money{
+  color:#5ee58a;
+  font-weight:bold;
+}
+
+.warning{
+  color:#ffcc66;
+}
+
+.center{
+  text-align:center;
+}
+
+.big-title{
+  font-size:42px;
+  margin-top:70px;
+}
+
+.role{
+  color:#9db2ff;
+  font-weight:bold;
+}
+
+.small{
+  font-size:13px;
+  color:#aab3c9;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #303a57;
+  margin:18px 0;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:#aab3c9;
+}
+
+.progress{
+  width:100%;
+  height:10px;
+  background:#252d44;
+  border-radius:20px;
+  overflow:hidden;
+  margin-top:6px;
+}
+
+.progress div{
+  height:100%;
+  background:#5865f2;
+}
+
+select{
+  padding:11px;
+  border-radius:8px;
+  background:#202a45;
+  color:white;
+  border:1px solid #3b4768;
+}
+
+@media(max-width:600px){
+  .big-title{
+    font-size:32px;
+  }
+
+  .container{
+    padding:12px;
+  }
+
+  button{
+    padding:10px 12px;
+  }
+}
 </style>
 </head>
 
 <body>
 
-<div class="header">
-<h1>MPL WORLD MANAGER</h1>
-<p>Global Mobile Legends Organization Manager</p>
-</div>
-
-<div class="container">
-
-<!-- MENU -->
-<div id="mainMenu" class="screen active">
-<div class="title">Menu Utama</div>
-<div class="subtitle">Bangun organisasi esports kamu.</div>
-
-<button class="menu-btn primary" onclick="newCareer()">▶ MULAI KARIER</button>
-<button class="menu-btn" onclick="continueCareer()">↻ LANJUTKAN KARIER</button>
-<button class="menu-btn" onclick="openWorld()">🌎 WORLD</button>
-</div>
-
-
-<!-- COUNTRY -->
-<div id="countryScreen" class="screen">
-<button class="back" onclick="showScreen('mainMenu')">← Kembali</button>
-<div class="title">Pilih Negara</div>
-<div class="subtitle">Tentukan wilayah awal karier.</div>
-<div id="countryList"></div>
-</div>
-
-
-<!-- LEAGUE -->
-<div id="leagueScreen" class="screen">
-<button class="back" onclick="showScreen('countryScreen')">← Kembali</button>
-<div class="title">Pilih Liga</div>
-<div id="leagueList"></div>
-</div>
-
-
-<!-- ORGANIZATION -->
-<div id="organizationScreen" class="screen">
-<button class="back" onclick="showScreen('leagueScreen')">← Kembali</button>
-<div class="title">Pilih Organisasi</div>
-<div id="organizationList"></div>
-</div>
-
-
-<!-- TEAM -->
-<div id="teamScreen" class="screen">
-<button class="back" onclick="showScreen('organizationScreen')">← Kembali</button>
-<div class="title">Pilih Tim</div>
-<div id="teamList"></div>
-</div>
-
-
-<!-- DASHBOARD -->
-<div id="dashboardScreen" class="screen">
-<div class="title">Dashboard Organisasi</div>
-<div id="organizationInfo"></div>
-
-<h3 style="margin-bottom:12px">🏢 Tim Organisasi</h3>
-<div id="relatedTeams"></div>
-
-<h3 style="margin:22px 0 12px">⚙️ Manajemen</h3>
-
-<div class="grid">
-
-<div class="small-card" onclick="openRoster()">
-<h3>👥 Roster</h3>
-<p>Kelola pemain dan lineup.</p>
-</div>
-
-<div class="small-card" onclick="openTraining()">
-<h3>🧠 Training</h3>
-<p>Kembangkan kemampuan pemain.</p>
-</div>
-
-<div class="small-card" onclick="openFeature('Transfer')">
-<h3>🔄 Transfer</h3>
-<p>Rekrut pemain baru.</p>
-</div>
-
-<div class="small-card" onclick="openFeature('Staff')">
-<h3>👔 Staff</h3>
-<p>Kelola staff organisasi.</p>
-</div>
-
-<div class="small-card" onclick="openFeature('Schedule')">
-<h3>📅 Schedule</h3>
-<p>Lihat jadwal pertandingan.</p>
-</div>
-
-<div class="small-card" onclick="openFeature('Tournaments')">
-<h3>🏆 Tournaments</h3>
-<p>Turnamen nasional & internasional.</p>
-</div>
-
-</div>
-
-<button class="menu-btn" onclick="openWorld()">🌎 WORLD</button>
-<button class="menu-btn" onclick="showScreen('mainMenu')">🚪 Menu Utama</button>
-</div>
-
-
-<!-- ROSTER -->
-<div id="rosterScreen" class="screen">
-<button class="back" onclick="showScreen('dashboardScreen')">← Dashboard</button>
-
-<div class="title">👥 Roster</div>
-<div id="rosterInfo"></div>
-
-<h3 style="margin:18px 0 12px">Lineup Aktif</h3>
-<div id="lineup"></div>
-
-<h3 style="margin:22px 0 12px">Semua Pemain</h3>
-<div id="playerList"></div>
-</div>
-
-
-<!-- TRAINING -->
-<div id="trainingScreen" class="screen">
-<button class="back" onclick="showScreen('dashboardScreen')">← Dashboard</button>
-
-<div class="title">🧠 Training Center</div>
-<div class="subtitle">Kembangkan pemain dan persiapkan tim.</div>
-
-<div id="trainingInfo"></div>
-
-<h3 style="margin:20px 0 12px">Program Latihan</h3>
-<div id="trainingList"></div>
-</div>
-
-
-<!-- FEATURE -->
-<div id="featureScreen" class="screen">
-<button class="back" onclick="showScreen('dashboardScreen')">← Kembali</button>
-<div id="featureContent"></div>
-</div>
-
-
-<!-- WORLD -->
-<div id="worldScreen" class="screen">
-<button class="back" onclick="backFromWorld()">← Kembali</button>
-<div class="title">🌎 WORLD</div>
-<div class="subtitle">Dunia esports terus berjalan.</div>
-<div id="worldList"></div>
-</div>
-
-</div>
-
+<div id="app"></div>
 
 <script>
 
 /* =====================================================
-WORLD
-===================================================== */
+   MPL WORLD MANAGER
+   ===================================================== */
 
-const WORLD={
-countries:[
-{
-id:"id",
-name:"Indonesia",
-leagues:[
-{
-id:"mpl-id",
-name:"MPL Indonesia",
-tier:1,
-organizations:[
-{
-id:"rrq",
-name:"RRQ",
-teams:[
-{id:"rrq-mpl-id",name:"RRQ Hoshi",league:"MPL Indonesia",tier:1},
-{id:"rrq-mdl-id",name:"RRQ MDL",league:"MDL Indonesia",tier:2},
-{id:"rrq-ph",name:"RRQ Philippines",league:"MPL Philippines",tier:1},
-{id:"rrq-my",name:"RRQ Malaysia",league:"MPL Malaysia",tier:1}
-]
-},
-{
-id:"onic",
-name:"ONIC",
-teams:[
-{id:"onic-mpl-id",name:"ONIC",league:"MPL Indonesia",tier:1},
-{id:"onic-mdl-id",name:"ONIC MDL",league:"MDL Indonesia",tier:2}
-]
-},
-{
-id:"evos",
-name:"EVOS",
-teams:[
-{id:"evos-mpl-id",name:"EVOS",league:"MPL Indonesia",tier:1},
-{id:"evos-mdl-id",name:"EVOS MDL",league:"MDL Indonesia",tier:2}
-]
-},
-{
-id:"btr",
-name:"Bigetron",
-teams:[
-{id:"btr-mpl-id",name:"Bigetron by Vitality",league:"MPL Indonesia",tier:1},
-{id:"btr-mdl-id",name:"Bigetron MDL",league:"MDL Indonesia",tier:2}
-]
-},
-{
-id:"ae",
-name:"Alter Ego",
-teams:[
-{id:"ae-mpl-id",name:"Alter Ego",league:"MPL Indonesia",tier:1},
-{id:"ae-mdl-id",name:"Alter Ego MDL",league:"MDL Indonesia",tier:2}
-]
-}
-]
-},
-{
-id:"mdl-id",
-name:"MDL Indonesia",
-tier:2,
-organizations:[]
-}
-]
-},
-{
-id:"ph",
-name:"Philippines",
-leagues:[
-{
-id:"mpl-ph",
-name:"MPL Philippines",
-tier:1,
-organizations:[
-{
-id:"ph-sample",
-name:"Sample PH Organization",
-teams:[
-{id:"ph-main",name:"PH Main Team",league:"MPL Philippines",tier:1},
-{id:"ph-academy",name:"PH Academy",league:"MDL Philippines",tier:2}
-]
-}
-]
-}
-]
-},
-{
-id:"my",
-name:"Malaysia",
-leagues:[
-{
-id:"mpl-my",
-name:"MPL Malaysia",
-tier:1,
-organizations:[
-{
-id:"my-sample",
-name:"Sample MY Organization",
-teams:[
-{id:"my-main",name:"MY Main Team",league:"MPL Malaysia",tier:1}
-]
-}
-]
-}
-]
-},
-{id:"sg",name:"Singapore",leagues:[{id:"mpl-sg",name:"MPL Singapore",tier:1,organizations:[]}]},
-{id:"kh",name:"Cambodia",leagues:[{id:"mpl-kh",name:"MPL Cambodia",tier:1,organizations:[]}]},
-{id:"mm",name:"Myanmar",leagues:[{id:"mpl-mm",name:"MPL Myanmar",tier:1,organizations:[]}]},
-{id:"br",name:"Brazil",leagues:[{id:"mpl-br",name:"MPL Brazil",tier:1,organizations:[]}]},
-{id:"tr",name:"Türkiye",leagues:[{id:"mpl-tr",name:"MPL Türkiye",tier:1,organizations:[]}]}
-]
+const SAVE_KEY = "MPL_WORLD_MANAGER_CAREER_V12";
+
+const app = document.getElementById("app");
+
+let career = null;
+
+
+/* =====================================================
+   WORLD DATA
+   ===================================================== */
+
+const WORLD = {
+
+  Indonesia:{
+    leagues:{
+      "MPL Indonesia":{
+        organizations:[
+          {
+            id:"rrq",
+            name:"RRQ",
+            teams:[
+              {id:"rrq_mpl",name:"RRQ Hoshi",tier:1},
+              {id:"rrq_mdl",name:"RRQ MDL",tier:2},
+              {id:"rrq_ph",name:"RRQ Philippines",tier:1},
+              {id:"rrq_my",name:"RRQ Malaysia",tier:1}
+            ]
+          },
+          {
+            id:"onic",
+            name:"ONIC",
+            teams:[
+              {id:"onic_mpl",name:"ONIC Indonesia",tier:1}
+            ]
+          },
+          {
+            id:"evos",
+            name:"EVOS",
+            teams:[
+              {id:"evos_mpl",name:"EVOS",tier:1}
+            ]
+          },
+          {
+            id:"btr",
+            name:"Bigetron",
+            teams:[
+              {id:"btr_mpl",name:"Bigetron by Vitality",tier:1}
+            ]
+          },
+          {
+            id:"ae",
+            name:"Alter Ego",
+            teams:[
+              {id:"ae_mpl",name:"Alter Ego",tier:1}
+            ]
+          }
+        ]
+      },
+
+      "MDL Indonesia":{
+        organizations:[
+          {
+            id:"rrq",
+            name:"RRQ",
+            teams:[
+              {id:"rrq_mdl",name:"RRQ MDL",tier:2}
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  Philippines:{
+    leagues:{
+      "MPL Philippines":{
+        organizations:[
+          {
+            id:"rrq_ph",
+            name:"RRQ Philippines",
+            teams:[
+              {id:"rrq_ph",name:"RRQ Philippines",tier:1}
+            ]
+          },
+          {
+            id:"echo",
+            name:"Team Liquid PH",
+            teams:[
+              {id:"tlph",name:"Team Liquid PH",tier:1}
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  Malaysia:{
+    leagues:{
+      "MPL Malaysia":{
+        organizations:[
+          {
+            id:"rrq_my",
+            name:"RRQ Malaysia",
+            teams:[
+              {id:"rrq_my",name:"RRQ Malaysia",tier:1}
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  Singapore:{
+    leagues:{
+      "MPL Singapore":{
+        organizations:[
+          {
+            id:"sample_sg",
+            name:"Singapore Esports",
+            teams:[
+              {id:"sg1",name:"Singapore Main Team",tier:1}
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  Cambodia:{
+    leagues:{
+      "MPL Cambodia":{
+        organizations:[
+          {
+            id:"sample_kh",
+            name:"Cambodia Esports",
+            teams:[
+              {id:"kh1",name:"Cambodia Main Team",tier:1}
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  Myanmar:{
+    leagues:{
+      "MPL Myanmar":{
+        organizations:[
+          {
+            id:"sample_mm",
+            name:"Myanmar Esports",
+            teams:[
+              {id:"mm1",name:"Myanmar Main Team",tier:1}
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  Brazil:{
+    leagues:{
+      "MPL Brazil":{
+        organizations:[
+          {
+            id:"sample_br",
+            name:"Brazil Esports",
+            teams:[
+              {id:"br1",name:"Brazil Main Team",tier:1}
+            ]
+          }
+        ]
+      }
+    }
+  },
+
+  Türkiye:{
+    leagues:{
+      "MPL Türkiye":{
+        organizations:[
+          {
+            id:"sample_tr",
+            name:"Türkiye Esports",
+            teams:[
+              {id:"tr1",name:"Türkiye Main Team",tier:1}
+            ]
+          }
+        ]
+      }
+    }
+  }
+
 };
 
 
 /* =====================================================
-BASE ROSTER
-===================================================== */
+   BASE ROSTERS
+   ===================================================== */
 
-const BASE_ROSTERS={
+const BASE_ROSTERS = {
 
-"rrq-mpl-id":[
-["Hajirin","MID",87,94],
-["Arthur","GOLD",88,94],
-["Said","ROAM",86,92],
-["Joshua","EXP",87,93],
-["Demonkite","JUNGLE",89,95],
-["Habil","GOLD",84,91],
-["Clayyy","MID",85,90]
+rrq_mpl:[
+  ["Hajirin","MID",87,94],
+  ["Arthur","GOLD",88,94],
+  ["Said","ROAM",86,92],
+  ["Joshua","EXP",87,93],
+  ["Demonkite","JUNGLE",89,95],
+  ["Habil","GOLD",84,91],
+  ["Clayyy","MID",85,90]
 ],
 
-"rrq-mdl-id":[
-["Rinz","GOLD",78,88],
-["Lynch","JUNGLE",80,90],
-["Kuroky","MID",77,88],
-["Idok","EXP",76,87],
-["Player MDL","ROAM",75,86],
-["Player Academy 2","GOLD",73,85]
+rrq_mdl:[
+  ["Rinz","GOLD",78,88],
+  ["Lynch","JUNGLE",80,90],
+  ["Kuroky","MID",77,88],
+  ["Idok","EXP",76,87],
+  ["Player MDL ROAM","ROAM",75,86],
+  ["Player Academy 2","GOLD",73,85]
 ],
 
-"onic-mpl-id":[
-["Kiboy","ROAM",90,95],
-["Sanz","MID",91,96],
-["Kairi","JUNGLE",92,97],
-["Lutpi","EXP",87,93],
-["Kelra","GOLD",91,96],
-["SsamueL","ROAM",82,90]
+onic_mpl:[
+  ["Kiboy","ROAM",90,95],
+  ["Sanz","MID",91,96],
+  ["Kairi","JUNGLE",92,97],
+  ["Lutpi","EXP",87,93],
+  ["Kelra","GOLD",91,96],
+  ["SsamueL","ROAM",82,90]
 ],
 
-"evos-mpl-id":[
-["Alberttt","JUNGLE",89,95],
-["Erlan","GOLD",86,93],
-["Vell","EXP",85,92],
-["Muezza","ROAM",84,91],
-["Rendyyy","EXP",80,88],
-["Ryzaa","MID",84,91]
+evos_mpl:[
+  ["Alberttt","JUNGLE",89,95],
+  ["Erlan","GOLD",86,93],
+  ["Vell","EXP",85,92],
+  ["Muezza","ROAM",84,91],
+  ["Rendyyy","EXP",80,88],
+  ["Ryzaa","MID",84,91]
 ],
 
-"btr-mpl-id":[
-["Morenooo","MID",87,94],
-["Emann","GOLD",89,95],
-["Finn","ROAM",86,93],
-["Nnael","JUNGLE",88,94],
-["Shogun","EXP",85,92],
-["Miguel","GOLD",80,88]
+btr_mpl:[
+  ["Morenooo","MID",87,94],
+  ["Emann","GOLD",89,95],
+  ["Finn","ROAM",86,93],
+  ["Nnael","JUNGLE",88,94],
+  ["Shogun","EXP",85,92],
+  ["Miguel","GOLD",80,88]
 ],
 
-"ae-mpl-id":[
-["Nino","EXP",86,93],
-["Alexander","ROAM",84,91],
-["Dingarai","GOLD",87,94],
-["Dalvin","MID",85,92],
-["Reyy","JUNGLE",86,93],
-["Halim","MID",80,89],
-["Affan","JUNGLE",79,88],
-["Ivann","ROAM",78,87]
+ae_mpl:[
+  ["Nino","EXP",86,93],
+  ["Alexander","ROAM",84,91],
+  ["Dingarai","GOLD",87,94],
+  ["Dalvin","MID",85,92],
+  ["Reyy","JUNGLE",86,93],
+  ["Halim","MID",80,89],
+  ["Affan","JUNGLE",79,88],
+  ["Ivann","ROAM",78,87]
 ]
 
 };
 
 
 /* =====================================================
-CAREER
-===================================================== */
+   TRANSFER MARKET
+   Semua nama di sini adalah data game/prototipe
+   ===================================================== */
 
-let career={
-country:null,
-league:null,
-organization:null,
-team:null,
-budget:1000000000,
-week:1,
-morale:75,
-chemistry:70,
-lineups:{},
-players:{},
-trainingUsed:false
-};
+const MARKET_PLAYERS = [
+
+  {
+    id:"free_01",
+    name:"Raven",
+    role:"GOLD",
+    ovr:82,
+    potential:91,
+    price:180000000,
+    salary:12000000
+  },
+
+  {
+    id:"free_02",
+    name:"Axel",
+    role:"JUNGLE",
+    ovr:84,
+    potential:93,
+    price:240000000,
+    salary:15000000
+  },
+
+  {
+    id:"free_03",
+    name:"Nero",
+    role:"MID",
+    ovr:81,
+    potential:92,
+    price:160000000,
+    salary:11000000
+  },
+
+  {
+    id:"free_04",
+    name:"Kaze",
+    role:"ROAM",
+    ovr:80,
+    potential:90,
+    price:140000000,
+    salary:10000000
+  },
+
+  {
+    id:"free_05",
+    name:"Rex",
+    role:"EXP",
+    ovr:83,
+    potential:92,
+    price:210000000,
+    salary:13000000
+  },
+
+  {
+    id:"free_06",
+    name:"Mika",
+    role:"MID",
+    ovr:76,
+    potential:88,
+    price:80000000,
+    salary:7000000
+  },
+
+  {
+    id:"free_07",
+    name:"Jett",
+    role:"GOLD",
+    ovr:79,
+    potential:89,
+    price:120000000,
+    salary:8500000
+  },
+
+  {
+    id:"free_08",
+    name:"Zero",
+    role:"JUNGLE",
+    ovr:77,
+    potential:90,
+    price:100000000,
+    salary:7500000
+  },
+
+  {
+    id:"free_09",
+    name:"Aero",
+    role:"ROAM",
+    ovr:75,
+    potential:87,
+    price:70000000,
+    salary:6000000
+  },
+
+  {
+    id:"free_10",
+    name:"Kai",
+    role:"EXP",
+    ovr:78,
+    potential:91,
+    price:95000000,
+    salary:7000000
+  }
+
+];
 
 
 /* =====================================================
-UTILITAS
-===================================================== */
+   UTILITIES
+   ===================================================== */
 
-function showScreen(id){
-document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
-document.getElementById(id).classList.add("active");
-window.scrollTo(0,0);
-}
+function money(value){
 
-function saveCareer(){
-localStorage.setItem(
-"MPL_WORLD_MANAGER_CAREER",
-JSON.stringify(career)
-);
-}
-
-function formatMoney(n){
-return "Rp "+Math.round(n).toLocaleString("id-ID");
-}
-
-
-/* =====================================================
-PLAYER DATA
-===================================================== */
-
-function getPlayers(teamId){
-
-if(!career.players[teamId]){
-
-const base=BASE_ROSTERS[teamId]||[];
-
-career.players[teamId]=base.map(p=>({
-name:p[0],
-role:p[1],
-ovr:p[2],
-potential:p[3],
-stamina:100,
-form:75
-}));
+  return new Intl.NumberFormat("id-ID",{
+    style:"currency",
+    currency:"IDR",
+    maximumFractionDigits:0
+  }).format(value);
 
 }
 
-return career.players[teamId];
+function getOrg(){
+
+  if(!career) return null;
+
+  const country = WORLD[career.country];
+
+  if(!country) return null;
+
+  const league = country.leagues[career.league];
+
+  if(!league) return null;
+
+  return league.organizations.find(
+    o => o.id === career.organizationId
+  );
+
 }
 
+function getTeam(teamId){
 
-/* =====================================================
-GET ORGANIZATION
-===================================================== */
+  const org = getOrg();
 
-function getOrganization(){
+  if(!org) return null;
 
-for(const country of WORLD.countries){
-for(const league of country.leagues){
-for(const org of league.organizations){
-
-if(org.id===career.organization)return org;
+  return org.teams.find(
+    t => t.id === teamId
+  );
 
 }
-}
-}
-
-return null;
-}
-
 
 function getCurrentTeam(){
 
-const org=getOrganization();
+  return getTeam(career.currentTeamId);
 
-if(!org)return null;
+}
 
-return org.teams.find(t=>t.id===career.team);
+function getRoster(teamId){
+
+  if(!career.players[teamId]){
+    career.players[teamId] = [];
+  }
+
+  return career.players[teamId];
+
+}
+
+function save(){
+
+  localStorage.setItem(
+    SAVE_KEY,
+    JSON.stringify(career)
+  );
+
+}
+
+function load(){
+
+  const data =
+    localStorage.getItem(SAVE_KEY);
+
+  if(!data) return false;
+
+  try{
+
+    career = JSON.parse(data);
+
+    migrateCareer();
+
+    return true;
+
+  }catch(e){
+
+    return false;
+
+  }
 
 }
 
 
 /* =====================================================
-NEW CAREER
-===================================================== */
+   MIGRATION
+   ===================================================== */
+
+function migrateCareer(){
+
+  if(!career.players)
+    career.players = {};
+
+  if(!career.lineups)
+    career.lineups = {};
+
+  if(!career.trainingUsed)
+    career.trainingUsed = false;
+
+  if(!career.week)
+    career.week = 1;
+
+  if(!career.budget)
+    career.budget = 1000000000;
+
+  if(!career.morale)
+    career.morale = 75;
+
+  if(!career.chemistry)
+    career.chemistry = 70;
+
+  if(!career.contracts)
+    career.contracts = {};
+
+  Object.keys(career.players).forEach(teamId=>{
+
+    career.players[teamId].forEach(p=>{
+
+      if(p.stamina === undefined)
+        p.stamina = 100;
+
+      if(p.form === undefined)
+        p.form = 75;
+
+      if(p.salary === undefined)
+        p.salary =
+          Math.max(
+            3000000,
+            Math.round(p.ovr * 100000)
+          );
+
+      if(p.contractYears === undefined)
+        p.contractYears = 2;
+
+      if(p.transferValue === undefined)
+        p.transferValue =
+          Math.round(
+            p.ovr * p.ovr * 100000
+          );
+
+    });
+
+  });
+
+  save();
+
+}
+
+
+/* =====================================================
+   CREATE CAREER
+   ===================================================== */
+
+function createCareer(
+  country,
+  league,
+  organizationId,
+  teamId
+){
+
+  career = {
+
+    country,
+    league,
+
+    organizationId,
+
+    currentTeamId:teamId,
+
+    week:1,
+
+    season:18,
+
+    budget:1000000000,
+
+    morale:75,
+
+    chemistry:70,
+
+    trainingUsed:false,
+
+    players:{},
+
+    lineups:{},
+
+    contracts:{},
+
+    history:[]
+
+  };
+
+  initializeRosters();
+
+  save();
+
+  dashboard();
+
+}
+
+
+function initializeRosters(){
+
+  const org = getOrg();
+
+  if(!org) return;
+
+  org.teams.forEach(team=>{
+
+    if(!career.players[team.id]){
+
+      const base =
+        BASE_ROSTERS[team.id] || [];
+
+      career.players[team.id] =
+        base.map((p,index)=>({
+
+          id:
+            team.id+"_"+index+"_"+Date.now(),
+
+          name:p[0],
+
+          role:p[1],
+
+          ovr:p[2],
+
+          potential:p[3],
+
+          stamina:100,
+
+          form:75,
+
+          salary:
+            Math.round(p[2]*100000),
+
+          contractYears:2,
+
+          transferValue:
+            Math.round(
+              p[2]*p[2]*100000
+            )
+
+        }));
+
+    }
+
+  });
+
+}
+
+
+/* =====================================================
+   START
+   ===================================================== */
+
+function home(){
+
+  app.innerHTML = `
+
+  <div class="container center">
+
+    <h1 class="big-title">
+      MPL WORLD MANAGER
+    </h1>
+
+    <p>
+      Global Mobile Legends Esports Organization Manager
+    </p>
+
+    <br>
+
+    <button onclick="newCareer()">
+      🎮 MULAI KARIER
+    </button>
+
+    <button onclick="continueCareer()">
+      💾 LANJUTKAN KARIER
+    </button>
+
+    <button class="dark" onclick="worldInfo()">
+      🌍 WORLD
+    </button>
+
+  </div>
+
+  `;
+
+}
+
 
 function newCareer(){
 
-career={
-country:null,
-league:null,
-organization:null,
-team:null,
-budget:1000000000,
-week:1,
-morale:75,
-chemistry:70,
-lineups:{},
-players:{},
-trainingUsed:false
-};
+  countrySelect();
 
-localStorage.removeItem("MPL_WORLD_MANAGER_CAREER");
+}
 
-renderCountries();
-showScreen("countryScreen");
+
+function continueCareer(){
+
+  if(load()){
+
+    dashboard();
+
+  }else{
+
+    alert("Belum ada career yang tersimpan.");
+
+  }
+
 }
 
 
 /* =====================================================
-COUNTRY
-===================================================== */
+   COUNTRY
+   ===================================================== */
 
-function renderCountries(){
+function countrySelect(){
 
-const box=document.getElementById("countryList");
-box.innerHTML="";
+  let html = `
 
-WORLD.countries.forEach(country=>{
+  <div class="container">
 
-const div=document.createElement("div");
-div.className="card";
+    <h2>🌍 Pilih Negara / Region</h2>
 
-div.innerHTML=`
-<h3>🌎 ${country.name}</h3>
-<p>${country.leagues.length} liga tersedia</p>
-`;
+    <div class="grid">
 
-div.onclick=()=>{
-career.country=country.id;
-renderLeagues(country);
-showScreen("leagueScreen");
-};
+  `;
 
-box.appendChild(div);
+  Object.keys(WORLD).forEach(country=>{
 
-});
+    html += `
+
+      <div class="org-card">
+
+        <h3>${country}</h3>
+
+        <button onclick="leagueSelect('${country}')">
+          Pilih
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+  html += `
+
+    </div>
+
+    <button class="dark" onclick="home()">
+      ← Kembali
+    </button>
+
+  </div>
+
+  `;
+
+  app.innerHTML = html;
+
 }
 
 
 /* =====================================================
-LEAGUE
-===================================================== */
+   LEAGUE
+   ===================================================== */
 
-function renderLeagues(country){
+function leagueSelect(country){
 
-const box=document.getElementById("leagueList");
-box.innerHTML="";
+  const leagues =
+    WORLD[country].leagues;
 
-country.leagues.forEach(league=>{
+  let html = `
 
-const div=document.createElement("div");
-div.className="card";
+  <div class="container">
 
-div.innerHTML=`
-<h3>${league.name}</h3>
-<p>Tier ${league.tier}</p>
-`;
+    <h2>🏆 Pilih Liga</h2>
 
-div.onclick=()=>{
-career.league=league.id;
-renderOrganizations(league);
-showScreen("organizationScreen");
-};
+    <div class="grid">
 
-box.appendChild(div);
+  `;
 
-});
+  Object.keys(leagues).forEach(league=>{
+
+    html += `
+
+      <div class="org-card">
+
+        <h3>${league}</h3>
+
+        <button onclick="organizationSelect(
+          '${country}',
+          '${league}'
+        )">
+          Pilih Liga
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+  html += `
+
+    </div>
+
+    <button class="dark"
+      onclick="countrySelect()">
+      ← Kembali
+    </button>
+
+  </div>
+
+  `;
+
+  app.innerHTML = html;
+
 }
 
 
 /* =====================================================
-ORGANIZATION
-===================================================== */
+   ORGANIZATION
+   ===================================================== */
 
-function renderOrganizations(league){
+function organizationSelect(
+  country,
+  league
+){
 
-const box=document.getElementById("organizationList");
-box.innerHTML="";
+  const orgs =
+    WORLD[country]
+      .leagues[league]
+      .organizations;
 
-let organizations=[];
+  let html = `
 
-WORLD.countries.forEach(country=>{
-country.leagues.forEach(l=>{
-l.organizations.forEach(org=>{
+  <div class="container">
 
-if(org.teams.some(t=>t.league===league.name)){
+    <h2>🏢 Pilih Organisasi</h2>
 
-if(!organizations.some(x=>x.id===org.id)){
-organizations.push(org);
-}
+    <div class="grid">
 
-}
+  `;
 
-});
-});
-});
+  orgs.forEach(org=>{
 
+    html += `
 
-if(!organizations.length){
+      <div class="org-card">
 
-box.innerHTML=`
-<div class="notice">
-Belum ada organisasi di liga ini.
-</div>`;
-return;
+        <h2>${org.name}</h2>
 
-}
+        <p>
+          ${org.teams.length} team
+        </p>
 
-organizations.forEach(org=>{
+        <button onclick="teamSelect(
+          '${country}',
+          '${league}',
+          '${org.id}'
+        )">
+          Pilih Organisasi
+        </button>
 
-const div=document.createElement("div");
-div.className="card";
+      </div>
 
-div.innerHTML=`
-<h3>🏢 ${org.name}</h3>
-<p>${org.teams.length} tim dalam organisasi</p>
-`;
+    `;
 
-div.onclick=()=>{
-career.organization=org.id;
-renderTeams(org,league);
-showScreen("teamScreen");
-};
+  });
 
-box.appendChild(div);
+  html += `
 
-});
-}
+    </div>
 
+    <button class="dark"
+      onclick="leagueSelect('${country}')">
+      ← Kembali
+    </button>
 
-/* =====================================================
-TEAM
-===================================================== */
+  </div>
 
-function renderTeams(org,league){
+  `;
 
-const box=document.getElementById("teamList");
-box.innerHTML="";
+  app.innerHTML = html;
 
-org.teams.filter(t=>t.league===league.name).forEach(team=>{
-
-const div=document.createElement("div");
-div.className="card";
-
-div.innerHTML=`
-<h3>${team.name}</h3>
-<p>${team.league}</p>
-<span class="badge">Tier ${team.tier}</span>
-`;
-
-div.onclick=()=>{
-career.team=team.id;
-getPlayers(team.id);
-saveCareer();
-renderDashboard();
-showScreen("dashboardScreen");
-};
-
-box.appendChild(div);
-
-});
 }
 
 
 /* =====================================================
-DASHBOARD
-===================================================== */
+   TEAM SELECT
+   ===================================================== */
 
-function renderDashboard(){
+function teamSelect(
+  country,
+  league,
+  organizationId
+){
 
-const org=getOrganization();
-const team=getCurrentTeam();
+  const org =
+    WORLD[country]
+      .leagues[league]
+      .organizations
+      .find(o=>o.id===organizationId);
 
-if(!org||!team){
-showScreen("mainMenu");
-return;
+  let html = `
+
+  <div class="container">
+
+    <h2>👕 Pilih Tim</h2>
+
+    <p>
+      Kamu akan menjadi manager organisasi
+      <b>${org.name}</b>.
+    </p>
+
+    <div class="grid">
+
+  `;
+
+  org.teams.forEach(team=>{
+
+    html += `
+
+      <div class="team-card">
+
+        <h3>${team.name}</h3>
+
+        <span class="stat">
+          Tier ${team.tier}
+        </span>
+
+        <br>
+
+        <button onclick="startSelectedCareer(
+          '${country}',
+          '${league}',
+          '${organizationId}',
+          '${team.id}'
+        )">
+          Mulai Karier
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+  html += `
+
+    </div>
+
+  </div>
+
+  `;
+
+  app.innerHTML = html;
+
 }
 
-document.getElementById("organizationInfo").innerHTML=`
 
-<div class="info">
+function startSelectedCareer(
+  country,
+  league,
+  organizationId,
+  teamId
+){
 
-<div class="info-row">
-<span>Organisasi</span>
-<strong>${org.name}</strong>
-</div>
+  createCareer(
+    country,
+    league,
+    organizationId,
+    teamId
+  );
 
-<div class="info-row">
-<span>Tim aktif</span>
-<strong>${team.name}</strong>
-</div>
-
-<div class="info-row">
-<span>Liga</span>
-<strong>${team.league}</strong>
-</div>
-
-<div class="info-row">
-<span>Budget</span>
-<strong>${formatMoney(career.budget)}</strong>
-</div>
-
-<div class="info-row">
-<span>Week</span>
-<strong>${career.week}</strong>
-</div>
-
-<div class="info-row">
-<span>Morale</span>
-<strong>${career.morale}/100</strong>
-</div>
-
-<div class="info-row">
-<span>Chemistry</span>
-<strong>${career.chemistry}/100</strong>
-</div>
-
-</div>
-`;
-
-renderRelatedTeams(org,team);
-}
-
-
-/* =====================================================
-RELATED TEAMS
-===================================================== */
-
-function renderRelatedTeams(org,current){
-
-const box=document.getElementById("relatedTeams");
-box.innerHTML="";
-
-org.teams.forEach(team=>{
-
-const div=document.createElement("div");
-div.className="card";
-
-if(team.id===current.id)div.classList.add("active-team");
-
-div.innerHTML=`
-<h3>${team.id===current.id?"⭐ ":""}${team.name}</h3>
-<p>${team.league}</p>
-<span class="badge">Tier ${team.tier}</span>
-`;
-
-div.onclick=()=>{
-career.team=team.id;
-getPlayers(team.id);
-saveCareer();
-renderDashboard();
-};
-
-box.appendChild(div);
-
-});
 }
 
 
 /* =====================================================
-ROSTER
-===================================================== */
+   HEADER
+   ===================================================== */
 
-function openRoster(){
-renderRoster();
-showScreen("rosterScreen");
-}
+function header(){
 
+  const team =
+    getCurrentTeam();
 
-function renderRoster(){
+  const org =
+    getOrg();
 
-const team=getCurrentTeam();
-if(!team)return;
+  return `
 
-const players=getPlayers(team.id);
+  <div class="header">
 
-document.getElementById("rosterInfo").innerHTML=`
+    <h1>⚽ MPL WORLD MANAGER</h1>
 
-<div class="info">
+    <div class="small">
+      ${org ? org.name : ""}
+      ${team ? " • "+team.name : ""}
+      • Season ${career.season}
+      • Week ${career.week}
+    </div>
 
-<div class="info-row">
-<span>Tim</span>
-<strong>${team.name}</strong>
-</div>
+    <div class="nav">
 
-<div class="info-row">
-<span>Pemain</span>
-<strong>${players.length}</strong>
-</div>
+      <button onclick="dashboard()">
+        🏠 Dashboard
+      </button>
 
-</div>
+      <button onclick="rosterScreen()">
+        👥 Roster
+      </button>
 
-<div class="notice">
-Pilih pemain untuk mengisi lineup.
-Role yang sama akan menggantikan pemain sebelumnya.
-</div>
-`;
+      <button onclick="trainingScreen()">
+        🏋️ Training
+      </button>
 
-renderLineup(players);
-renderPlayers(players);
+      <button onclick="transferScreen()">
+        🔄 Transfer
+      </button>
+
+      <button onclick="scheduleScreen()">
+        📅 Schedule
+      </button>
+
+      <button onclick="organizationScreen()">
+        🏢 Organization
+      </button>
+
+      <button class="danger"
+        onclick="resetCareer()">
+        Reset
+      </button>
+
+    </div>
+
+  </div>
+
+  `;
+
 }
 
 
 /* =====================================================
-PLAYER LIST
-===================================================== */
+   DASHBOARD
+   ===================================================== */
 
-function renderPlayers(players){
+function dashboard(){
 
-const box=document.getElementById("playerList");
-box.innerHTML="";
+  if(!career){
 
-players.forEach((p,index)=>{
+    home();
 
-const div=document.createElement("div");
-div.className="card";
+    return;
 
-div.innerHTML=`
+  }
 
-<div class="player">
+  migrateCareer();
 
-<div class="player-left">
+  const team =
+    getCurrentTeam();
 
-<div class="player-icon">👤</div>
+  const roster =
+    getRoster(team.id);
 
-<div class="player-info">
+  app.innerHTML = header()+`
 
-<strong>${p.name}</strong>
+  <div class="container">
 
-<span>
-${p.role} • OVR ${p.ovr} • POT ${p.potential}
-</span>
+    <div class="card">
 
-</div>
+      <h2>🏠 Organization Dashboard</h2>
 
-</div>
+      <div class="stat">
+        💰 Budget:
+        <span class="money">
+          ${money(career.budget)}
+        </span>
+      </div>
 
-<div class="ovr">${p.ovr}</div>
+      <div class="stat">
+        📅 Week ${career.week}
+      </div>
 
-</div>
+      <div class="stat">
+        👥 ${roster.length} pemain
+      </div>
 
-<div class="stat">
-<span>Stamina ${p.stamina}/100</span>
-<div class="bar">
-<div style="width:${p.stamina}%"></div>
-</div>
-</div>
+      <div class="stat">
+        ❤️ Morale ${career.morale}
+      </div>
 
-<div class="stat">
-<span>Form ${p.form}/100</span>
-<div class="bar">
-<div style="width:${p.form}%"></div>
-</div>
-</div>
+      <div class="stat">
+        🤝 Chemistry ${career.chemistry}
+      </div>
 
-<button
-class="menu-btn primary"
-onclick="addToLineup(${index})">
-+ Masukkan Lineup
-</button>
+    </div>
 
-`;
 
-box.appendChild(div);
+    <div class="card">
 
-});
+      <h2>👕 Tim Aktif</h2>
+
+      <h3>${team.name}</h3>
+
+      <p>
+        Tier ${team.tier}
+      </p>
+
+      <button onclick="rosterScreen()">
+        Kelola Roster
+      </button>
+
+      <button onclick="trainingScreen()">
+        Training
+      </button>
+
+      <button onclick="transferScreen()">
+        Transfer Market
+      </button>
+
+    </div>
+
+
+    <div class="card">
+
+      <h2>📌 Menu Cepat</h2>
+
+      <button onclick="organizationScreen()">
+        Lihat Semua Tim Organisasi
+      </button>
+
+      <button onclick="scheduleScreen()">
+        Lihat Jadwal
+      </button>
+
+    </div>
+
+  </div>
+
+  `;
+
 }
 
 
 /* =====================================================
-LINEUP
-===================================================== */
+   ORGANIZATION
+   ===================================================== */
 
-function getLineup(){
+function organizationScreen(){
 
-const team=getCurrentTeam();
+  const org =
+    getOrg();
 
-if(!career.lineups[team.id]){
+  let html = header()+`
 
-career.lineups[team.id]={
-EXP:null,
-JUNGLE:null,
-MID:null,
-GOLD:null,
-ROAM:null
-};
+  <div class="container">
+
+    <h2>🏢 ${org.name}</h2>
+
+    <p>
+      Kamu mengelola seluruh organisasi,
+      bukan hanya satu tim.
+    </p>
+
+    <div class="grid">
+
+  `;
+
+  org.teams.forEach(team=>{
+
+    const roster =
+      getRoster(team.id);
+
+    html += `
+
+      <div class="team-card">
+
+        <h3>${team.name}</h3>
+
+        <span class="stat">
+          Tier ${team.tier}
+        </span>
+
+        <span class="stat">
+          👥 ${roster.length}
+        </span>
+
+        <br>
+
+        <button onclick="switchTeam('${team.id}')">
+          Kelola Tim
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+  html += `
+
+    </div>
+
+  </div>
+
+  `;
+
+  app.innerHTML = html;
 
 }
 
-return career.lineups[team.id];
+
+function switchTeam(teamId){
+
+  career.currentTeamId =
+    teamId;
+
+  save();
+
+  dashboard();
+
 }
 
 
-function renderLineup(players){
+/* =====================================================
+   ROSTER
+   ===================================================== */
 
-const box=document.getElementById("lineup");
-const lineup=getLineup();
+function rosterScreen(){
 
-box.innerHTML="";
+  const team =
+    getCurrentTeam();
 
-const roles=[
-["EXP","⚔️"],
-["JUNGLE","🌲"],
-["MID","🔮"],
-["GOLD","💰"],
-["ROAM","🛡️"]
-];
+  const roster =
+    getRoster(team.id);
 
-roles.forEach(r=>{
+  let html = header()+`
 
-const player=players.find(
-p=>p.name===lineup[r[0]]
-);
+  <div class="container">
 
-const div=document.createElement("div");
-div.className="lineup-slot";
+    <h2>👥 Roster — ${team.name}</h2>
 
-div.innerHTML=`
-${r[1]} <strong>${r[0]}</strong>
-—
-${player?
-player.name+" (OVR "+player.ovr+")":
-'<span style="color:#68738a">Kosong</span>'}
-`;
+    <p>
+      ${roster.length} pemain
+    </p>
 
-box.appendChild(div);
+    <div class="grid">
 
-});
+  `;
+
+  roster.forEach((p,index)=>{
+
+    html += `
+
+      <div class="player-card">
+
+        <h3>${p.name}</h3>
+
+        <div class="role">
+          ${p.role}
+        </div>
+
+        <div class="stat">
+          OVR ${p.ovr}
+        </div>
+
+        <div class="stat">
+          POT ${p.potential}
+        </div>
+
+        <div class="stat">
+          ⚡ ${p.stamina}
+        </div>
+
+        <div class="stat">
+          😊 ${p.form}
+        </div>
+
+        <hr>
+
+        <div class="small">
+          Gaji:
+          <span class="money">
+            ${money(p.salary)}
+          </span>
+          / minggu
+        </div>
+
+        <div class="small">
+          Kontrak:
+          ${p.contractYears} tahun
+        </div>
+
+        <button
+          onclick="addToLineup(${index})"
+          class="green">
+          Masukkan Lineup
+        </button>
+
+        <button
+          onclick="releasePlayer(${index})"
+          class="danger">
+          Lepas
+        </button>
+
+      </div>
+
+    `;
+
+  });
+
+  html += `
+
+    </div>
+
+    <hr>
+
+    <h2>⭐ Starting Lineup</h2>
+
+    ${renderLineup()}
+
+  </div>
+
+  `;
+
+  app.innerHTML = html;
+
+}
+
+
+function renderLineup(){
+
+  const team =
+    getCurrentTeam();
+
+  const roster =
+    getRoster(team.id);
+
+  const lineup =
+    career.lineups[team.id] || {};
+
+  const roles =
+    ["EXP","JUNGLE","MID","GOLD","ROAM"];
+
+  let html = "";
+
+  roles.forEach(role=>{
+
+    const index =
+      lineup[role];
+
+    let playerName =
+      "Belum diisi";
+
+    if(
+      index !== undefined &&
+      roster[index]
+    ){
+
+      playerName =
+        roster[index].name+
+        " — OVR "+
+        roster[index].ovr;
+
+    }
+
+    html += `
+
+      <div class="card">
+
+        <b>${role}</b>
+
+        <br>
+
+        ${playerName}
+
+      </div>
+
+    `;
+
+  });
+
+  return html;
+
 }
 
 
 function addToLineup(index){
 
-const team=getCurrentTeam();
-const players=getPlayers(team.id);
-const player=players[index];
-const lineup=getLineup();
+  const team =
+    getCurrentTeam();
 
-lineup[player.role]=player.name;
+  const roster =
+    getRoster(team.id);
 
-saveCareer();
-renderRoster();
+  const player =
+    roster[index];
+
+  if(!career.lineups[team.id])
+    career.lineups[team.id]={};
+
+  career.lineups[team.id][player.role] =
+    index;
+
+  save();
+
+  rosterScreen();
+
 }
 
 
 /* =====================================================
-TRAINING
-===================================================== */
+   TRAINING
+   ===================================================== */
 
-const TRAINING=[
+const TRAINING = [
 
-{
-id:"intensive",
-name:"🔥 Intensive Training",
-cost:100000000,
-desc:"Latihan berat untuk meningkatkan kemampuan pemain.",
-morale:-3,
-chemistry:0,
-stamina:-15,
-ovr:1
-},
+  {
+    name:"Intensive Training",
+    price:100000000,
+    morale:-3,
+    chemistry:0,
+    stamina:-15,
+    ovr:1
+  },
 
-{
-id:"tactical",
-name:"🎯 Tactical Training",
-cost:75000000,
-desc:"Meningkatkan pemahaman strategi dan chemistry.",
-morale:2,
-chemistry:5,
-stamina:-8,
-ovr:0.5
-},
+  {
+    name:"Tactical Training",
+    price:75000000,
+    morale:2,
+    chemistry:5,
+    stamina:-8,
+    ovr:.5
+  },
 
-{
-id:"physical",
-name:"💪 Physical Training",
-cost:50000000,
-desc:"Fokus pada kondisi fisik dan stamina.",
-morale:1,
-chemistry:0,
-stamina:10,
-ovr:0
-},
+  {
+    name:"Physical Training",
+    price:50000000,
+    morale:1,
+    chemistry:0,
+    stamina:10,
+    ovr:0
+  },
 
-{
-id:"recovery",
-name:"🛌 Recovery",
-cost:25000000,
-desc:"Memulihkan stamina dan meningkatkan morale.",
-morale:6,
-chemistry:1,
-stamina:25,
-ovr:0
-},
+  {
+    name:"Recovery",
+    price:25000000,
+    morale:6,
+    chemistry:1,
+    stamina:25,
+    ovr:0
+  },
 
-{
-id:"bootcamp",
-name:"🏕️ Bootcamp",
-cost:250000000,
-desc:"Program intensif organisasi untuk perkembangan tim.",
-morale:8,
-chemistry:12,
-stamina:-10,
-ovr:1
-}
+  {
+    name:"Bootcamp",
+    price:250000000,
+    morale:8,
+    chemistry:12,
+    stamina:-10,
+    ovr:1
+  }
 
 ];
 
 
-function openTraining(){
+function trainingScreen(){
 
-renderTraining();
-showScreen("trainingScreen");
+  let html = header()+`
 
-}
+  <div class="container">
 
+    <h2>🏋️ Training Center</h2>
 
-function renderTraining(){
+    <div class="card">
 
-const team=getCurrentTeam();
-const players=getPlayers(team.id);
+      <h3>
+        Budget:
+        <span class="money">
+          ${money(career.budget)}
+        </span>
+      </h3>
 
-document.getElementById("trainingInfo").innerHTML=`
+      <p>
+        Training hanya dapat dilakukan
+        sekali setiap minggu.
+      </p>
 
-<div class="week-box">
+    </div>
 
-<div>Week</div>
-<div class="big">${career.week}</div>
+    <div class="grid">
 
-<p style="margin-top:8px;color:#929bad">
-Training minggu ini:
-${career.trainingUsed?"SUDAH DIGUNAKAN":"BELUM DIGUNAKAN"}
-</p>
+  `;
 
-</div>
+  TRAINING.forEach((t,index)=>{
 
-<div class="info">
+    html += `
 
-<div class="info-row">
-<span>Budget</span>
-<strong>${formatMoney(career.budget)}</strong>
-</div>
+      <div class="card">
 
-<div class="info-row">
-<span>Morale</span>
-<strong>${career.morale}/100</strong>
-</div>
+        <h3>${t.name}</h3>
 
-<div class="info-row">
-<span>Chemistry</span>
-<strong>${career.chemistry}/100</strong>
-</div>
+        <p>
+          💰 ${money(t.price)}
+        </p>
 
-</div>
+        <p>
+          Morale:
+          ${t.morale >= 0 ? "+" : ""}
+          ${t.morale}
+        </p>
 
-<div class="notice">
-Latihan hanya dapat dilakukan satu kali setiap minggu.
-Pilih program dengan bijak.
-</div>
-`;
+        <p>
+          Chemistry:
+          +${t.chemistry}
+        </p>
 
-const box=document.getElementById("trainingList");
-box.innerHTML="";
+        <p>
+          Stamina:
+          ${t.stamina >= 0 ? "+" : ""}
+          ${t.stamina}
+        </p>
 
-TRAINING.forEach(t=>{
+        <p>
+          OVR:
+          +${t.ovr}
+        </p>
 
-const div=document.createElement("div");
-div.className="train-card";
+        <button
+          onclick="doTraining(${index})"
+          ${career.trainingUsed ? "disabled" : ""}>
+          ${career.trainingUsed
+            ? "Sudah Training"
+            : "Pilih Training"}
+        </button>
 
-div.innerHTML=`
+      </div>
 
-<h3>${t.name}</h3>
+    `;
 
-<p>${t.desc}</p>
+  });
 
-<div class="train-cost">
-Biaya: ${formatMoney(t.cost)}
-</div>
+  html += `
 
-<p>
-OVR: ${t.ovr>=0?"+":""}${t.ovr}
-&nbsp; | &nbsp;
-Stamina: ${t.stamina>=0?"+":""}${t.stamina}
-&nbsp; | &nbsp;
-Morale: ${t.morale>=0?"+":""}${t.morale}
-&nbsp; | &nbsp;
-Chemistry: ${t.chemistry>=0?"+":""}${t.chemistry}
-</p>
+    </div>
 
-<button
-class="menu-btn primary"
-onclick="doTraining('${t.id}')"
-${career.trainingUsed?"disabled":""}>
-${career.trainingUsed?"✓ Sudah Latihan":"▶ Jalankan Latihan"}
-</button>
+  </div>
 
-`;
+  `;
 
-box.appendChild(div);
-
-});
+  app.innerHTML = html;
 
 }
 
 
-function doTraining(id){
+function doTraining(index){
 
-if(career.trainingUsed){
+  if(career.trainingUsed){
 
-alert("Kamu sudah melakukan training minggu ini.");
-return;
+    alert(
+      "Training minggu ini sudah digunakan."
+    );
 
-}
+    return;
 
-const training=TRAINING.find(t=>t.id===id);
-const team=getCurrentTeam();
+  }
 
-if(career.budget<training.cost){
+  const t =
+    TRAINING[index];
 
-alert("Budget tidak cukup.");
-return;
+  if(career.budget < t.price){
 
-}
+    alert("Budget tidak cukup!");
 
-const players=getPlayers(team.id);
+    return;
 
-career.budget-=training.cost;
+  }
 
-career.morale=Math.max(
-0,
-Math.min(100,career.morale+training.morale)
-);
+  const team =
+    getCurrentTeam();
 
-career.chemistry=Math.max(
-0,
-Math.min(100,career.chemistry+training.chemistry)
-);
+  const roster =
+    getRoster(team.id);
 
+  career.budget -=
+    t.price;
 
-/*
- Semua pemain mendapat efek latihan.
- */
+  career.morale +=
+    t.morale;
 
-players.forEach(player=>{
+  career.chemistry +=
+    t.chemistry;
 
-player.stamina=Math.max(
-0,
-Math.min(100,player.stamina+training.stamina)
-);
+  career.morale =
+    Math.max(
+      0,
+      Math.min(100,career.morale)
+    );
 
-if(training.ovr>0){
+  career.chemistry =
+    Math.max(
+      0,
+      Math.min(100,career.chemistry)
+    );
 
-player.ovr=Math.min(
-player.potential,
-player.ovr+training.ovr
-);
+  roster.forEach(p=>{
 
-}
+    p.stamina =
+      Math.max(
+        0,
+        Math.min(
+          100,
+          p.stamina+t.stamina
+        )
+      );
 
-player.form=Math.max(
-0,
-Math.min(100,player.form+training.morale)
-);
+    p.ovr =
+      Math.min(
+        p.potential,
+        p.ovr+t.ovr
+      );
 
-});
+  });
 
+  career.trainingUsed = true;
 
-career.trainingUsed=true;
+  save();
 
-saveCareer();
+  alert(
+    t.name+
+    " berhasil dilakukan!"
+  );
 
-alert(
-"Training selesai!\n\n"+
-training.name+
-"\nBiaya: "+
-formatMoney(training.cost)
-);
-
-renderTraining();
+  trainingScreen();
 
 }
 
 
 /* =====================================================
-ADVANCE WEEK
-===================================================== */
+   TRANSFER MARKET
+   ===================================================== */
+
+function transferScreen(){
+
+  const team =
+    getCurrentTeam();
+
+  const roster =
+    getRoster(team.id);
+
+  let html = header()+`
+
+  <div class="container">
+
+    <div class="card">
+
+      <h2>🔄 Transfer Market</h2>
+
+      <p>
+        Tim aktif:
+        <b>${team.name}</b>
+      </p>
+
+      <p>
+        Budget:
+        <span class="money">
+          ${money(career.budget)}
+        </span>
+      </p>
+
+      <p>
+        Roster:
+        ${roster.length}/12
+      </p>
+
+    </div>
+
+    <div class="grid">
+
+  `;
+
+  MARKET_PLAYERS.forEach(p=>{
+
+    const already =
+      isPlayerSigned(p.id);
+
+    html += `
+
+      <div class="market-card">
+
+        <h3>${p.name}</h3>
+
+        <div class="role">
+          ${p.role}
+        </div>
+
+        <div class="stat">
+          OVR ${p.ovr}
+        </div>
+
+        <div class="stat">
+          POT ${p.potential}
+        </div>
+
+        <hr>
+
+        <p>
+          💰 Transfer:
+          <span class="money">
+            ${money(p.price)}
+          </span>
+        </p>
+
+        <p>
+          💵 Gaji:
+          ${money(p.salary)}
+          / minggu
+        </p>
+
+        <select id="contract_${p.id}">
+
+          <option value="1">
+            Kontrak 1 Tahun
+          </option>
+
+          <option value="2" selected>
+            Kontrak 2 Tahun
+          </option>
+
+          <option value="3">
+            Kontrak 3 Tahun
+          </option>
+
+        </select>
+
+        <br>
+
+        ${
+          already
+          ?
+          `<button disabled>
+            Sudah Dikontrak
+          </button>`
+          :
+          `<button
+            class="green"
+            onclick="signPlayer('${p.id}')">
+            Rekrut
+          </button>`
+        }
+
+      </div>
+
+    `;
+
+  });
+
+  html += `
+
+    </div>
+
+  </div>
+
+  `;
+
+  app.innerHTML = html;
+
+}
+
+
+function isPlayerSigned(id){
+
+  for(const teamId in career.players){
+
+    const found =
+      career.players[teamId]
+        .find(p=>p.marketId===id);
+
+    if(found)
+      return true;
+
+  }
+
+  return false;
+
+}
+
+
+function signPlayer(id){
+
+  const marketPlayer =
+    MARKET_PLAYERS.find(
+      p=>p.id===id
+    );
+
+  if(!marketPlayer)
+    return;
+
+  const team =
+    getCurrentTeam();
+
+  const roster =
+    getRoster(team.id);
+
+  if(roster.length >= 12){
+
+    alert(
+      "Roster sudah penuh! Maksimal 12 pemain."
+    );
+
+    return;
+
+  }
+
+  if(isPlayerSigned(id)){
+
+    alert(
+      "Pemain ini sudah dikontrak."
+    );
+
+    return;
+
+  }
+
+  const select =
+    document.getElementById(
+      "contract_"+id
+    );
+
+  const years =
+    Number(select.value);
+
+  if(career.budget <
+     marketPlayer.price){
+
+    alert(
+      "Budget tidak cukup untuk transfer ini!"
+    );
+
+    return;
+
+  }
+
+  const player = {
+
+    id:
+      "signed_"+id+"_"+Date.now(),
+
+    marketId:id,
+
+    name:marketPlayer.name,
+
+    role:marketPlayer.role,
+
+    ovr:marketPlayer.ovr,
+
+    potential:marketPlayer.potential,
+
+    stamina:100,
+
+    form:75,
+
+    salary:marketPlayer.salary,
+
+    contractYears:years,
+
+    transferValue:
+      marketPlayer.price
+
+  };
+
+  career.budget -=
+    marketPlayer.price;
+
+  roster.push(player);
+
+  career.contracts[player.id]={
+    playerId:player.id,
+    years:years,
+    salary:player.salary
+  };
+
+  career.history.push({
+
+    type:"transfer_in",
+
+    player:player.name,
+
+    team:team.name,
+
+    fee:marketPlayer.price,
+
+    week:career.week
+
+  });
+
+  save();
+
+  alert(
+    player.name+
+    " berhasil direkrut!"
+  );
+
+  transferScreen();
+
+}
+
+
+/* =====================================================
+   RELEASE PLAYER
+   ===================================================== */
+
+function releasePlayer(index){
+
+  const team =
+    getCurrentTeam();
+
+  const roster =
+    getRoster(team.id);
+
+  const player =
+    roster[index];
+
+  if(!player)
+    return;
+
+  const confirmRelease =
+    confirm(
+      "Lepas "+player.name+"?"
+    );
+
+  if(!confirmRelease)
+    return;
+
+  const releaseFee =
+    Math.round(
+      player.salary * 4
+    );
+
+  if(career.budget <
+     releaseFee){
+
+    alert(
+      "Budget tidak cukup untuk membayar release fee."
+    );
+
+    return;
+
+  }
+
+  career.budget -=
+    releaseFee;
+
+  delete career.contracts[player.id];
+
+  if(career.lineups[team.id]){
+
+    Object.keys(
+      career.lineups[team.id]
+    ).forEach(role=>{
+
+      if(
+        career.lineups[team.id][role] ===
+        index
+      ){
+
+        delete career.lineups[team.id][role];
+
+      }
+
+    });
+
+  }
+
+  roster.splice(index,1);
+
+  /* perbaiki index lineup */
+
+  if(career.lineups[team.id]){
+
+    Object.keys(
+      career.lineups[team.id]
+    ).forEach(role=>{
+
+      const oldIndex =
+        career.lineups[team.id][role];
+
+      if(oldIndex > index){
+
+        career.lineups[team.id][role] =
+          oldIndex-1;
+
+      }
+
+    });
+
+  }
+
+  career.history.push({
+
+    type:"transfer_out",
+
+    player:player.name,
+
+    team:team.name,
+
+    fee:releaseFee,
+
+    week:career.week
+
+  });
+
+  save();
+
+  alert(
+    player.name+
+    " dilepas."
+  );
+
+  rosterScreen();
+
+}
+
+
+/* =====================================================
+   SCHEDULE / ADVANCE WEEK
+   ===================================================== */
+
+function scheduleScreen(){
+
+  app.innerHTML = header()+`
+
+  <div class="container">
+
+    <div class="card">
+
+      <h2>📅 Schedule</h2>
+
+      <p>
+        Season ${career.season}
+      </p>
+
+      <p>
+        Week ${career.week}
+      </p>
+
+      <hr>
+
+      <h3>
+        Next Week
+      </h3>
+
+      <p>
+        Saat minggu berjalan, stamina pemain
+        akan pulih dan gaji mingguan dibayar.
+      </p>
+
+      <button
+        class="green"
+        onclick="advanceWeek()">
+        ▶ Advance Week
+      </button>
+
+    </div>
+
+  </div>
+
+  `;
+
+}
+
 
 function advanceWeek(){
 
-career.week++;
+  const org =
+    getOrg();
 
-career.trainingUsed=false;
+  let payroll = 0;
 
-const team=getCurrentTeam();
+  org.teams.forEach(team=>{
 
-if(team){
+    const roster =
+      getRoster(team.id);
 
-const players=getPlayers(team.id);
+    roster.forEach(player=>{
 
-players.forEach(p=>{
+      payroll +=
+        player.salary;
 
-p.stamina=Math.min(
-100,
-p.stamina+10
-);
+      player.stamina =
+        Math.min(
+          100,
+          player.stamina+10
+        );
 
-});
+      player.form =
+        Math.min(
+          100,
+          player.form+1
+        );
 
-}
+    });
 
-saveCareer();
+  });
 
-renderDashboard();
+  if(career.budget <
+     payroll){
+
+    alert(
+      "Budget tidak cukup untuk membayar payroll minggu ini!\n\n"+
+      "Payroll: "+money(payroll)
+    );
+
+    return;
+
+  }
+
+  career.budget -=
+    payroll;
+
+  career.week++;
+
+  career.trainingUsed =
+    false;
+
+  /* setiap 18 minggu masuk season baru */
+
+  if(career.week > 18){
+
+    career.week = 1;
+
+    career.season++;
+
+    Object.keys(
+      career.players
+    ).forEach(teamId=>{
+
+      career.players[teamId]
+        .forEach(p=>{
+
+          p.contractYears =
+            Math.max(
+              0,
+              p.contractYears-1
+            );
+
+        });
+
+    });
+
+    alert(
+      "🎉 Season baru dimulai!"
+    );
+
+  }
+
+  save();
+
+  dashboard();
 
 }
 
 
 /* =====================================================
-FEATURE
-===================================================== */
+   WORLD INFO
+   ===================================================== */
 
-function openFeature(feature){
+function worldInfo(){
 
-document.getElementById("featureContent").innerHTML=`
+  app.innerHTML = `
 
-<div class="card">
+  <div class="container">
 
-<div class="title">${feature}</div>
+    <h2>🌍 WORLD</h2>
 
-<p>
-Fitur ${feature} sedang dikembangkan.
-</p>
+    <div class="card">
 
-<div class="notice">
-Sistem ini nantinya akan terhubung dengan
-career mode utama.
-</div>
+      <h3>Struktur Dunia</h3>
 
-${
-feature==="Schedule"
-?
-`
-<button class="menu-btn primary"
-onclick="advanceWeek()">
-⏭️ Lanjut ke Minggu Berikutnya
-</button>
-`
-:""
-}
+      <p>
+        World
+        →
+        Country / Region
+        →
+        League
+        →
+        Tier
+        →
+        Organization
+        →
+        Team
+      </p>
 
-</div>
-`;
+      <p>
+        Kamu mengelola organisasi dan
+        semua tim yang berada di bawahnya.
+      </p>
 
-showScreen("featureScreen");
+    </div>
+
+    <div class="card">
+
+      <h3>🌐 Konsep</h3>
+
+      <p>
+        Liga negara lain tetap berjalan
+        ketika kamu mengelola organisasi kamu.
+      </p>
+
+      <p>
+        Tier 2 dan tim academy juga dapat
+        berkembang dan mengikuti kompetisi
+        tertentu.
+      </p>
+
+    </div>
+
+    <button onclick="home()">
+      ← Kembali
+    </button>
+
+  </div>
+
+  `;
+
 }
 
 
 /* =====================================================
-WORLD
-===================================================== */
+   RESET
+   ===================================================== */
 
-function openWorld(){
+function resetCareer(){
 
-const box=document.getElementById("worldList");
-box.innerHTML="";
+  const yes =
+    confirm(
+      "Yakin ingin menghapus career?"
+    );
 
-WORLD.countries.forEach(country=>{
+  if(!yes)
+    return;
 
-const div=document.createElement("div");
-div.className="card";
+  localStorage.removeItem(
+    SAVE_KEY
+  );
 
-let text="";
+  career = null;
 
-country.leagues.forEach(l=>{
+  home();
 
-text+=`
-<div style="
-padding:9px 0;
-border-top:1px solid #202637">
-<strong>${l.name}</strong><br>
-<span style="color:#929bad;font-size:12px">
-Tier ${l.tier}
-</span>
-</div>
-`;
-
-});
-
-div.innerHTML=`
-<h3>🌎 ${country.name}</h3>
-<div style="margin-top:10px">${text}</div>
-`;
-
-box.appendChild(div);
-
-});
-
-showScreen("worldScreen");
 }
 
 
-function backFromWorld(){
+/* =====================================================
+   START APP
+   ===================================================== */
 
-if(career.organization){
+if(load()){
 
-renderDashboard();
-showScreen("dashboardScreen");
+  dashboard();
 
 }else{
 
-showScreen("mainMenu");
-
-}
-
-}
-
-
-/* =====================================================
-CONTINUE
-===================================================== */
-
-function continueCareer(){
-
-const saved=localStorage.getItem(
-"MPL_WORLD_MANAGER_CAREER"
-);
-
-if(!saved){
-
-alert("Belum ada karier yang tersimpan.");
-return;
-
-}
-
-try{
-
-career=JSON.parse(saved);
-
-renderDashboard();
-showScreen("dashboardScreen");
-
-}catch(e){
-
-alert("Data karier rusak.");
-
-}
-
-}
-
-
-/* =====================================================
-LOAD
-===================================================== */
-
-const saved=localStorage.getItem(
-"MPL_WORLD_MANAGER_CAREER"
-);
-
-if(saved){
-
-try{
-career=JSON.parse(saved);
-}catch(e){
-console.log("Save error");
-}
+  home();
 
 }
 
