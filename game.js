@@ -443,12 +443,24 @@ function simulateGame(homeId, awayId) {
    BO3
 ===================================================== */
 
-function simulateBo3(homeId, awayId) {
+
+    }
+
+    return {
+
+        winner:
+            homeGames === 2
+            ? homeId
+            : awayId,
+
+        lfunction simulateBo3(homeId, awayId) {
 
     let homeGames = 0;
     let awayGames = 0;
 
     let mvp = "-";
+
+    const games = [];
 
     while (
         homeGames < 2 &&
@@ -461,9 +473,27 @@ function simulateBo3(homeId, awayId) {
         mvp = result.mvp;
 
         if (result.winner === homeId) {
+
             homeGames++;
+
+            games.push({
+                number: games.length + 1,
+                winner: homeId,
+                loser: awayId,
+                mvp: result.mvp
+            });
+
         } else {
+
             awayGames++;
+
+            games.push({
+                number: games.length + 1,
+                winner: awayId,
+                loser: homeId,
+                mvp: result.mvp
+            });
+
         }
 
     }
@@ -476,6 +506,21 @@ function simulateBo3(homeId, awayId) {
             : awayId,
 
         loser:
+            homeGames === 2
+            ? awayId
+            : homeId,
+
+        homeGames: homeGames,
+
+        awayGames: awayGames,
+
+        mvp: mvp,
+
+        games: games
+
+    };
+
+        }oser:
             homeGames === 2
             ? awayId
             : homeId,
