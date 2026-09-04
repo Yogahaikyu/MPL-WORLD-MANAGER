@@ -3,7 +3,9 @@
    MPL INDONESIA SEASON 18
 ===================================================== */
 
-const SAVE_KEY = "mpl_world_manager_v4";
+const SAVE_KEY = "mpl_world_manager_v5";
+
+let game;
 
 
 /* =====================================================
@@ -129,8 +131,6 @@ const TEAM_DATA = [
 
 const PLAYER_DATA = [
 
-    /* ALTER EGO */
-
     ["p001","Nino","EXP","alterego",84,91],
     ["p002","Alexander","Roam","alterego",82,88],
     ["p003","Dingarai","Gold","alterego",83,90],
@@ -140,16 +140,12 @@ const PLAYER_DATA = [
     ["p007","Affan","Jungle","alterego",78,86],
     ["p008","Ivann","Roam","alterego",77,84],
 
-    /* ONIC */
-
     ["p009","Kiboy","Roam","onic",91,95],
     ["p010","Sanz","Mid","onic",94,97],
     ["p011","Kairi","Jungle","onic",95,98],
     ["p012","Lutpi","EXP","onic",86,92],
     ["p013","Kelra","Gold","onic",94,98],
     ["p014","SSamuel","Roam","onic",80,87],
-
-    /* RRQ */
 
     ["p015","Hajirin","Mid","rrq",82,90],
     ["p016","Arthur","Gold","rrq",84,91],
@@ -159,8 +155,6 @@ const PLAYER_DATA = [
     ["p020","Habil","Gold","rrq",79,87],
     ["p021","Clayyy","Mid","rrq",89,94],
 
-    /* EVOS */
-
     ["p022","Alberttt","Jungle","evos",92,96],
     ["p023","Erlan","Gold","evos",82,89],
     ["p024","Vell","EXP","evos",81,89],
@@ -168,16 +162,12 @@ const PLAYER_DATA = [
     ["p026","Rendyyy","EXP","evos",77,85],
     ["p027","Ryzaa","Mid","evos",80,88],
 
-    /* BIGETRON */
-
     ["p028","Morenooo","Mid","btr",84,92],
     ["p029","EMANN","Gold","btr",89,95],
     ["p030","Finn","Roam","btr",81,89],
     ["p031","Nnael","Jungle","btr",86,93],
     ["p032","Shogun","EXP","btr",82,90],
     ["p033","Miguel","Gold","btr",78,87],
-
-    /* DEWA */
 
     ["p034","Octa","Mid","dewa",81,89],
     ["p035","Qinn","EXP","dewa",80,88],
@@ -187,16 +177,12 @@ const PLAYER_DATA = [
     ["p039","Rul Good","Roam","dewa",77,85],
     ["p040","Hazle","Jungle","dewa",76,85],
 
-    /* GEEK */
-
     ["p041","Aboyy","Mid","geek",86,92],
     ["p042","Nazara","Jungle","geek",82,90],
     ["p043","Kennzyyskie","Gold","geek",81,89],
     ["p044","Marcel","EXP","geek",80,88],
     ["p045","Febriii","EXP","geek",78,86],
     ["p046","Frenzyy","Roam","geek",80,88],
-
-    /* NAVI */
 
     ["p047","Karss","EXP","navi",80,88],
     ["p048","Andoryuuu","Jungle","navi",82,90],
@@ -205,8 +191,6 @@ const PLAYER_DATA = [
     ["p051","Jiizee","Mid","navi",81,90],
     ["p052","Febbb","EXP","navi",77,86],
     ["p053","Joshuaa","Jungle","navi",78,87],
-
-    /* TEAM LIQUID */
 
     ["p054","Aran","EXP","tlid",87,93],
     ["p055","Drichel","Mid","tlid",84,92],
@@ -218,6 +202,10 @@ const PLAYER_DATA = [
 ];
 
 
+/* =====================================================
+   BUILD PLAYERS
+===================================================== */
+
 function buildPlayers() {
 
     return PLAYER_DATA.map(function(p) {
@@ -228,10 +216,13 @@ function buildPlayers() {
             name: p[1],
             role: p[2],
             teamId: p[3],
+
             rating: p[4],
             potential: p[5],
+
             morale: 80,
             stamina: 100,
+
             kills: 0,
             deaths: 0,
             assists: 0
@@ -241,13 +232,6 @@ function buildPlayers() {
     });
 
 }
-
-
-/* =====================================================
-   GAME OBJECT
-===================================================== */
-
-let game;
 
 
 /* =====================================================
@@ -284,15 +268,19 @@ function getTeamPlayers(teamId) {
 function formatMoney(value) {
 
     if (value >= 1000000000) {
+
         return "Rp " +
-            (value / 1000000000).toFixed(1)
-            + " M";
+            (value / 1000000000).toFixed(1) +
+            " M";
+
     }
 
     if (value >= 1000000) {
+
         return "Rp " +
-            (value / 1000000).toFixed(0)
-            + " Jt";
+            (value / 1000000).toFixed(0) +
+            " Jt";
+
     }
 
     return "Rp " +
@@ -304,7 +292,8 @@ function formatMoney(value) {
 function random(min, max) {
 
     return Math.floor(
-        Math.random() * (max - min + 1)
+        Math.random() *
+        (max - min + 1)
     ) + min;
 
 }
@@ -346,7 +335,32 @@ function createStandings() {
 function getStanding(teamId) {
 
     return game.standings.find(function(row) {
+
         return row.teamId === teamId;
+
+    });
+
+}
+
+
+function getSortedStandings() {
+
+    return [...game.standings].sort(function(a, b) {
+
+        if (b.points !== a.points) {
+
+            return b.points - a.points;
+
+        }
+
+        if (b.gameDiff !== a.gameDiff) {
+
+            return b.gameDiff - a.gameDiff;
+
+        }
+
+        return b.wins - a.wins;
+
     });
 
 }
@@ -365,7 +379,9 @@ function teamPower(teamId) {
 
     const total =
         players.reduce(function(sum, player) {
+
             return sum + player.rating;
+
         }, 0);
 
     const average =
@@ -374,10 +390,10 @@ function teamPower(teamId) {
     const team =
         getTeam(teamId);
 
-    return average
-        + (team.reputation * 0.08)
-        + (team.chemistry * 0.05)
-        + (team.morale * 0.05);
+    return average +
+        (team.reputation * 0.08) +
+        (team.chemistry * 0.05) +
+        (team.morale * 0.05);
 
 }
 
@@ -403,9 +419,13 @@ function simulateGame(homeId, awayId) {
     let winner;
 
     if (homeScore >= awayScore) {
+
         winner = homeId;
+
     } else {
+
         winner = awayId;
+
     }
 
     const loser =
@@ -420,7 +440,9 @@ function simulateGame(homeId, awayId) {
         winnerPlayers
         .slice()
         .sort(function(a, b) {
+
             return b.rating - a.rating;
+
         })[0];
 
     return {
@@ -443,19 +465,10 @@ function simulateGame(homeId, awayId) {
    BO3
 ===================================================== */
 
-
-    }
-
-    return {
-
-        winner:
-            homeGames === 2
-            ? homeId
-            : awayId,
-
-        lfunction simulateBo3(homeId, awayId) {
+function simulateBo3(homeId, awayId) {
 
     let homeGames = 0;
+
     let awayGames = 0;
 
     let mvp = "-";
@@ -468,33 +481,38 @@ function simulateGame(homeId, awayId) {
     ) {
 
         const result =
-            simulateGame(homeId, awayId);
-
-        mvp = result.mvp;
+            simulateGame(
+                homeId,
+                awayId
+            );
 
         if (result.winner === homeId) {
 
             homeGames++;
 
-            games.push({
-                number: games.length + 1,
-                winner: homeId,
-                loser: awayId,
-                mvp: result.mvp
-            });
-
         } else {
 
             awayGames++;
 
-            games.push({
-                number: games.length + 1,
-                winner: awayId,
-                loser: homeId,
-                mvp: result.mvp
-            });
-
         }
+
+        mvp = result.mvp;
+
+        games.push({
+
+            game:
+                games.length + 1,
+
+            winner:
+                result.winner,
+
+            loser:
+                result.loser,
+
+            mvp:
+                result.mvp
+
+        });
 
     }
 
@@ -510,26 +528,17 @@ function simulateGame(homeId, awayId) {
             ? awayId
             : homeId,
 
-        homeGames: homeGames,
+        homeGames:
+            homeGames,
 
-        awayGames: awayGames,
+        awayGames:
+            awayGames,
 
-        mvp: mvp,
+        mvp:
+            mvp,
 
-        games: games
-
-    };
-
-        }oser:
-            homeGames === 2
-            ? awayId
-            : homeId,
-
-        homeGames: homeGames,
-
-        awayGames: awayGames,
-
-        mvp: mvp
+        games:
+            games
 
     };
 
@@ -543,9 +552,12 @@ function simulateGame(homeId, awayId) {
 function simulateBo5(homeId, awayId) {
 
     let homeGames = 0;
+
     let awayGames = 0;
 
     let mvp = "-";
+
+    const games = [];
 
     while (
         homeGames < 3 &&
@@ -553,15 +565,38 @@ function simulateBo5(homeId, awayId) {
     ) {
 
         const result =
-            simulateGame(homeId, awayId);
+            simulateGame(
+                homeId,
+                awayId
+            );
+
+        if (result.winner === homeId) {
+
+            homeGames++;
+
+        } else {
+
+            awayGames++;
+
+        }
 
         mvp = result.mvp;
 
-        if (result.winner === homeId) {
-            homeGames++;
-        } else {
-            awayGames++;
-        }
+        games.push({
+
+            game:
+                games.length + 1,
+
+            winner:
+                result.winner,
+
+            loser:
+                result.loser,
+
+            mvp:
+                result.mvp
+
+        });
 
     }
 
@@ -577,11 +612,17 @@ function simulateBo5(homeId, awayId) {
             ? awayId
             : homeId,
 
-        homeGames: homeGames,
+        homeGames:
+            homeGames,
 
-        awayGames: awayGames,
+        awayGames:
+            awayGames,
 
-        mvp: mvp
+        mvp:
+            mvp,
+
+        games:
+            games
 
     };
 
@@ -595,9 +636,12 @@ function simulateBo5(homeId, awayId) {
 function simulateBo7(homeId, awayId) {
 
     let homeGames = 0;
+
     let awayGames = 0;
 
     let mvp = "-";
+
+    const games = [];
 
     while (
         homeGames < 4 &&
@@ -605,15 +649,38 @@ function simulateBo7(homeId, awayId) {
     ) {
 
         const result =
-            simulateGame(homeId, awayId);
+            simulateGame(
+                homeId,
+                awayId
+            );
+
+        if (result.winner === homeId) {
+
+            homeGames++;
+
+        } else {
+
+            awayGames++;
+
+        }
 
         mvp = result.mvp;
 
-        if (result.winner === homeId) {
-            homeGames++;
-        } else {
-            awayGames++;
-        }
+        games.push({
+
+            game:
+                games.length + 1,
+
+            winner:
+                result.winner,
+
+            loser:
+                result.loser,
+
+            mvp:
+                result.mvp
+
+        });
 
     }
 
@@ -629,11 +696,17 @@ function simulateBo7(homeId, awayId) {
             ? awayId
             : homeId,
 
-        homeGames: homeGames,
+        homeGames:
+            homeGames,
 
-        awayGames: awayGames,
+        awayGames:
+            awayGames,
 
-        mvp: mvp
+        mvp:
+            mvp,
+
+        games:
+            games
 
     };
 
@@ -644,7 +717,11 @@ function simulateBo7(homeId, awayId) {
    APPLY REGULAR MATCH
 ===================================================== */
 
-function applyMatchResult(homeId, awayId, result) {
+function applyMatchResult(
+    homeId,
+    awayId,
+    result
+) {
 
     const home =
         getStanding(homeId);
@@ -655,13 +732,20 @@ function applyMatchResult(homeId, awayId, result) {
     if (!home || !away) return;
 
     home.played++;
+
     away.played++;
 
-    home.gameWins += result.homeGames;
-    home.gameLosses += result.awayGames;
+    home.gameWins +=
+        result.homeGames;
 
-    away.gameWins += result.awayGames;
-    away.gameLosses += result.homeGames;
+    home.gameLosses +=
+        result.awayGames;
+
+    away.gameWins +=
+        result.awayGames;
+
+    away.gameLosses +=
+        result.homeGames;
 
     home.gameDiff =
         home.gameWins -
@@ -674,6 +758,7 @@ function applyMatchResult(homeId, awayId, result) {
     if (result.winner === homeId) {
 
         home.wins++;
+
         home.points++;
 
         away.losses++;
@@ -681,11 +766,264 @@ function applyMatchResult(homeId, awayId, result) {
     } else {
 
         away.wins++;
+
         away.points++;
 
         home.losses++;
 
     }
+
+}
+
+
+/* =====================================================
+   QUICK MATCH
+===================================================== */
+
+function startQuickMatch() {
+
+    const homeId =
+        document.getElementById(
+            "quickHome"
+        ).value;
+
+    const awayId =
+        document.getElementById(
+            "quickAway"
+        ).value;
+
+    if (!homeId || !awayId) {
+
+        alert(
+            "Pilih kedua tim terlebih dahulu."
+        );
+
+        return;
+
+    }
+
+    if (homeId === awayId) {
+
+        alert(
+            "Tim 1 dan Tim 2 harus berbeda."
+        );
+
+        return;
+
+    }
+
+    const result =
+        simulateBo3(
+            homeId,
+            awayId
+        );
+
+    applyMatchResult(
+        homeId,
+        awayId,
+        result
+    );
+
+    game.currentMatch = {
+
+        home: homeId,
+
+        away: awayId,
+
+        homeGames:
+            result.homeGames,
+
+        awayGames:
+            result.awayGames,
+
+        winner:
+            result.winner,
+
+        loser:
+            result.loser,
+
+        mvp:
+            result.mvp,
+
+        games:
+            result.games
+
+    };
+
+    saveGame();
+
+    renderMatchResult(
+        getTeam(homeId),
+        getTeam(awayId),
+        result
+    );
+
+    if (
+        typeof refreshUI ===
+        "function"
+    ) {
+
+        refreshUI();
+
+    }
+
+    if (
+        typeof showPage ===
+        "function"
+    ) {
+
+        showPage("match");
+
+    }
+
+}
+
+
+/* =====================================================
+   MATCH RESULT
+===================================================== */
+
+function renderMatchResult(
+    home,
+    away,
+    result
+) {
+
+    const box =
+        document.getElementById(
+            "matchContainer"
+        );
+
+    if (!box) return;
+
+    let gamesHTML = "";
+
+    result.games.forEach(function(g) {
+
+        const winner =
+            getTeam(g.winner);
+
+        const loser =
+            getTeam(g.loser);
+
+        gamesHTML += `
+
+            <div class="card">
+
+                <h3>
+                    🎮 Game ${g.game}
+                </h3>
+
+                <p style="font-size:18px;">
+
+                    <b>
+                        ${winner.name}
+                    </b>
+
+                    <span class="win">
+                        WIN
+                    </span>
+
+                </p>
+
+                <p>
+                    ${loser.name}
+                    kalah
+                </p>
+
+                <p>
+                    ⭐ MVP:
+                    <b>
+                        ${g.mvp}
+                    </b>
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+    box.innerHTML = `
+
+        <div class="card">
+
+            <h2 style="text-align:center;">
+                ⚔️ MATCH RESULT
+            </h2>
+
+            <h1 style="text-align:center;">
+
+                ${home.short}
+
+                <br>
+
+                <span style="font-size:44px;">
+                    ${result.homeGames}
+                    -
+                    ${result.awayGames}
+                </span>
+
+                <br>
+
+                ${away.short}
+
+            </h1>
+
+            <div class="champion">
+
+                <div class="trophy">
+                    🏆
+                </div>
+
+                <h2>
+                    ${getTeam(result.winner).name}
+                </h2>
+
+                <p>
+                    MENANG
+                    ${result.homeGames}
+                    -
+                    ${result.awayGames}
+                </p>
+
+                <p>
+                    ⭐ MVP:
+                    <b>
+                        ${result.mvp}
+                    </b>
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>
+                🎮 Detail Pertandingan
+            </h2>
+
+            ${gamesHTML}
+
+        </div>
+
+        <div class="card">
+
+            <h2>
+                📊 Klasemen Setelah Match
+            </h2>
+
+            ${
+                typeof getStandingsTableHTML ===
+                "function"
+                ? getStandingsTableHTML(false)
+                : "Klasemen tersedia di menu Klasemen."
+            }
+
+        </div>
+
+    `;
 
 }
 
@@ -698,24 +1036,30 @@ function generateSchedule() {
 
     const ids =
         game.teams.map(function(team) {
+
             return team.id;
+
         });
 
     let schedule = [];
 
-    let rotation = ids.slice();
+    let rotation =
+        ids.slice();
 
-    /*
-       9 teams = 1 bye every round.
-       18 weeks = double round robin.
-    */
-
-    for (let round = 0; round < 9; round++) {
+    for (
+        let round = 0;
+        round < 9;
+        round++
+    ) {
 
         const current =
             rotation.slice();
 
-        for (let i = 0; i < 4; i++) {
+        for (
+            let i = 0;
+            i < 4;
+            i++
+        ) {
 
             const home =
                 current[i];
@@ -726,21 +1070,28 @@ function generateSchedule() {
             schedule.push({
 
                 id:
-                    "w" + (round + 1)
-                    + "m" + (i + 1),
+                    "w" +
+                    (round + 1) +
+                    "m" +
+                    (i + 1),
 
                 week:
                     round + 1,
 
-                home: home,
+                home:
+                    home,
 
-                away: away,
+                away:
+                    away,
 
-                played: false,
+                played:
+                    false,
 
-                homeGames: 0,
+                homeGames:
+                    0,
 
-                awayGames: 0
+                awayGames:
+                    0
 
             });
 
@@ -758,29 +1109,34 @@ function generateSchedule() {
     }
 
 
-    /*
-       Second half.
-       Home / away dibalik.
-    */
-
     const firstHalf =
         schedule.slice();
 
-    firstHalf.forEach(function(match, index) {
+    firstHalf.forEach(function(
+        match,
+        index
+    ) {
 
         schedule.push({
 
             id:
                 "w" +
-                (10 +
-                Math.floor(index / 4))
-                +
+                (
+                    10 +
+                    Math.floor(
+                        index / 4
+                    )
+                ) +
                 "m" +
-                ((index % 4) + 1),
+                (
+                    (index % 4) + 1
+                ),
 
             week:
                 10 +
-                Math.floor(index / 4),
+                Math.floor(
+                    index / 4
+                ),
 
             home:
                 match.away,
@@ -788,11 +1144,14 @@ function generateSchedule() {
             away:
                 match.home,
 
-            played: false,
+            played:
+                false,
 
-            homeGames: 0,
+            homeGames:
+                0,
 
-            awayGames: 0
+            awayGames:
+                0
 
         });
 
@@ -805,11 +1164,14 @@ function generateSchedule() {
 
 function getCurrentWeekMatches() {
 
-    return game.schedule.filter(function(match) {
+    return game.schedule.filter(
+        function(match) {
 
-        return match.week === game.week;
+            return match.week ===
+                game.week;
 
-    });
+        }
+    );
 
 }
 
@@ -820,9 +1182,13 @@ function isCurrentWeekComplete() {
         getCurrentWeekMatches();
 
     return matches.length > 0 &&
-        matches.every(function(match) {
-            return match.played;
-        });
+        matches.every(
+            function(match) {
+
+                return match.played;
+
+            }
+        );
 
 }
 
@@ -840,16 +1206,25 @@ function playScheduledMatch(index) {
 
     if (match.played) {
 
-        alert("Match ini sudah dimainkan.");
+        alert(
+            "Match ini sudah dimainkan."
+        );
 
         return;
+
     }
 
-    if (match.week !== game.week) {
+    if (
+        match.week !==
+        game.week
+    ) {
 
-        alert("Match ini bukan pada week sekarang.");
+        alert(
+            "Match ini bukan pada week sekarang."
+        );
 
         return;
+
     }
 
     const result =
@@ -872,27 +1247,59 @@ function playScheduledMatch(index) {
     match.mvp =
         result.mvp;
 
+    match.games =
+        result.games;
+
     applyMatchResult(
         match.home,
         match.away,
         result
     );
 
+    game.currentMatch = {
+
+        home:
+            match.home,
+
+        away:
+            match.away,
+
+        homeGames:
+            result.homeGames,
+
+        awayGames:
+            result.awayGames,
+
+        winner:
+            result.winner,
+
+        loser:
+            result.loser,
+
+        mvp:
+            result.mvp,
+
+        games:
+            result.games
+
+    };
+
     saveGame();
 
-    const home =
-        getTeam(match.home);
-
-    const away =
-        getTeam(match.away);
-
     renderMatchResult(
-        home,
-        away,
+        getTeam(match.home),
+        getTeam(match.away),
         result
     );
 
-    refreshUI();
+    if (
+        typeof refreshUI ===
+        "function"
+    ) {
+
+        refreshUI();
+
+    }
 
     showPage("match");
 
@@ -905,15 +1312,18 @@ function playScheduledMatch(index) {
 
 function nextMPLWeek() {
 
-    if (!isCurrentWeekComplete()) {
+    if (
+        !isCurrentWeekComplete()
+    ) {
 
         alert(
-            "Selesaikan semua pertandingan Week "
-            + game.week
-            + " terlebih dahulu."
+            "Selesaikan semua pertandingan Week " +
+            game.week +
+            " terlebih dahulu."
         );
 
         return;
+
     }
 
     if (game.week >= 18) {
@@ -921,19 +1331,38 @@ function nextMPLWeek() {
         finishMPLRegularSeason();
 
         return;
+
     }
 
     game.week++;
 
-    game.players.forEach(function(player) {
+    game.players.forEach(
+        function(player) {
 
-        player.stamina = 100;
+            player.stamina = 100;
 
-    });
+        }
+    );
 
     saveGame();
 
-    refreshUI();
+    if (
+        typeof refreshUI ===
+        "function"
+    ) {
+
+        refreshUI();
+
+    }
+
+    if (
+        typeof renderSchedule ===
+        "function"
+    ) {
+
+        renderSchedule();
+
+    }
 
 }
 
@@ -951,12 +1380,17 @@ function finishMPLRegularSeason() {
         );
 
         return;
+
     }
 
     const matches =
-        game.schedule.filter(function(match) {
-            return match.played;
-        });
+        game.schedule.filter(
+            function(match) {
+
+                return match.played;
+
+            }
+        );
 
     if (matches.length < 72) {
 
@@ -965,38 +1399,42 @@ function finishMPLRegularSeason() {
         );
 
         return;
+
     }
 
     const sorted =
-        [...game.standings].sort(function(a, b) {
-
-            if (b.points !== a.points) {
-                return b.points - a.points;
-            }
-
-            if (b.gameDiff !== a.gameDiff) {
-                return b.gameDiff - a.gameDiff;
-            }
-
-            return b.wins - a.wins;
-
-        });
+        getSortedStandings();
 
     game.regularSeasonTop6 =
-        sorted.slice(0, 6)
+        sorted
+        .slice(0, 6)
         .map(function(row) {
+
             return row.teamId;
+
         });
 
     createPlayoffs();
 
     saveGame();
 
-    if (typeof renderPlayoffs === "function") {
+    if (
+        typeof renderPlayoffs ===
+        "function"
+    ) {
+
         renderPlayoffs();
+
     }
 
-    showPage("playoffs");
+    if (
+        typeof showPage ===
+        "function"
+    ) {
+
+        showPage("playoffs");
+
+    }
 
 }
 
@@ -1010,11 +1448,17 @@ function createPlayoffs() {
     const top =
         game.regularSeasonTop6;
 
-    if (!top || top.length < 6) {
+    if (
+        !top ||
+        top.length < 6
+    ) {
 
-        alert("Top 6 belum tersedia.");
+        alert(
+            "Top 6 belum tersedia."
+        );
 
         return;
+
     }
 
     game.playoffs = {
@@ -1025,7 +1469,7 @@ function createPlayoffs() {
 
             {
                 id: "PO1",
-                round: "Play-In 1 • Seed #3 vs #6",
+                round: "Play-In 1 • #3 vs #6",
                 format: "BO5",
                 home: top[2],
                 away: top[5],
@@ -1034,7 +1478,7 @@ function createPlayoffs() {
 
             {
                 id: "PO2",
-                round: "Play-In 2 • Seed #4 vs #5",
+                round: "Play-In 2 • #4 vs #5",
                 format: "BO5",
                 home: top[3],
                 away: top[4],
@@ -1104,16 +1548,28 @@ function createPlayoffs() {
 }
 
 
+/* =====================================================
+   GET PLAYOFF
+===================================================== */
+
 function getPlayoff(id) {
 
     if (!game.playoffs) return null;
 
-    return game.playoffs.matches.find(function(match) {
-        return match.id === id;
-    });
+    return game.playoffs.matches.find(
+        function(match) {
+
+            return match.id === id;
+
+        }
+    );
 
 }
 
+
+/* =====================================================
+   UPDATE PLAYOFF BRACKET
+===================================================== */
 
 function updatePlayoffBracket() {
 
@@ -1121,7 +1577,6 @@ function updatePlayoffBracket() {
         game.playoffs;
 
     if (!p) return;
-
 
     const po1 =
         getPlayoff("PO1");
@@ -1148,7 +1603,10 @@ function updatePlayoffBracket() {
         getPlayoff("PO8");
 
 
-    if (po2 && po2.played) {
+    if (
+        po2 &&
+        po2.played
+    ) {
 
         po3.away =
             po2.winner;
@@ -1156,7 +1614,10 @@ function updatePlayoffBracket() {
     }
 
 
-    if (po1 && po1.played) {
+    if (
+        po1 &&
+        po1.played
+    ) {
 
         po4.away =
             po1.winner;
@@ -1220,6 +1681,10 @@ function updatePlayoffBracket() {
 }
 
 
+/* =====================================================
+   PLAYOFF READY
+===================================================== */
+
 function isPlayoffMatchReady(match) {
 
     if (!match) return false;
@@ -1233,6 +1698,10 @@ function isPlayoffMatchReady(match) {
 }
 
 
+/* =====================================================
+   PLAY PLAYOFF MATCH
+===================================================== */
+
 function playPlayoffMatch(id) {
 
     const match =
@@ -1240,18 +1709,23 @@ function playPlayoffMatch(id) {
 
     if (!match) return;
 
-    if (!isPlayoffMatchReady(match)) {
+    if (
+        !isPlayoffMatchReady(match)
+    ) {
 
         alert(
             "Pertandingan belum siap dimainkan."
         );
 
         return;
+
     }
 
     let result;
 
-    if (match.format === "BO7") {
+    if (
+        match.format === "BO7"
+    ) {
 
         result =
             simulateBo7(
@@ -1286,30 +1760,53 @@ function playPlayoffMatch(id) {
     match.mvp =
         result.mvp;
 
+    match.games =
+        result.games;
+
     updatePlayoffBracket();
 
     checkPlayoffFinish();
 
     saveGame();
 
-    renderPlayoffs();
+    if (
+        typeof renderPlayoffs ===
+        "function"
+    ) {
 
-    showPage("playoffs");
+        renderPlayoffs();
+
+    }
+
+    if (
+        typeof showPage ===
+        "function"
+    ) {
+
+        showPage("playoffs");
+
+    }
 
 }
 
+
+/* =====================================================
+   CHECK PLAYOFF FINISH
+===================================================== */
 
 function checkPlayoffFinish() {
 
     const po8 =
         getPlayoff("PO8");
 
-    if (!po8 || !po8.played) return;
+    if (
+        !po8 ||
+        !po8.played
+    ) {
 
-    /*
-       Grand Final sudah selesai.
-       Pemenang menjadi juara.
-    */
+        return;
+
+    }
 
     const champion =
         getTeam(po8.winner);
@@ -1319,21 +1816,29 @@ function checkPlayoffFinish() {
 
     champion.mplTitles++;
 
+    if (
+        !game.history.mpl
+    ) {
+
+        game.history.mpl = [];
+
+    }
+
     game.history.mpl.push({
 
-        season: game.season,
+        season:
+            game.season,
 
-        championId: champion.id,
+        championId:
+            champion.id,
 
-        championName: champion.name
+        championName:
+            champion.name
 
     });
 
-    /*
-       Reset untuk menyiapkan season berikutnya.
-    */
-
-    game.nextSeasonReady = true;
+    game.nextSeasonReady =
+        true;
 
     saveGame();
 
@@ -1365,10 +1870,14 @@ function saveGame() {
 function loadGame() {
 
     const saved =
-        localStorage.getItem(SAVE_KEY);
+        localStorage.getItem(
+            SAVE_KEY
+        );
 
     if (!saved) {
+
         return false;
+
     }
 
     try {
@@ -1405,7 +1914,9 @@ function createNewGame() {
 
         teams:
             JSON.parse(
-                JSON.stringify(TEAM_DATA)
+                JSON.stringify(
+                    TEAM_DATA
+                )
             ),
 
         players:
@@ -1419,6 +1930,8 @@ function createNewGame() {
 
         playoffs: null,
 
+        currentMatch: null,
+
         history: {
 
             mpl: [],
@@ -1427,7 +1940,8 @@ function createNewGame() {
 
         },
 
-        nextSeasonReady: false
+        nextSeasonReady:
+            false
 
     };
 
@@ -1458,12 +1972,6 @@ function initializeGame() {
 
     }
 
-    /*
-       Safety check.
-       Kalau data lama rusak/tidak lengkap,
-       buat game baru.
-    */
-
     if (
         !game.teams ||
         !game.players ||
@@ -1491,10 +1999,19 @@ function resetGame() {
 
     if (!yes) return;
 
-    localStorage.removeItem(SAVE_KEY);
+    localStorage.removeItem(
+        SAVE_KEY
+    );
 
     createNewGame();
 
     location.reload();
 
 }
+
+
+/* =====================================================
+   AUTO INITIALIZE
+===================================================== */
+
+initializeGame();
