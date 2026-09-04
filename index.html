@@ -4,104 +4,132 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>MPL Manager</title>
+    <title>MPL World Manager</title>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #10131a;
+            color: white;
+        }
+
+        header {
+            padding: 20px;
+            text-align: center;
+            background: #171b25;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .card {
+            background: #191e29;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #f5c542;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .team {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #303642;
+        }
+    </style>
 </head>
 
 <body>
 
-    <header>
-        <h1>🏆 MPL MANAGER</h1>
-        <p>Mobile Legends Esports Manager</p>
-    </header>
+<header>
+    <h1>🌍 MPL World Manager</h1>
+    <p>Esports Management Simulator</p>
+</header>
 
-    <main>
+<div class="container">
 
-        <section id="dashboard">
+    <div class="card">
+        <h2>🏆 Indonesia Tier 1</h2>
 
-            <div class="card">
-                <h2>👤 Manager</h2>
-                <p id="managerName">Belum memilih tim</p>
-            </div>
+        <div class="team">
+            <span>RRQ</span>
+            <span>0 PTS</span>
+        </div>
 
-            <div class="card">
-                <h2>💰 Budget</h2>
-                <p id="budget">-</p>
-            </div>
+        <div class="team">
+            <span>ONIC</span>
+            <span>0 PTS</span>
+        </div>
 
-            <div class="card">
-                <h2>🏆 Posisi</h2>
-                <p id="position">-</p>
-            </div>
+        <div class="team">
+            <span>EVOS</span>
+            <span>0 PTS</span>
+        </div>
 
-        </section>
+        <div class="team">
+            <span>BTR</span>
+            <span>0 PTS</span>
+        </div>
+    </div>
 
+    <div class="card">
+        <h2>⚔️ Pertandingan</h2>
 
-        <section class="panel">
+        <p id="match">
+            RRQ vs ONIC
+        </p>
 
-            <h2>Pilih Tim</h2>
+        <button onclick="mainMatch()">
+            MAINKAN MATCH
+        </button>
 
-            <select id="teamSelect">
-                <option value="">-- Pilih Tim --</option>
-                <option value="RRQ">RRQ</option>
-                <option value="ONIC">ONIC</option>
-                <option value="EVOS">EVOS</option>
-                <option value="BTR">Bigetron</option>
-            </select>
+        <p id="result"></p>
+    </div>
 
-            <button onclick="startGame()">
-                Mulai Karier
-            </button>
+</div>
 
-        </section>
+<script>
 
+function mainMatch() {
 
-        <section class="panel">
+    const rrq = 85;
+    const onic = 88;
 
-            <h2>📅 Pertandingan Berikutnya</h2>
+    const rrqPower = rrq + Math.random() * 20;
+    const onicPower = onic + Math.random() * 20;
 
-            <div id="nextMatch">
-                Pilih tim terlebih dahulu.
-            </div>
+    const result = document.getElementById("result");
 
-            <button onclick="simulateMatch()">
-                Simulasikan Match
-            </button>
+    if (rrqPower > onicPower) {
+        result.innerHTML = "🏆 RRQ MENANG!";
+    } else {
+        result.innerHTML = "🏆 ONIC MENANG!";
+    }
+}
 
-        </section>
-
-
-        <section class="panel">
-
-            <h2>📊 Klasemen</h2>
-
-            <table>
-
-                <thead>
-                    <tr>
-                        <th>Pos</th>
-                        <th>Tim</th>
-                        <th>Menang</th>
-                        <th>Kalah</th>
-                        <th>Poin</th>
-                    </tr>
-                </thead>
-
-                <tbody id="standings">
-                </tbody>
-
-            </table>
-
-        </section>
-
-    </main>
-
-    <footer>
-        <p>MPL Manager Fan Project</p>
-    </footer>
-
-    <script src="app.js"></script>
+</script>
 
 </body>
 </html>
