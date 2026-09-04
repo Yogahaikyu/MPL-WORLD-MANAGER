@@ -6,276 +6,190 @@
 <title>MPL WORLD MANAGER</title>
 
 <style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background:
-        radial-gradient(circle at top, #172554 0%, #050816 45%, #02030a 100%);
-    color: white;
-    min-height: 100vh;
+body{
+    background:#080b14;
+    color:white;
+    min-height:100vh;
 }
 
-button {
-    font-family: inherit;
-    cursor: pointer;
+button{
+    border:0;
+    cursor:pointer;
 }
 
-.app {
-    max-width: 1100px;
-    margin: auto;
-    min-height: 100vh;
-    padding: 20px;
+.header{
+    background:#111625;
+    padding:18px;
+    text-align:center;
+    border-bottom:1px solid #252b3d;
 }
 
-/* HEADER */
-
-.header {
-    text-align: center;
-    padding: 35px 10px 25px;
+.header h1{
+    color:#ffd84d;
+    font-size:25px;
 }
 
-.logo {
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: 2px;
+.header p{
+    color:#8d96aa;
+    margin-top:5px;
+    font-size:13px;
 }
 
-.logo span {
-    color: #38bdf8;
+.container{
+    width:94%;
+    max-width:900px;
+    margin:25px auto;
 }
 
-.subtitle {
-    margin-top: 8px;
-    color: #94a3b8;
-    font-size: 14px;
+.screen{
+    display:none;
 }
 
-/* SCREEN */
-
-.screen {
-    display: none;
+.screen.active{
+    display:block;
 }
 
-.screen.active {
-    display: block;
+.title{
+    font-size:24px;
+    margin-bottom:8px;
 }
 
-/* MAIN MENU */
-
-.menu-box {
-    max-width: 500px;
-    margin: 40px auto;
-    background: rgba(15, 23, 42, .9);
-    border: 1px solid #334155;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+.subtitle{
+    color:#929bad;
+    margin-bottom:20px;
 }
 
-.menu-title {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 25px;
+.menu-btn{
+    width:100%;
+    padding:18px;
+    margin:9px 0;
+    border-radius:12px;
+    background:#171d2d;
+    color:white;
+    text-align:left;
+    font-size:16px;
+    border:1px solid #252d42;
 }
 
-.menu-button {
-    width: 100%;
-    padding: 17px;
-    margin-bottom: 12px;
-    border: none;
-    border-radius: 12px;
-    background: #1e293b;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+.menu-btn:hover{
+    background:#20283b;
 }
 
-.menu-button:hover {
-    background: #2563eb;
+.primary{
+    background:#ffd84d;
+    color:#111;
+    font-weight:bold;
 }
 
-/* PAGE TITLE */
-
-.page-title {
-    text-align: center;
-    font-size: 28px;
-    margin: 20px 0 8px;
+.card{
+    background:#121827;
+    border:1px solid #252d42;
+    border-radius:14px;
+    padding:18px;
+    margin-bottom:12px;
 }
 
-.page-desc {
-    text-align: center;
-    color: #94a3b8;
-    margin-bottom: 25px;
+.card h3{
+    margin-bottom:7px;
 }
 
-/* CARDS */
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 15px;
+.card p{
+    color:#929bad;
+    font-size:14px;
 }
 
-.card {
-    background: rgba(15,23,42,.9);
-    border: 1px solid #334155;
-    border-radius: 16px;
-    padding: 22px;
-    transition: .2s;
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
 }
 
-.card:hover {
-    transform: translateY(-3px);
-    border-color: #38bdf8;
+.small-card{
+    background:#151c2c;
+    border:1px solid #293248;
+    padding:17px;
+    border-radius:13px;
 }
 
-.flag {
-    font-size: 38px;
-    margin-bottom: 12px;
+.small-card:hover{
+    background:#20293d;
 }
 
-.card h3 {
-    font-size: 19px;
-    margin-bottom: 7px;
+.small-card h3{
+    font-size:17px;
+    margin-bottom:6px;
 }
 
-.card p {
-    color: #94a3b8;
-    font-size: 13px;
-    margin-bottom: 18px;
+.small-card p{
+    color:#929bad;
+    font-size:13px;
 }
 
-.select-button {
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    background: #2563eb;
-    color: white;
-    font-weight: bold;
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#272f43;
+    color:#ffd84d;
+    font-size:11px;
+    margin-top:8px;
 }
 
-.select-button:hover {
-    background: #3b82f6;
+.back{
+    background:#252c3e;
+    color:white;
+    padding:10px 15px;
+    border-radius:8px;
+    margin-bottom:20px;
 }
 
-/* TEAM */
-
-.team-card {
-    position: relative;
+.info{
+    background:#0e1320;
+    border:1px solid #252d42;
+    border-radius:13px;
+    padding:17px;
+    margin-bottom:18px;
 }
 
-.tier {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 7px;
-    background: #334155;
-    color: #cbd5e1;
-    font-size: 11px;
-    font-weight: bold;
-    margin-bottom: 12px;
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:8px 0;
+    border-bottom:1px solid #202637;
 }
 
-.team-logo {
-    width: 65px;
-    height: 65px;
-    border-radius: 15px;
-    background: #1e293b;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 25px;
-    font-weight: 900;
-    margin-bottom: 15px;
+.info-row:last-child{
+    border-bottom:0;
 }
 
-/* TOP INFO */
-
-.path {
-    background: #0f172a;
-    border: 1px solid #334155;
-    padding: 13px 16px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    color: #cbd5e1;
-    font-size: 14px;
+.info-row span:first-child{
+    color:#8992a6;
 }
 
-.path strong {
-    color: #38bdf8;
+.team-active{
+    border:1px solid #ffd84d;
+    background:#1c2130;
 }
 
-/* BUTTONS */
-
-.back-button {
-    border: 1px solid #475569;
-    background: #0f172a;
-    color: white;
-    padding: 11px 16px;
-    border-radius: 10px;
-    margin-bottom: 20px;
+.notice{
+    padding:14px;
+    border-radius:10px;
+    background:#171d2d;
+    color:#aab2c2;
+    font-size:13px;
+    margin-top:15px;
 }
 
-.back-button:hover {
-    background: #1e293b;
-}
-
-.start-button {
-    display: block;
-    width: 100%;
-    max-width: 500px;
-    margin: 30px auto;
-    padding: 18px;
-    border: none;
-    border-radius: 13px;
-    background: linear-gradient(90deg,#2563eb,#06b6d4);
-    color: white;
-    font-size: 18px;
-    font-weight: 900;
-}
-
-.start-button:disabled {
-    opacity: .4;
-    cursor: not-allowed;
-}
-
-/* SELECTED */
-
-.selected {
-    border-color: #22c55e !important;
-    box-shadow: 0 0 0 2px rgba(34,197,94,.25);
-}
-
-.selected-label {
-    color: #22c55e;
-    font-size: 12px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-/* RESPONSIVE */
-
-@media(max-width:600px) {
-
-    .app {
-        padding: 12px;
-    }
-
-    .logo {
-        font-size: 30px;
-    }
-
-    .page-title {
-        font-size: 23px;
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
+@media(max-width:600px){
+    .grid{
+        grid-template-columns:1fr;
     }
 }
 </style>
@@ -283,259 +197,188 @@ button {
 
 <body>
 
-<div class="app">
+<div class="header">
+    <h1>MPL WORLD MANAGER</h1>
+    <p>Global Mobile Legends Organization Manager</p>
+</div>
 
-    <header class="header">
-        <div class="logo">MPL <span>WORLD</span> MANAGER</div>
-        <div class="subtitle">
-            Global Mobile Legends Esports Career
-        </div>
-    </header>
+<div class="container">
 
+<!-- ================= MENU UTAMA ================= -->
 
-    <!-- ================= MENU UTAMA ================= -->
+<div id="mainMenu" class="screen active">
 
-    <section id="mainMenu" class="screen active">
+    <div class="title">Menu Utama</div>
+    <div class="subtitle">Bangun organisasi esports kamu.</div>
 
-        <div class="menu-box">
+    <button class="menu-btn primary" onclick="newCareer()">
+        ▶ MULAI KARIER
+    </button>
 
-            <div class="menu-title">
-                MANAGER CAREER
-            </div>
+    <button class="menu-btn" onclick="continueCareer()">
+        ↻ LANJUTKAN KARIER
+    </button>
 
-            <button class="menu-button" onclick="showCountryScreen()">
-                ▶ MULAI KARIER
-            </button>
+    <button class="menu-btn" onclick="openWorld()">
+        🌎 WORLD
+    </button>
 
-            <button class="menu-button" onclick="continueCareer()">
-                ↻ LANJUTKAN KARIER
-            </button>
-
-            <button class="menu-button" onclick="showWorldInfo()">
-                🌎 WORLD
-            </button>
-
-        </div>
-
-    </section>
+</div>
 
 
-    <!-- ================= PILIH NEGARA ================= -->
+<!-- ================= PILIH NEGARA ================= -->
 
-    <section id="countryScreen" class="screen">
+<div id="countryScreen" class="screen">
 
-        <button class="back-button" onclick="showScreen('mainMenu')">
-            ← Kembali
-        </button>
+    <button class="back" onclick="showScreen('mainMenu')">← Kembali</button>
 
-        <h1 class="page-title">
-            PILIH NEGARA
-        </h1>
+    <div class="title">Pilih Negara / Region</div>
+    <div class="subtitle">Tentukan wilayah awal kariermu.</div>
 
-        <p class="page-desc">
-            Pilih negara atau region tempat organisasi kamu berkompetisi.
-        </p>
+    <div id="countryList"></div>
 
-        <div id="countryList" class="grid"></div>
-
-    </section>
+</div>
 
 
-    <!-- ================= PILIH LIGA ================= -->
+<!-- ================= PILIH LIGA ================= -->
 
-    <section id="leagueScreen" class="screen">
+<div id="leagueScreen" class="screen">
 
-        <button class="back-button" onclick="showCountryScreen()">
-            ← Kembali
-        </button>
+    <button class="back" onclick="showScreen('countryScreen')">← Kembali</button>
 
-        <div class="path">
-            Negara:
-            <strong id="selectedCountryName"></strong>
-        </div>
+    <div class="title">Pilih Liga</div>
+    <div id="leagueList"></div>
 
-        <h1 class="page-title">
-            PILIH LIGA
-        </h1>
-
-        <p class="page-desc">
-            Pilih kompetisi yang ingin menjadi awal kariermu.
-        </p>
-
-        <div id="leagueList" class="grid"></div>
-
-    </section>
+</div>
 
 
-    <!-- ================= PILIH ORGANISASI ================= -->
+<!-- ================= PILIH ORGANISASI ================= -->
 
-    <section id="organizationScreen" class="screen">
+<div id="organizationScreen" class="screen">
 
-        <button class="back-button" onclick="showLeagueScreen()">
-            ← Kembali
-        </button>
+    <button class="back" onclick="showScreen('leagueScreen')">← Kembali</button>
 
-        <div class="path">
-            <span id="organizationPath"></span>
-        </div>
+    <div class="title">Pilih Organisasi</div>
+    <div class="subtitle">
+        Kamu akan mengelola seluruh organisasi.
+    </div>
 
-        <h1 class="page-title">
-            PILIH ORGANISASI
-        </h1>
+    <div id="organizationList"></div>
 
-        <p class="page-desc">
-            Pilih organisasi yang akan kamu kelola.
-        </p>
-
-        <div id="organizationList" class="grid"></div>
-
-    </section>
+</div>
 
 
-    <!-- ================= PILIH TIM ================= -->
+<!-- ================= PILIH TIM ================= -->
 
-    <section id="teamScreen" class="screen">
+<div id="teamScreen" class="screen">
 
-        <button class="back-button" onclick="showOrganizationScreen()">
-            ← Kembali
-        </button>
+    <button class="back" onclick="showScreen('organizationScreen')">
+        ← Kembali
+    </button>
 
-        <div class="path">
-            <span id="teamPath"></span>
+    <div class="title">Pilih Tim</div>
+    <div class="subtitle">
+        Pilih tim yang menjadi awal kariermu.
+    </div>
+
+    <div id="teamList"></div>
+
+</div>
+
+
+<!-- ================= DASHBOARD ORGANISASI ================= -->
+
+<div id="dashboardScreen" class="screen">
+
+    <div class="title">Dashboard Organisasi</div>
+
+    <div id="organizationInfo"></div>
+
+    <h3 style="margin-bottom:12px;">
+        Tim Dalam Organisasi
+    </h3>
+
+    <div id="relatedTeams"></div>
+
+    <h3 style="margin:22px 0 12px;">
+        Manajemen
+    </h3>
+
+    <div class="grid">
+
+        <div class="small-card" onclick="openFeature('Roster')">
+            <h3>👥 Roster</h3>
+            <p>Kelola pemain setiap tim.</p>
         </div>
 
-        <h1 class="page-title">
-            PILIH TIM
-        </h1>
-
-        <p class="page-desc">
-            Pilih tim yang menjadi tim utama kariermu.
-            Tim lain dalam organisasi tetap berada di bawah manajemenmu.
-        </p>
-
-        <div id="teamList" class="grid"></div>
-
-        <button
-            id="startCareerButton"
-            class="start-button"
-            disabled
-            onclick="startCareer()">
-            MULAI KARIER
-        </button>
-
-    </section>
-
-
-    <!-- ================= WORLD INFO ================= -->
-
-    <section id="worldScreen" class="screen">
-
-        <button class="back-button" onclick="showScreen('mainMenu')">
-            ← Kembali
-        </button>
-
-        <h1 class="page-title">
-            🌎 MPL WORLD
-        </h1>
-
-        <p class="page-desc">
-            Dunia kompetitif MLBB global.
-        </p>
-
-        <div class="grid">
-
-            <div class="card">
-                <div class="flag">🌍</div>
-                <h3>GLOBAL</h3>
-                <p>
-                    Negara, liga, organisasi, tim dan turnamen
-                    berada dalam satu dunia.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="flag">🏢</div>
-                <h3>ORGANISASI</h3>
-                <p>
-                    Satu organisasi dapat mempunyai beberapa tim
-                    di berbagai liga dan negara.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="flag">🏆</div>
-                <h3>INTERNATIONAL</h3>
-                <p>
-                    Tim Tier 1, Tier 2 dan tim lainnya dapat
-                    mempunyai jalur menuju turnamen internasional.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="flag">🚫</div>
-                <h3>TANPA DEGRADASI</h3>
-                <p>
-                    Tidak ada sistem promosi dan degradasi.
-                    Liga mempunyai struktur tetap.
-                </p>
-            </div>
-
+        <div class="small-card" onclick="openFeature('Transfer')">
+            <h3>🔄 Transfer</h3>
+            <p>Rekrut dan transfer pemain.</p>
         </div>
 
-    </section>
-
-
-    <!-- ================= DASHBOARD PLACEHOLDER ================= -->
-
-    <section id="careerScreen" class="screen">
-
-        <div class="path">
-            Organisasi:
-            <strong id="careerOrganization"></strong>
-            <br>
-            Tim:
-            <strong id="careerTeam"></strong>
-            <br>
-            Liga:
-            <strong id="careerLeague"></strong>
+        <div class="small-card" onclick="openFeature('Training')">
+            <h3>🧠 Training</h3>
+            <p>Latihan dan perkembangan pemain.</p>
         </div>
 
-        <h1 class="page-title">
-            🏢 CAREER MANAGER
-        </h1>
-
-        <p class="page-desc">
-            Karier berhasil dibuat.
-        </p>
-
-        <div class="grid">
-
-            <div class="card">
-                <div class="flag">👑</div>
-                <h3>Tim Utama</h3>
-                <p id="careerMainTeam"></p>
-            </div>
-
-            <div class="card">
-                <div class="flag">🌱</div>
-                <h3>Tim Akademi</h3>
-                <p>
-                    Nantinya dapat kamu kelola dari organisasi yang sama.
-                </p>
-            </div>
-
-            <div class="card">
-                <div class="flag">🌎</div>
-                <h3>World</h3>
-                <p>
-                    Nantinya kamu dapat melihat liga dan pertandingan
-                    negara lain.
-                </p>
-            </div>
-
+        <div class="small-card" onclick="openFeature('Staff')">
+            <h3>👔 Staff</h3>
+            <p>Kelola coach dan staff.</p>
         </div>
 
-    </section>
+        <div class="small-card" onclick="openFeature('Schedule')">
+            <h3>📅 Schedule</h3>
+            <p>Lihat jadwal pertandingan.</p>
+        </div>
+
+        <div class="small-card" onclick="openFeature('Tournaments')">
+            <h3>🏆 Tournaments</h3>
+            <p>Ikuti turnamen nasional dan internasional.</p>
+        </div>
+
+    </div>
+
+    <button class="menu-btn" style="margin-top:18px;" onclick="openWorld()">
+        🌎 WORLD
+    </button>
+
+    <button class="menu-btn" onclick="showScreen('mainMenu')">
+        🚪 KELUAR KE MENU
+    </button>
+
+</div>
+
+
+<!-- ================= FEATURE ================= -->
+
+<div id="featureScreen" class="screen">
+
+    <button class="back" onclick="showScreen('dashboardScreen')">
+        ← Kembali
+    </button>
+
+    <div id="featureContent"></div>
+
+</div>
+
+
+<!-- ================= WORLD ================= -->
+
+<div id="worldScreen" class="screen">
+
+    <button class="back" onclick="backFromWorld()">
+        ← Kembali
+    </button>
+
+    <div class="title">🌎 WORLD</div>
+
+    <div class="subtitle">
+        Dunia esports terus berjalan.
+    </div>
+
+    <div id="worldList"></div>
+
+</div>
 
 </div>
 
@@ -543,258 +386,260 @@ button {
 <script>
 
 /* =====================================================
-   DATABASE DASAR
-   ===================================================== */
+   DATA WORLD
+===================================================== */
 
 const WORLD = {
 
     countries: [
 
         {
-            id: "id",
-            name: "Indonesia",
-            flag: "🇮🇩"
-        },
-
-        {
-            id: "ph",
-            name: "Philippines",
-            flag: "🇵🇭"
-        },
-
-        {
-            id: "my",
-            name: "Malaysia",
-            flag: "🇲🇾"
-        },
-
-        {
-            id: "sg",
-            name: "Singapore",
-            flag: "🇸🇬"
-        },
-
-        {
-            id: "kh",
-            name: "Cambodia",
-            flag: "🇰🇭"
-        },
-
-        {
-            id: "mm",
-            name: "Myanmar",
-            flag: "🇲🇲"
-        },
-
-        {
-            id: "br",
-            name: "Brazil",
-            flag: "🇧🇷"
-        },
-
-        {
-            id: "tr",
-            name: "Türkiye",
-            flag: "🇹🇷"
-        }
-
-    ],
-
-
-    leagues: [
-
-        {
-            id: "mpl-id",
-            country: "id",
-            name: "MPL Indonesia",
-            tier: 1
-        },
-
-        {
-            id: "mdl-id",
-            country: "id",
-            name: "MDL Indonesia",
-            tier: 2
-        },
-
-        {
-            id: "mpl-ph",
-            country: "ph",
-            name: "MPL Philippines",
-            tier: 1
-        },
-
-        {
-            id: "mpl-my",
-            country: "my",
-            name: "MPL Malaysia",
-            tier: 1
-        },
-
-        {
-            id: "mpl-sg",
-            country: "sg",
-            name: "MPL Singapore",
-            tier: 1
-        },
-
-        {
-            id: "mpl-kh",
-            country: "kh",
-            name: "MPL Cambodia",
-            tier: 1
-        },
-
-        {
-            id: "mpl-mm",
-            country: "mm",
-            name: "MPL Myanmar",
-            tier: 1
-        },
-
-        {
-            id: "mpl-br",
-            country: "br",
-            name: "MPL Brazil",
-            tier: 1
-        },
-
-        {
-            id: "mpl-tr",
-            country: "tr",
-            name: "MPL Türkiye",
-            tier: 1
-        }
-
-    ],
-
-
-    organizations: [
-
-        {
-            id: "rrq",
-            name: "RRQ",
-            country: "id",
-            teams: [
+            id:"id",
+            name:"Indonesia",
+            leagues:[
                 {
-                    id: "rrq-mpl-id",
-                    name: "RRQ",
-                    league: "mpl-id",
-                    tier: 1
+                    id:"mpl-id",
+                    name:"MPL Indonesia",
+                    tier:1,
+                    organizations:[
+                        {
+                            id:"rrq",
+                            name:"RRQ",
+                            teams:[
+                                {
+                                    id:"rrq-mpl-id",
+                                    name:"RRQ Hoshi",
+                                    league:"MPL Indonesia",
+                                    tier:1
+                                },
+                                {
+                                    id:"rrq-mdl-id",
+                                    name:"RRQ MDL",
+                                    league:"MDL Indonesia",
+                                    tier:2
+                                },
+                                {
+                                    id:"rrq-ph",
+                                    name:"RRQ Philippines",
+                                    league:"MPL Philippines",
+                                    tier:1
+                                },
+                                {
+                                    id:"rrq-my",
+                                    name:"RRQ Malaysia",
+                                    league:"MPL Malaysia",
+                                    tier:1
+                                }
+                            ]
+                        },
+
+                        {
+                            id:"onic",
+                            name:"ONIC",
+                            teams:[
+                                {
+                                    id:"onic-mpl-id",
+                                    name:"ONIC",
+                                    league:"MPL Indonesia",
+                                    tier:1
+                                },
+                                {
+                                    id:"onic-mdl-id",
+                                    name:"ONIC MDL",
+                                    league:"MDL Indonesia",
+                                    tier:2
+                                }
+                            ]
+                        },
+
+                        {
+                            id:"evos",
+                            name:"EVOS",
+                            teams:[
+                                {
+                                    id:"evos-mpl-id",
+                                    name:"EVOS",
+                                    league:"MPL Indonesia",
+                                    tier:1
+                                },
+                                {
+                                    id:"evos-mdl-id",
+                                    name:"EVOS MDL",
+                                    league:"MDL Indonesia",
+                                    tier:2
+                                }
+                            ]
+                        },
+
+                        {
+                            id:"btr",
+                            name:"Bigetron",
+                            teams:[
+                                {
+                                    id:"btr-mpl-id",
+                                    name:"Bigetron by Vitality",
+                                    league:"MPL Indonesia",
+                                    tier:1
+                                },
+                                {
+                                    id:"btr-mdl-id",
+                                    name:"Bigetron MDL",
+                                    league:"MDL Indonesia",
+                                    tier:2
+                                }
+                            ]
+                        },
+
+                        {
+                            id:"ae",
+                            name:"Alter Ego",
+                            teams:[
+                                {
+                                    id:"ae-mpl-id",
+                                    name:"Alter Ego",
+                                    league:"MPL Indonesia",
+                                    tier:1
+                                },
+                                {
+                                    id:"ae-mdl-id",
+                                    name:"Alter Ego MDL",
+                                    league:"MDL Indonesia",
+                                    tier:2
+                                }
+                            ]
+                        }
+
+                    ]
                 },
+
                 {
-                    id: "rrq-mdl-id",
-                    name: "RRQ MDL",
-                    league: "mdl-id",
-                    tier: 2
+                    id:"mdl-id",
+                    name:"MDL Indonesia",
+                    tier:2,
+                    organizations:[]
                 }
             ]
         },
 
         {
-            id: "onic",
-            name: "ONIC",
-            country: "id",
-            teams: [
+            id:"ph",
+            name:"Philippines",
+            leagues:[
                 {
-                    id: "onic-mpl-id",
-                    name: "ONIC",
-                    league: "mpl-id",
-                    tier: 1
-                },
-                {
-                    id: "onic-mdl-id",
-                    name: "ONIC MDL",
-                    league: "mdl-id",
-                    tier: 2
+                    id:"mpl-ph",
+                    name:"MPL Philippines",
+                    tier:1,
+                    organizations:[
+                        {
+                            id:"ph-sample",
+                            name:"Sample PH Organization",
+                            teams:[
+                                {
+                                    id:"ph-main",
+                                    name:"PH Main Team",
+                                    league:"MPL Philippines",
+                                    tier:1
+                                },
+                                {
+                                    id:"ph-academy",
+                                    name:"PH Academy",
+                                    league:"MDL Philippines",
+                                    tier:2
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
 
         {
-            id: "evos",
-            name: "EVOS",
-            country: "id",
-            teams: [
+            id:"my",
+            name:"Malaysia",
+            leagues:[
                 {
-                    id: "evos-mpl-id",
-                    name: "EVOS",
-                    league: "mpl-id",
-                    tier: 1
-                },
-                {
-                    id: "evos-mdl-id",
-                    name: "EVOS MDL",
-                    league: "mdl-id",
-                    tier: 2
+                    id:"mpl-my",
+                    name:"MPL Malaysia",
+                    tier:1,
+                    organizations:[
+                        {
+                            id:"my-sample",
+                            name:"Sample MY Organization",
+                            teams:[
+                                {
+                                    id:"my-main",
+                                    name:"MY Main Team",
+                                    league:"MPL Malaysia",
+                                    tier:1
+                                }
+                            ]
+                        }
+                    ]
                 }
             ]
         },
 
         {
-            id: "btr",
-            name: "Bigetron",
-            country: "id",
-            teams: [
+            id:"sg",
+            name:"Singapore",
+            leagues:[
                 {
-                    id: "btr-mpl-id",
-                    name: "Bigetron",
-                    league: "mpl-id",
-                    tier: 1
-                },
-                {
-                    id: "btr-mdl-id",
-                    name: "Bigetron MDL",
-                    league: "mdl-id",
-                    tier: 2
+                    id:"mpl-sg",
+                    name:"MPL Singapore",
+                    tier:1,
+                    organizations:[]
                 }
             ]
         },
 
         {
-            id: "ae",
-            name: "Alter Ego",
-            country: "id",
-            teams: [
+            id:"kh",
+            name:"Cambodia",
+            leagues:[
                 {
-                    id: "ae-mpl-id",
-                    name: "Alter Ego",
-                    league: "mpl-id",
-                    tier: 1
-                },
-                {
-                    id: "ae-mdl-id",
-                    name: "Alter Ego MDL",
-                    league: "mdl-id",
-                    tier: 2
+                    id:"mpl-kh",
+                    name:"MPL Cambodia",
+                    tier:1,
+                    organizations:[]
                 }
             ]
         },
 
         {
-            id: "team-ph",
-            name: "Sample PH Organization",
-            country: "ph",
-            teams: [
+            id:"mm",
+            name:"Myanmar",
+            leagues:[
                 {
-                    id: "team-ph-mpl",
-                    name: "Sample PH",
-                    league: "mpl-ph",
-                    tier: 1
+                    id:"mpl-mm",
+                    name:"MPL Myanmar",
+                    tier:1,
+                    organizations:[]
                 }
             ]
         },
 
         {
-            id: "team-my",
-            name: "Sample MY Organization",
-            country: "my",
-            teams: [
+            id:"br",
+            name:"Brazil",
+            leagues:[
                 {
-                    id: "team-my-mpl",
-                    name: "Sample MY",
-                    league: "mpl-my",
-                    tier: 1
+                    id:"mpl-br",
+                    name:"MPL Brazil",
+                    tier:1,
+                    organizations:[]
+                }
+            ]
+        },
+
+        {
+            id:"tr",
+            name:"Türkiye",
+            leagues:[
+                {
+                    id:"mpl-tr",
+                    name:"MPL Türkiye",
+                    tier:1,
+                    organizations:[]
                 }
             ]
         }
@@ -806,487 +651,602 @@ const WORLD = {
 
 /* =====================================================
    CAREER DATA
-   ===================================================== */
+===================================================== */
 
 let career = {
-
-    country: null,
-
-    league: null,
-
-    organization: null,
-
-    team: null
-
+    country:null,
+    league:null,
+    organization:null,
+    team:null
 };
 
 
 /* =====================================================
-   SCREEN
-   ===================================================== */
+   SCREEN SYSTEM
+===================================================== */
 
-function showScreen(id) {
+function showScreen(id){
 
-    document.querySelectorAll(".screen").forEach(screen => {
-
+    document.querySelectorAll(".screen").forEach(screen=>{
         screen.classList.remove("active");
-
     });
 
     document.getElementById(id).classList.add("active");
 
-}
-
-
-/* =====================================================
-   NEGARA
-   ===================================================== */
-
-function showCountryScreen() {
-
-    showScreen("countryScreen");
-
-    const container = document.getElementById("countryList");
-
-    container.innerHTML = "";
-
-    WORLD.countries.forEach(country => {
-
-        container.innerHTML += `
-
-            <div class="card">
-
-                <div class="flag">
-                    ${country.flag}
-                </div>
-
-                <h3>
-                    ${country.name}
-                </h3>
-
-                <p>
-                    Lihat liga dan organisasi
-                    dari ${country.name}.
-                </p>
-
-                <button
-                    class="select-button"
-                    onclick="selectCountry('${country.id}')">
-
-                    PILIH NEGARA
-
-                </button>
-
-            </div>
-
-        `;
-
-    });
-
-}
-
-
-/* =====================================================
-   LIGA
-   ===================================================== */
-
-function selectCountry(countryId) {
-
-    career.country = countryId;
-
-    const country =
-        WORLD.countries.find(c => c.id === countryId);
-
-    document.getElementById("selectedCountryName")
-        .textContent =
-        country.flag + " " + country.name;
-
-    showScreen("leagueScreen");
-
-    const container =
-        document.getElementById("leagueList");
-
-    container.innerHTML = "";
-
-    WORLD.leagues
-        .filter(league => league.country === countryId)
-        .forEach(league => {
-
-            container.innerHTML += `
-
-                <div class="card">
-
-                    <div class="tier">
-                        TIER ${league.tier}
-                    </div>
-
-                    <h3>
-                        ${league.name}
-                    </h3>
-
-                    <p>
-                        Kompetisi tetap.
-                        Tidak ada promosi/degradasi.
-                    </p>
-
-                    <button
-                        class="select-button"
-                        onclick="selectLeague('${league.id}')">
-
-                        PILIH LIGA
-
-                    </button>
-
-                </div>
-
-            `;
-
-        });
-
-}
-
-
-function showLeagueScreen() {
-
-    if (!career.country) {
-
-        showCountryScreen();
-
-        return;
-
-    }
-
-    selectCountry(career.country);
-
-}
-
-
-/* =====================================================
-   ORGANISASI
-   ===================================================== */
-
-function selectLeague(leagueId) {
-
-    career.league = leagueId;
-
-    const league =
-        WORLD.leagues.find(l => l.id === leagueId);
-
-    const country =
-        WORLD.countries.find(c => c.id === league.country);
-
-    document.getElementById("organizationPath")
-        .innerHTML =
-        `${country.flag} ${country.name}
-        → <strong>${league.name}</strong>`;
-
-    showScreen("organizationScreen");
-
-    const container =
-        document.getElementById("organizationList");
-
-    container.innerHTML = "";
-
-    WORLD.organizations
-        .filter(org =>
-
-            org.teams.some(team =>
-                team.league === leagueId
-            )
-
-        )
-        .forEach(org => {
-
-            const team =
-                org.teams.find(t =>
-                    t.league === leagueId
-                );
-
-            container.innerHTML += `
-
-                <div class="card">
-
-                    <div class="team-logo">
-                        ${org.name.substring(0,3).toUpperCase()}
-                    </div>
-
-                    <h3>
-                        ${org.name}
-                    </h3>
-
-                    <p>
-                        Tim di ${league.name}:
-                        <br>
-                        <strong>${team.name}</strong>
-                    </p>
-
-                    <button
-                        class="select-button"
-                        onclick="selectOrganization('${org.id}')">
-
-                        PILIH ORGANISASI
-
-                    </button>
-
-                </div>
-
-            `;
-
-        });
-
-}
-
-
-function showOrganizationScreen() {
-
-    if (!career.league) {
-
-        showLeagueScreen();
-
-        return;
-
-    }
-
-    selectLeague(career.league);
-
-}
-
-
-/* =====================================================
-   TIM
-   ===================================================== */
-
-function selectOrganization(orgId) {
-
-    career.organization = orgId;
-
-    const org =
-        WORLD.organizations.find(o =>
-            o.id === orgId
-        );
-
-    const league =
-        WORLD.leagues.find(l =>
-            l.id === career.league
-        );
-
-    const country =
-        WORLD.countries.find(c =>
-            c.id === career.country
-        );
-
-    document.getElementById("teamPath")
-        .innerHTML =
-        `${country.flag} ${country.name}
-        → <strong>${league.name}</strong>
-        → <strong>${org.name}</strong>`;
-
-    showScreen("teamScreen");
-
-    const container =
-        document.getElementById("teamList");
-
-    container.innerHTML = "";
-
-    org.teams.forEach(team => {
-
-        const isMain =
-            team.league === career.league;
-
-        container.innerHTML += `
-
-            <div
-                id="team-${team.id}"
-                class="card team-card">
-
-                <div class="tier">
-                    TIER ${team.tier}
-                </div>
-
-                <div class="team-logo">
-                    ${org.name.substring(0,3).toUpperCase()}
-                </div>
-
-                <h3>
-                    ${team.name}
-                </h3>
-
-                <p>
-                    ${getLeagueName(team.league)}
-                </p>
-
-                ${
-                    isMain
-                    ? `
-                        <div class="selected-label">
-                            ★ TIM UTAMA
-                        </div>
-                    `
-                    : `
-                        <div style="color:#94a3b8;font-size:12px;">
-                            Tim terkait organisasi
-                        </div>
-                    `
-                }
-
-                <button
-                    class="select-button"
-                    onclick="selectTeam('${team.id}')">
-
-                    PILIH TIM
-
-                </button>
-
-            </div>
-
-        `;
-
-    });
-
-}
-
-
-function selectTeam(teamId) {
-
-    const org =
-        WORLD.organizations.find(o =>
-            o.id === career.organization
-        );
-
-    const team =
-        org.teams.find(t =>
-            t.id === teamId
-        );
-
-    career.team = teamId;
-
-    document
-        .querySelectorAll(".team-card")
-        .forEach(card =>
-            card.classList.remove("selected")
-        );
-
-    const selected =
-        document.getElementById("team-" + teamId);
-
-    if (selected) {
-
-        selected.classList.add("selected");
-
-    }
-
-    document.getElementById("startCareerButton")
-        .disabled = false;
-
+    window.scrollTo(0,0);
 }
 
 
 /* =====================================================
    MULAI KARIER
-   ===================================================== */
+===================================================== */
 
-function startCareer() {
+function newCareer(){
 
-    if (!career.team) {
+    career={
+        country:null,
+        league:null,
+        organization:null,
+        team:null
+    };
 
-        alert("Pilih tim terlebih dahulu.");
+    localStorage.removeItem("MPL_WORLD_MANAGER_CAREER");
+
+    renderCountries();
+
+    showScreen("countryScreen");
+}
+
+
+/* =====================================================
+   COUNTRY
+===================================================== */
+
+function renderCountries(){
+
+    const box=document.getElementById("countryList");
+
+    box.innerHTML="";
+
+    WORLD.countries.forEach(country=>{
+
+        const div=document.createElement("div");
+
+        div.className="card";
+
+        div.innerHTML=`
+            <h3>${country.name}</h3>
+            <p>${country.leagues.length} liga tersedia</p>
+        `;
+
+        div.onclick=()=>{
+
+            career.country=country.id;
+
+            renderLeagues(country);
+
+            showScreen("leagueScreen");
+
+        };
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   LEAGUE
+===================================================== */
+
+function renderLeagues(country){
+
+    const box=document.getElementById("leagueList");
+
+    box.innerHTML="";
+
+    country.leagues.forEach(league=>{
+
+        const div=document.createElement("div");
+
+        div.className="card";
+
+        div.innerHTML=`
+            <h3>${league.name}</h3>
+            <p>Tier ${league.tier}</p>
+        `;
+
+        div.onclick=()=>{
+
+            career.league=league.id;
+
+            renderOrganizations(country,league);
+
+            showScreen("organizationScreen");
+
+        };
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   ORGANIZATION
+===================================================== */
+
+function renderOrganizations(country,league){
+
+    const box=document.getElementById("organizationList");
+
+    box.innerHTML="";
+
+    let organizations=[];
+
+    /*
+       Cari organisasi yang mempunyai tim
+       di liga yang sedang dipilih.
+    */
+
+    WORLD.countries.forEach(c=>{
+
+        c.leagues.forEach(l=>{
+
+            l.organizations.forEach(org=>{
+
+                const hasTeam=org.teams.some(
+                    team=>team.league===league.name
+                );
+
+                if(hasTeam){
+
+                    if(!organizations.some(
+                        x=>x.id===org.id
+                    )){
+                        organizations.push(org);
+                    }
+
+                }
+
+            });
+
+        });
+
+    });
+
+
+    if(organizations.length===0){
+
+        box.innerHTML=`
+            <div class="notice">
+                Belum ada organisasi yang tersedia
+                di liga ini.
+            </div>
+        `;
 
         return;
-
     }
+
+
+    organizations.forEach(org=>{
+
+        const div=document.createElement("div");
+
+        div.className="card";
+
+        div.innerHTML=`
+            <h3>🏢 ${org.name}</h3>
+            <p>
+                ${org.teams.length}
+                tim dalam organisasi
+            </p>
+        `;
+
+        div.onclick=()=>{
+
+            career.organization=org.id;
+
+            renderTeams(org,league);
+
+            showScreen("teamScreen");
+
+        };
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   TEAM
+===================================================== */
+
+function renderTeams(org,league){
+
+    const box=document.getElementById("teamList");
+
+    box.innerHTML="";
+
+    const teams=org.teams.filter(
+        team=>team.league===league.name
+    );
+
+    teams.forEach(team=>{
+
+        const div=document.createElement("div");
+
+        div.className="card";
+
+        div.innerHTML=`
+            <h3>${team.name}</h3>
+            <p>${team.league}</p>
+            <span class="badge">
+                Tier ${team.tier}
+            </span>
+        `;
+
+        div.onclick=()=>{
+
+            career.team=team.id;
+
+            saveCareer();
+
+            renderDashboard();
+
+            showScreen("dashboardScreen");
+
+        };
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   SAVE CAREER
+===================================================== */
+
+function saveCareer(){
 
     localStorage.setItem(
         "MPL_WORLD_MANAGER_CAREER",
         JSON.stringify(career)
     );
 
-    const org =
-        WORLD.organizations.find(o =>
-            o.id === career.organization
-        );
-
-    const team =
-        org.teams.find(t =>
-            t.id === career.team
-        );
-
-    const league =
-        WORLD.leagues.find(l =>
-            l.id === career.league
-        );
-
-    document.getElementById("careerOrganization")
-        .textContent = org.name;
-
-    document.getElementById("careerTeam")
-        .textContent = team.name;
-
-    document.getElementById("careerLeague")
-        .textContent = league.name;
-
-    document.getElementById("careerMainTeam")
-        .textContent = team.name;
-
-    showScreen("careerScreen");
-
 }
 
 
 /* =====================================================
-   LANJUTKAN KARIER
-   ===================================================== */
+   LOAD CAREER
+===================================================== */
 
-function continueCareer() {
+function continueCareer(){
 
-    const saved =
+    const saved=
         localStorage.getItem(
             "MPL_WORLD_MANAGER_CAREER"
         );
 
-    if (!saved) {
+    if(!saved){
 
-        alert("Belum ada karier tersimpan.");
+        alert("Belum ada karier yang tersimpan.");
 
         return;
-
     }
 
-    career = JSON.parse(saved);
+    career=JSON.parse(saved);
 
-    if (career.team) {
+    renderDashboard();
 
-        startCareer();
-
-    }
+    showScreen("dashboardScreen");
 
 }
 
 
 /* =====================================================
-   WORLD INFO
-   ===================================================== */
+   GET ORGANIZATION
+===================================================== */
 
-function showWorldInfo() {
+function getOrganization(){
+
+    for(const country of WORLD.countries){
+
+        for(const league of country.leagues){
+
+            for(const org of league.organizations){
+
+                if(org.id===career.organization){
+
+                    return org;
+
+                }
+
+            }
+
+        }
+
+    }
+
+    return null;
+
+}
+
+
+/* =====================================================
+   GET CURRENT TEAM
+===================================================== */
+
+function getCurrentTeam(){
+
+    const org=getOrganization();
+
+    if(!org) return null;
+
+    return org.teams.find(
+        team=>team.id===career.team
+    );
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function renderDashboard(){
+
+    const org=getOrganization();
+
+    const currentTeam=getCurrentTeam();
+
+    if(!org || !currentTeam){
+
+        showScreen("mainMenu");
+
+        return;
+    }
+
+
+    document.getElementById(
+        "organizationInfo"
+    ).innerHTML=`
+
+        <div class="info">
+
+            <div class="info-row">
+                <span>Organisasi</span>
+                <strong>${org.name}</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Tim aktif</span>
+                <strong>${currentTeam.name}</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Liga</span>
+                <strong>${currentTeam.league}</strong>
+            </div>
+
+            <div class="info-row">
+                <span>Tier</span>
+                <strong>Tier ${currentTeam.tier}</strong>
+            </div>
+
+        </div>
+
+    `;
+
+
+    renderRelatedTeams(org,currentTeam);
+
+}
+
+
+/* =====================================================
+   RELATED TEAMS
+===================================================== */
+
+function renderRelatedTeams(org,currentTeam){
+
+    const box=document.getElementById("relatedTeams");
+
+    box.innerHTML="";
+
+    org.teams.forEach(team=>{
+
+        const div=document.createElement("div");
+
+        div.className="card";
+
+        if(team.id===currentTeam.id){
+
+            div.classList.add("team-active");
+
+        }
+
+        div.innerHTML=`
+
+            <h3>
+                ${team.id===currentTeam.id ? "⭐ " : ""}
+                ${team.name}
+            </h3>
+
+            <p>
+                ${team.league}
+            </p>
+
+            <span class="badge">
+                Tier ${team.tier}
+            </span>
+
+        `;
+
+        div.onclick=()=>{
+
+            switchTeam(team.id);
+
+        };
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================================
+   SWITCH TIM
+===================================================== */
+
+function switchTeam(teamId){
+
+    career.team=teamId;
+
+    saveCareer();
+
+    renderDashboard();
+
+}
+
+
+/* =====================================================
+   FEATURE
+===================================================== */
+
+function openFeature(feature){
+
+    document.getElementById(
+        "featureContent"
+    ).innerHTML=`
+
+        <div class="card">
+
+            <div class="title">
+                ${feature}
+            </div>
+
+            <p>
+                Fitur ${feature} sedang
+                dalam tahap pengembangan.
+            </p>
+
+            <div class="notice">
+                Sistem organisasi sudah aktif.
+                Nantinya fitur ini akan terhubung
+                dengan roster, pemain, pertandingan,
+                AI, transfer dan perkembangan tim.
+            </div>
+
+        </div>
+
+    `;
+
+    showScreen("featureScreen");
+
+}
+
+
+/* =====================================================
+   WORLD
+===================================================== */
+
+function openWorld(){
+
+    renderWorld();
 
     showScreen("worldScreen");
 
 }
 
 
+function backFromWorld(){
+
+    if(career.organization){
+
+        renderDashboard();
+
+        showScreen("dashboardScreen");
+
+    }else{
+
+        showScreen("mainMenu");
+
+    }
+
+}
+
+
+function renderWorld(){
+
+    const box=document.getElementById("worldList");
+
+    box.innerHTML="";
+
+    WORLD.countries.forEach(country=>{
+
+        const div=document.createElement("div");
+
+        div.className="card";
+
+        let leagueText="";
+
+        country.leagues.forEach(league=>{
+
+            leagueText+=`
+                <div style="
+                    padding:10px 0;
+                    border-top:1px solid #202637;
+                ">
+                    <strong>${league.name}</strong>
+                    <br>
+                    <span style="
+                        color:#929bad;
+                        font-size:13px;
+                    ">
+                        Tier ${league.tier}
+                    </span>
+                </div>
+            `;
+
+        });
+
+        div.innerHTML=`
+
+            <h3>🌎 ${country.name}</h3>
+
+            <div style="margin-top:12px;">
+                ${leagueText}
+            </div>
+
+        `;
+
+        box.appendChild(div);
+
+    });
+
+}
+
+
 /* =====================================================
-   HELPER
-   ===================================================== */
+   START
+===================================================== */
 
-function getLeagueName(leagueId) {
+const saved=
+    localStorage.getItem(
+        "MPL_WORLD_MANAGER_CAREER"
+    );
 
-    const league =
-        WORLD.leagues.find(l =>
-            l.id === leagueId
-        );
+if(saved){
 
-    return league
-        ? league.name
-        : "Unknown League";
+    career=JSON.parse(saved);
 
 }
 
