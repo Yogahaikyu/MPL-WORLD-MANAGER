@@ -4,2455 +4,471 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MPL WORLD MANAGER</title>
-
 <style>
-*{
-  box-sizing:border-box;
+:root{
+  --bg:#06101c;--panel:#0c1826;--panel2:#101f30;--line:#24384e;
+  --text:#f4f7fb;--muted:#91a4b8;--gold:#f4b52b;--blue:#14b8ff;
+  --green:#20c878;--orange:#ff8a00;--red:#ff5c6c;
 }
-
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#0b1020;
-  color:white;
-}
-
-button{
-  border:0;
-  border-radius:10px;
-  padding:12px 16px;
-  background:#5865f2;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-  margin:4px;
-}
-
-button:hover{
-  opacity:.85;
-}
-
-button.danger{
-  background:#e74c3c;
-}
-
-button.green{
-  background:#27ae60;
-}
-
-button.gold{
-  background:#d99b20;
-}
-
-button.dark{
-  background:#252b40;
-}
-
-.container{
-  max-width:1100px;
-  margin:auto;
-  padding:20px;
-}
-
-.header{
-  background:#11182d;
-  padding:18px;
-  border-bottom:1px solid #29314d;
-  position:sticky;
-  top:0;
-  z-index:5;
-}
-
-.header h1{
-  margin:0 0 8px;
-  font-size:24px;
-}
-
-.nav{
-  display:flex;
-  flex-wrap:wrap;
-}
-
-.card{
-  background:#151d34;
-  border:1px solid #29314d;
-  border-radius:15px;
-  padding:18px;
-  margin:12px 0;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:14px;
-}
-
-.team-card,
-.org-card,
-.player-card,
-.market-card{
-  background:#1b2540;
-  border-radius:14px;
-  padding:16px;
-  border:1px solid #303b5c;
-}
-
-.team-card:hover,
-.org-card:hover{
-  transform:translateY(-2px);
-}
-
-h2{
-  margin-top:5px;
-}
-
-h3{
-  margin-top:5px;
-}
-
-.stat{
-  display:inline-block;
-  background:#252f4c;
-  padding:8px 12px;
-  border-radius:8px;
-  margin:3px;
-}
-
-.money{
-  color:#5ee58a;
-  font-weight:bold;
-}
-
-.warning{
-  color:#ffcc66;
-}
-
-.center{
-  text-align:center;
-}
-
-.big-title{
-  font-size:42px;
-  margin-top:70px;
-}
-
-.role{
-  color:#9db2ff;
-  font-weight:bold;
-}
-
-.small{
-  font-size:13px;
-  color:#aab3c9;
-}
-
-hr{
-  border:0;
-  border-top:1px solid #303a57;
-  margin:18px 0;
-}
-
-.empty{
-  padding:30px;
-  text-align:center;
-  color:#aab3c9;
-}
-
-.progress{
-  width:100%;
-  height:10px;
-  background:#252d44;
-  border-radius:20px;
-  overflow:hidden;
-  margin-top:6px;
-}
-
-.progress div{
-  height:100%;
-  background:#5865f2;
-}
-
-select{
-  padding:11px;
-  border-radius:8px;
-  background:#202a45;
-  color:white;
-  border:1px solid #3b4768;
-}
-
-@media(max-width:600px){
-  .big-title{
-    font-size:32px;
-  }
-
-  .container{
-    padding:12px;
-  }
-
-  button{
-    padding:10px 12px;
-  }
-}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at top,#10243a 0,#06101c 42%,#030912 100%);color:var(--text);font-family:Arial,Helvetica,sans-serif}
+button{font:inherit}
+.top{position:sticky;top:0;z-index:10;background:#06101cf2;border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.nav{max-width:1250px;margin:auto;display:flex;align-items:center;gap:8px;padding:12px 18px;overflow:auto}
+.brand{font-weight:900;min-width:220px;font-size:18px}.brand small{display:block;color:var(--muted);font-weight:400;font-size:11px}
+.nav button{background:transparent;border:0;color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer;white-space:nowrap}
+.nav button.active,.nav button:hover{background:#12304a;color:#fff}
+.money{margin-left:auto;white-space:nowrap;color:#ffd35a;font-weight:800}
+.container{max-width:1250px;margin:auto;padding:20px}
+.page-title{display:flex;justify-content:space-between;align-items:end;gap:15px;margin-bottom:18px}
+h1{margin:0;font-size:32px}h2{margin:0 0 10px}h3{margin:0 0 8px}.muted{color:var(--muted)}
+.hero{border:1px solid #9b6a00;border-radius:12px;overflow:hidden;background:linear-gradient(120deg,#241a00,#0d1620 70%);min-height:260px;padding:28px;text-align:center;position:relative}
+.hero .tag{position:absolute;left:0;top:0;background:#9b6500;padding:9px 28px;font-weight:900}
+.hero .m8{font-size:72px;font-weight:900;color:#d8aa48;margin-top:20px}.hero h2{color:#ffc94e;font-size:30px}.hero p{color:#4bbcff;font-size:20px}
+.grid{display:grid;gap:14px}.grid4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.section{margin-top:18px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#081522}
+.section-head{padding:12px 16px;font-size:18px;font-weight:900}.sea{background:#075e73}.ea{background:#a95100}.amer{background:#056b31}
+.card{background:linear-gradient(180deg,#122233,#0a1622);border:1px solid var(--line);border-radius:10px;padding:16px;cursor:pointer;transition:.15s}
+.card:hover{transform:translateY(-2px);border-color:#3f6386}.flag{font-size:28px}.card .title{font-weight:900;font-size:18px}.card .sub{font-size:12px;color:var(--muted);margin-top:4px}
+.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#172b40;color:#9fd8ff;font-size:11px;font-weight:800;margin:4px 4px 0 0}
+.s{background:#513a00;color:#ffd65e}.a{background:#083d31;color:#70f0bb}.b{background:#173c62;color:#8fd0ff}
+.tabs{display:flex;gap:8px;overflow:auto;margin:14px 0}.tabs button{border:1px solid var(--line);background:#0d1a28;color:#b9c8d8;padding:9px 14px;border-radius:8px;white-space:nowrap}.tabs button.active{background:#1262a1;color:#fff}
+.list{display:grid;gap:10px}.team{display:flex;justify-content:space-between;align-items:center;gap:12px}.team-left{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:10px;background:#17293a;display:grid;place-items:center;font-weight:900}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}
+.primary{background:#087ac1;border:0;color:white;padding:11px 16px;border-radius:8px;font-weight:900;cursor:pointer}.goldbtn{background:#b47b00;color:#fff;border:0;padding:11px 16px;border-radius:8px;font-weight:900;cursor:pointer}.danger{background:#61202a}.ghost{background:#102234;border:1px solid var(--line);color:#fff;padding:10px 14px;border-radius:8px;cursor:pointer}
+.panel{background:#0b1826;border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+.statgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}.stat{background:#101f30;border:1px solid var(--line);border-radius:10px;padding:14px}.stat b{font-size:22px;display:block;margin-top:4px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);font-size:13px}th{color:#9db0c4}
+select,input{width:100%;background:#091522;color:white;border:1px solid var(--line);padding:11px;border-radius:8px}
+.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.modal{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:30;padding:18px}.modal.show{display:flex}.modalbox{width:min(720px,100%);max-height:90vh;overflow:auto;background:#0b1826;border:1px solid #35516d;border-radius:12px;padding:20px}
+.toast{position:fixed;right:15px;bottom:15px;background:#13273a;border:1px solid #3a5975;padding:12px 16px;border-radius:8px;display:none;z-index:40}
+.small{font-size:12px}.center{text-align:center}.empty{padding:35px;text-align:center;color:var(--muted)}
+@media(max-width:850px){.grid4,.grid3{grid-template-columns:repeat(2,1fr)}.statgrid{grid-template-columns:repeat(2,1fr)}.money{display:none}}
+@media(max-width:560px){.container{padding:12px}.grid4,.grid3,.grid2,.formgrid{grid-template-columns:1fr}h1{font-size:25px}.hero .m8{font-size:48px}.nav{padding:8px}.brand{min-width:170px}.statgrid{grid-template-columns:1fr 1fr}}
 </style>
 </head>
-
 <body>
+<div class="top">
+  <div class="nav">
+    <div class="brand">🏆 MPL WORLD MANAGER<small>Build Your Legacy</small></div>
+    <button data-nav="home">⌂ Home</button>
+    <button data-nav="world">🌐 World</button>
+    <button data-nav="calendar">▣ Calendar</button>
+    <button data-nav="rankings">♛ Rankings</button>
+    <button data-nav="career">⚔ Career</button>
+    <div class="money" id="money">🪙 1,000,000,000</div>
+  </div>
+</div>
 
-<div id="app"></div>
+<main class="container" id="app"></main>
+<div class="modal" id="modal"><div class="modalbox" id="modalbox"></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
+/*
+  MPL WORLD MANAGER
+  DATABASE-FIRST ARCHITECTURE
+  - Active 2026 competitions are separated by region.
+  - Do not assume every country has MDL.
+  - Teams can be Tier 1, Tier 2, Tier 3/Open.
+  - A small team can qualify to regional/international events.
+*/
 
-/* =====================================================
-   MPL WORLD MANAGER
-   ===================================================== */
-
-const SAVE_KEY = "MPL_WORLD_MANAGER_CAREER_V12";
-
-const app = document.getElementById("app");
-
-let career = null;
-
-
-/* =====================================================
-   WORLD DATA
-   ===================================================== */
-
-const WORLD = {
-
-  Indonesia:{
-    leagues:{
-      "MPL Indonesia":{
-        organizations:[
-          {
-            id:"rrq",
-            name:"RRQ",
-            teams:[
-              {id:"rrq_mpl",name:"RRQ Hoshi",tier:1},
-              {id:"rrq_mdl",name:"RRQ MDL",tier:2},
-              {id:"rrq_ph",name:"RRQ Philippines",tier:1},
-              {id:"rrq_my",name:"RRQ Malaysia",tier:1}
-            ]
-          },
-          {
-            id:"onic",
-            name:"ONIC",
-            teams:[
-              {id:"onic_mpl",name:"ONIC Indonesia",tier:1}
-            ]
-          },
-          {
-            id:"evos",
-            name:"EVOS",
-            teams:[
-              {id:"evos_mpl",name:"EVOS",tier:1}
-            ]
-          },
-          {
-            id:"btr",
-            name:"Bigetron",
-            teams:[
-              {id:"btr_mpl",name:"Bigetron by Vitality",tier:1}
-            ]
-          },
-          {
-            id:"ae",
-            name:"Alter Ego",
-            teams:[
-              {id:"ae_mpl",name:"Alter Ego",tier:1}
-            ]
-          }
-        ]
-      },
-
-      "MDL Indonesia":{
-        organizations:[
-          {
-            id:"rrq",
-            name:"RRQ",
-            teams:[
-              {id:"rrq_mdl",name:"RRQ MDL",tier:2}
-            ]
-          }
-        ]
-      }
+const DB = {
+  year: 2026,
+  regions: {
+    SEA: {
+      name:"MCT SEA", color:"sea",
+      countries:[
+        {id:"id",flag:"🇮🇩",name:"Indonesia",leagues:[
+          {id:"mplid",name:"MPL Indonesia Season 18",tier:"A-Tier",level:1,teams:[
+            "Alter Ego","Bigetron by Vitality","Dewa United Esports","EVOS","Geek Fam ID","Natus Vincere","ONIC","RRQ Hoshi","Team Liquid ID"]},
+          {id:"mdlid",name:"MDL Indonesia Season 14",tier:"B-Tier",level:2,teams:[
+            "Alter Ego X","Bigetron Academy","Dewa United Academy","EVOS Icon","Geek Fam ID Jr","Natus Vincere Jr","ONIC Prodigy","RRQ Sena","Team Liquid ID Academy","Bigetron Beta","Rex Regum Qeon Academy","Valkyrie","Kagendra","YUPI","VESA","TRIX"]}
+        ]},
+        {id:"ph",flag:"🇵🇭",name:"Philippines",leagues:[
+          {id:"mplph",name:"MPL Philippines Season 18",tier:"A-Tier",level:1,teams:["Aurora Gaming PH","Blacklist International","Falcons AP.Bren","ONIC Philippines","Rex Regum Qeon Philippines","Team Liquid PH","TNC Pro Team","Twisted Minds PH"]},
+          {id:"mdlph",name:"MDL Philippines Season 8",tier:"B-Tier",level:2,teams:[
+            "Aurora Hunters","ONIC Uprising","Team Liquid Academy PH","TNC x Voltes PH","Twisted Minds RWE","Team Falcons Academy",
+            "Minerva Esports","Shinori x Totch Esports","Martial Mayhem TM","Dewa United PH","TEAM FUEGO","Panthera DE"]}
+        ]},
+        {id:"my",flag:"🇲🇾",name:"Malaysia",leagues:[
+          {id:"mplmy",name:"MPL Malaysia Season 18",tier:"A-Tier",level:1,teams:["AC Esports","Bigetron MY by VIT","RRQ Tora","Selangor Red Giants","Team Flash","Team Vamos","Team Rey","Invictus Gaming"]},
+          {id:"mal",name:"MLBB Academy League Malaysia Season 5",tier:"B-Tier",level:2,teams:["Pixel Esports","JP NINERS"]}
+        ]},
+        {id:"mm",flag:"🇲🇲",name:"Myanmar",leagues:[
+          {id:"mslmm",name:"MSL Myanmar Season 4",tier:"A-Tier",level:1,teams:["Yangon Galacticos","Team 7","D Family","Burmese Ghouls","Claw Esports","Team Reselection","Team Highborn","Outworld","Impunity MM","Team Cyanide"]}
+        ]},
+        {id:"sg",flag:"🇸🇬",name:"Singapore",leagues:[
+          {id:"mplsg",name:"MPL Singapore Season 11",tier:"B-Tier",level:1,teams:["RSG SG","EVOS SG","Slate Esports","Ninjas in Pyjamas","Todak SG","Team Flash SG"]}
+        ]},
+        {id:"kh",flag:"🇰🇭",name:"Cambodia",leagues:[
+          {id:"mplkh",name:"MPL Cambodia Season 11",tier:"B-Tier",level:1,teams:["See You Soon","Burn X Flash","PRO Esports","Logic Esports","Team Flash KH","Duckies"]}
+        ]},
+        {id:"th",flag:"🇹🇭",name:"Thailand",leagues:[
+          {id:"mslth",name:"MSL Thailand Season 2",tier:"B-Tier",level:1,teams:["Thailand Qualifier","Thailand Open Team 1","Thailand Open Team 2","Thailand Open Team 3"]}
+        ]},
+        {id:"vn",flag:"🇻🇳",name:"Vietnam",leagues:[
+          {id:"vmc",name:"Vietnam MLBB Championship Fall 2026",tier:"B-Tier",level:1,teams:["Vietnam Qualifier","Vietnam Open Team 1","Vietnam Open Team 2","Vietnam Open Team 3"]}
+        ]}
+      ]
+    },
+    EA:{
+      name:"MCT EA",color:"ea",
+      countries:[
+        {id:"cn",flag:"🇨🇳",name:"China",leagues:[{id:"mctcn",name:"MCT EA China Qualifier / Championship",tier:"A-Tier",level:1,teams:["China Qualifier","China Open Team 1","China Open Team 2","China Open Team 3"]}]},
+        {id:"mn",flag:"🇲🇳",name:"Mongolia",leagues:[{id:"mctmn",name:"MCT EA Mongolia Qualifier",tier:"B-Tier",level:1,teams:["Mongolia Qualifier","Mongolia Open Team 1","Mongolia Open Team 2"]}]},
+        {id:"jp",flag:"🇯🇵",name:"Japan",leagues:[{id:"mctjp",name:"MCT EA Japan Qualifier",tier:"B-Tier",level:1,teams:["Japan Qualifier","Japan Open Team 1","Japan Open Team 2"]}]},
+        {id:"kr",flag:"🇰🇷",name:"South Korea",leagues:[{id:"mctkr",name:"MCT EA South Korea Qualifier",tier:"B-Tier",level:1,teams:["South Korea Qualifier","Korea Open Team 1","Korea Open Team 2"]}]}
+      ]
+    },
+    AMER:{
+      name:"MCT AMER",color:"amer",
+      countries:[
+        {id:"sa",flag:"🌎",name:"South America",leagues:[{id:"mctsa",name:"MCT AMER South America",tier:"B-Tier",level:1,teams:["South America Qualifier","SA Open Team 1","SA Open Team 2","SA Open Team 3"]}]},
+        {id:"na",flag:"🇺🇸",name:"North America",leagues:[{id:"mctna",name:"MCT AMER North America",tier:"B-Tier",level:1,teams:["North America Qualifier","NA Open Team 1","NA Open Team 2","NA Open Team 3"]}]}
+      ]
     }
   },
-
-  Philippines:{
-    leagues:{
-      "MPL Philippines":{
-        organizations:[
-          {
-            id:"rrq_ph",
-            name:"RRQ Philippines",
-            teams:[
-              {id:"rrq_ph",name:"RRQ Philippines",tier:1}
-            ]
-          },
-          {
-            id:"echo",
-            name:"Team Liquid PH",
-            teams:[
-              {id:"tlph",name:"Team Liquid PH",tier:1}
-            ]
-          }
-        ]
-      }
-    }
-  },
-
-  Malaysia:{
-    leagues:{
-      "MPL Malaysia":{
-        organizations:[
-          {
-            id:"rrq_my",
-            name:"RRQ Malaysia",
-            teams:[
-              {id:"rrq_my",name:"RRQ Malaysia",tier:1}
-            ]
-          }
-        ]
-      }
-    }
-  },
-
-  Singapore:{
-    leagues:{
-      "MPL Singapore":{
-        organizations:[
-          {
-            id:"sample_sg",
-            name:"Singapore Esports",
-            teams:[
-              {id:"sg1",name:"Singapore Main Team",tier:1}
-            ]
-          }
-        ]
-      }
-    }
-  },
-
-  Cambodia:{
-    leagues:{
-      "MPL Cambodia":{
-        organizations:[
-          {
-            id:"sample_kh",
-            name:"Cambodia Esports",
-            teams:[
-              {id:"kh1",name:"Cambodia Main Team",tier:1}
-            ]
-          }
-        ]
-      }
-    }
-  },
-
-  Myanmar:{
-    leagues:{
-      "MPL Myanmar":{
-        organizations:[
-          {
-            id:"sample_mm",
-            name:"Myanmar Esports",
-            teams:[
-              {id:"mm1",name:"Myanmar Main Team",tier:1}
-            ]
-          }
-        ]
-      }
-    }
-  },
-
-  Brazil:{
-    leagues:{
-      "MPL Brazil":{
-        organizations:[
-          {
-            id:"sample_br",
-            name:"Brazil Esports",
-            teams:[
-              {id:"br1",name:"Brazil Main Team",tier:1}
-            ]
-          }
-        ]
-      }
-    }
-  },
-
-  Türkiye:{
-    leagues:{
-      "MPL Türkiye":{
-        organizations:[
-          {
-            id:"sample_tr",
-            name:"Türkiye Esports",
-            teams:[
-              {id:"tr1",name:"Türkiye Main Team",tier:1}
-            ]
-          }
-        ]
-      }
-    }
-  }
-
+  international:[
+    {id:"msc",name:"MSC 2026",tier:"S-Tier",route:"Regional champions / qualifiers"},
+    {id:"m8",name:"M8 World Championship",tier:"S-Tier",route:"Regional & league qualification"},
+    {id:"ewc",name:"Esports World Cup 2026",tier:"S-Tier",route:"Invitations / qualification"},
+    {id:"mwi",name:"MLBB Women's International 2026",tier:"S-Tier",route:"Women's circuit"}
+  ]
 };
 
 
-/* =====================================================
-   BASE ROSTERS
-   ===================================================== */
+const ROSTERS = {
+  "RRQ Hoshi":[
+    ["Lynchh","EXP",82],["Demonkite","JUNGLE",84],["Rinz","MID",83],["Clayyy","MID",81],["Kuroky","GOLD",82],["Sutsujin","GOLD",80],["Idok","ROAM",84]
+  ],
+  "Dewa United Esports":[
+    ["QINN","EXP",82],["Kayn","JUNGLE",80],["Octa","MID",78],["Maybeee","GOLD",80],["KESUUU","ROAM",79]
+  ],
+  "Geek Fam ID":[
+    ["MarceL","EXP",78],["Febriii","EXP",76],["Nazara","JUNGLE",79],["A B O Y","MID",81],["KennzyySkie","GOLD",80],["AudyTzy","ROAM",77]
+  ],
+  "ONIC":[
+    ["Lutpii","EXP",82],["Kairi","JUNGLE",86],["Sanz","MID",86],["Kelra","GOLD",87],["Kiboy","ROAM",85],["SsamueL","ROAM",76]
+  ],
+  "EVOS":[
+    ["Vell","EXP",77],["Alberttt","JUNGLE",86],["Pheww","MID",84],["Erlan","GOLD",81],["Kyy","ROAM",82],["Rendyyy","EXP",76],["Ryzaa","MID",78]
+  ],
+  "Bigetron by Vitality":[
+    ["Shogun","EXP",78],["Nnael","JUNGLE",82],["Moreno","MID",83],["EMANN","GOLD",85],["Finn","ROAM",82],["Miguel","GOLD",76]
+  ],
+  "Alter Ego":[
+    ["Nino","EXP",81],["Reyy","JUNGLE",79],["Dalvin","MID",78],["Dingarai","GOLD",80],["Alexander","ROAM",79],["Halim","MID",75],["Affan","JUNGLE",75],["Ivann","ROAM",74]
+  ],
+  "Natus Vincere":[
+    ["Karss","EXP",79],["Andoryuuu","JUNGLE",78],["Jiizee","MID",80],["Zeonn","GOLD",79],["Aprho","ROAM",82],["FEBBB","EXP",75],["Joshuaa","JUNGLE",74]
+  ],
+  "Team Liquid ID":[
+    ["Aran","EXP",83],["Kevin","JUNGLE",81],["Drichel","MID",82],["Kevinn","GOLD",84],["Lyoni","ROAM",82],["Anaver","MID",76]
+  ]
+};
+const ROLE_ORDER=["EXP","JUNGLE","MID","GOLD","ROAM"];
+function rosterForTeam(team){return ROSTERS[team]||[]}
+function rosterHTML(){
+  const c=state.career, roster=rosterForTeam(c.team);
+  if(!roster.length) return `<div class="empty"><h2>Roster belum tersedia</h2><p>Database roster tim ini belum dimasukkan karena kita tidak mau mengarang nama pemain. Tim tetap bisa dipilih; roster akan ditambahkan dari sumber kompetisi.</p><button class="ghost" onclick="closeModal()">Tutup</button></div>`;
+  const lineup=c.lineup||{};
+  return `<h2>👥 Roster & Lineup</h2>
+  <p class="muted">Pilih pemain aktif untuk 5 role utama. Rating memengaruhi kekuatan simulasi pertandingan.</p>
+  <div class="panel"><h3>⭐ Starting Lineup</h3>
+  ${ROLE_ORDER.map(role=>`<div class="row"><span><b>${role}</b></span><select onchange="setLineup('${role}',this.value)">
+    <option value="">-- Pilih pemain --</option>${roster.filter(x=>x[1]===role).map(x=>`<option value="${x[0]}" ${lineup[role]===x[0]?"selected":""}>${x[0]} — OVR ${x[2]}</option>`).join("")}
+  </select></div>`).join("")}</div>
+  <div class="list">${roster.map((x,i)=>`<div class="card row"><div><b>${x[0]}</b><div class="sub">${x[1]} • OVR ${x[2]}</div></div><span class="badge">${lineup[x[1]]===x[0]?"STARTER":"ROSTER"}</span></div>`).join("")}</div>
+  <button class="primary" onclick="saveLineup()">Simpan Lineup</button>`;
+}
+function setLineup(role,name){if(!state.career.lineup)state.career.lineup={};state.career.lineup[role]=name;save();rosterHTMLRefresh()}
+function rosterHTMLRefresh(){document.getElementById("modalbox").innerHTML=rosterHTML()}
+function saveLineup(){save();closeModal();render();toast("Lineup tersimpan!")}
 
-const BASE_ROSTERS = {
-
-rrq_mpl:[
-  ["Hajirin","MID",87,94],
-  ["Arthur","GOLD",88,94],
-  ["Said","ROAM",86,92],
-  ["Joshua","EXP",87,93],
-  ["Demonkite","JUNGLE",89,95],
-  ["Habil","GOLD",84,91],
-  ["Clayyy","MID",85,90]
-],
-
-rrq_mdl:[
-  ["Rinz","GOLD",78,88],
-  ["Lynch","JUNGLE",80,90],
-  ["Kuroky","MID",77,88],
-  ["Idok","EXP",76,87],
-  ["Player MDL ROAM","ROAM",75,86],
-  ["Player Academy 2","GOLD",73,85]
-],
-
-onic_mpl:[
-  ["Kiboy","ROAM",90,95],
-  ["Sanz","MID",91,96],
-  ["Kairi","JUNGLE",92,97],
-  ["Lutpi","EXP",87,93],
-  ["Kelra","GOLD",91,96],
-  ["SsamueL","ROAM",82,90]
-],
-
-evos_mpl:[
-  ["Alberttt","JUNGLE",89,95],
-  ["Erlan","GOLD",86,93],
-  ["Vell","EXP",85,92],
-  ["Muezza","ROAM",84,91],
-  ["Rendyyy","EXP",80,88],
-  ["Ryzaa","MID",84,91]
-],
-
-btr_mpl:[
-  ["Morenooo","MID",87,94],
-  ["Emann","GOLD",89,95],
-  ["Finn","ROAM",86,93],
-  ["Nnael","JUNGLE",88,94],
-  ["Shogun","EXP",85,92],
-  ["Miguel","GOLD",80,88]
-],
-
-ae_mpl:[
-  ["Nino","EXP",86,93],
-  ["Alexander","ROAM",84,91],
-  ["Dingarai","GOLD",87,94],
-  ["Dalvin","MID",85,92],
-  ["Reyy","JUNGLE",86,93],
-  ["Halim","MID",80,89],
-  ["Affan","JUNGLE",79,88],
-  ["Ivann","ROAM",78,87]
-]
-
+const STATE_KEY="mplwm_v2";
+let state=JSON.parse(localStorage.getItem(STATE_KEY)||"null")||{
+  page:"home",money:1000000000,week:1,day:14,
+  country:null,league:null,team:null,career:null,
+  history:[],saved:false
 };
 
+function save(){localStorage.setItem(STATE_KEY,JSON.stringify(state));updateMoney()}
+function updateMoney(){document.getElementById("money").textContent="🪙 "+fmt(state.money)}
+function fmt(n){return Math.round(n).toLocaleString("id-ID")}
+function toast(t){const e=document.getElementById("toast");e.textContent=t;e.style.display="block";setTimeout(()=>e.style.display="none",2200)}
+function allCountries(){return Object.values(DB.regions).flatMap(r=>r.countries)}
+function findCountry(id){return allCountries().find(c=>c.id===id)}
+function findLeague(id){for(const c of allCountries())for(const l of c.leagues)if(l.id===id)return l}
+function initials(s){return s.split(" ").map(x=>x[0]).slice(0,3).join("").toUpperCase()}
+function tierClass(t){return t.startsWith("S")?"s":t.startsWith("A")?"a":"b"}
 
-/* =====================================================
-   TRANSFER MARKET
-   Semua nama di sini adalah data game/prototipe
-   ===================================================== */
+document.querySelectorAll("[data-nav]").forEach(b=>b.onclick=()=>{state.page=b.dataset.nav;render()});
 
-const MARKET_PLAYERS = [
-
-  {
-    id:"free_01",
-    name:"Raven",
-    role:"GOLD",
-    ovr:82,
-    potential:91,
-    price:180000000,
-    salary:12000000
-  },
-
-  {
-    id:"free_02",
-    name:"Axel",
-    role:"JUNGLE",
-    ovr:84,
-    potential:93,
-    price:240000000,
-    salary:15000000
-  },
-
-  {
-    id:"free_03",
-    name:"Nero",
-    role:"MID",
-    ovr:81,
-    potential:92,
-    price:160000000,
-    salary:11000000
-  },
-
-  {
-    id:"free_04",
-    name:"Kaze",
-    role:"ROAM",
-    ovr:80,
-    potential:90,
-    price:140000000,
-    salary:10000000
-  },
-
-  {
-    id:"free_05",
-    name:"Rex",
-    role:"EXP",
-    ovr:83,
-    potential:92,
-    price:210000000,
-    salary:13000000
-  },
-
-  {
-    id:"free_06",
-    name:"Mika",
-    role:"MID",
-    ovr:76,
-    potential:88,
-    price:80000000,
-    salary:7000000
-  },
-
-  {
-    id:"free_07",
-    name:"Jett",
-    role:"GOLD",
-    ovr:79,
-    potential:89,
-    price:120000000,
-    salary:8500000
-  },
-
-  {
-    id:"free_08",
-    name:"Zero",
-    role:"JUNGLE",
-    ovr:77,
-    potential:90,
-    price:100000000,
-    salary:7500000
-  },
-
-  {
-    id:"free_09",
-    name:"Aero",
-    role:"ROAM",
-    ovr:75,
-    potential:87,
-    price:70000000,
-    salary:6000000
-  },
-
-  {
-    id:"free_10",
-    name:"Kai",
-    role:"EXP",
-    ovr:78,
-    potential:91,
-    price:95000000,
-    salary:7000000
-  }
-
-];
-
-
-/* =====================================================
-   UTILITIES
-   ===================================================== */
-
-function money(value){
-
-  return new Intl.NumberFormat("id-ID",{
-    style:"currency",
-    currency:"IDR",
-    maximumFractionDigits:0
-  }).format(value);
-
+function render(){
+  updateMoney();
+  const app=document.getElementById("app");
+  if(state.page==="home")app.innerHTML=home();
+  if(state.page==="world")app.innerHTML=world();
+  if(state.page==="calendar")app.innerHTML=calendar();
+  if(state.page==="rankings")app.innerHTML=rankings();
+  if(state.page==="career")app.innerHTML=career();
+  if(state.page==="country")app.innerHTML=countryPage();
+  if(state.page==="league")app.innerHTML=leaguePage();
+  if(state.page==="team")app.innerHTML=teamPage();
+  bind();
 }
-
-function getOrg(){
-
-  if(!career) return null;
-
-  const country = WORLD[career.country];
-
-  if(!country) return null;
-
-  const league = country.leagues[career.league];
-
-  if(!league) return null;
-
-  return league.organizations.find(
-    o => o.id === career.organizationId
-  );
-
-}
-
-function getTeam(teamId){
-
-  const org = getOrg();
-
-  if(!org) return null;
-
-  return org.teams.find(
-    t => t.id === teamId
-  );
-
-}
-
-function getCurrentTeam(){
-
-  return getTeam(career.currentTeamId);
-
-}
-
-function getRoster(teamId){
-
-  if(!career.players[teamId]){
-    career.players[teamId] = [];
-  }
-
-  return career.players[teamId];
-
-}
-
-function save(){
-
-  localStorage.setItem(
-    SAVE_KEY,
-    JSON.stringify(career)
-  );
-
-}
-
-function load(){
-
-  const data =
-    localStorage.getItem(SAVE_KEY);
-
-  if(!data) return false;
-
-  try{
-
-    career = JSON.parse(data);
-
-    migrateCareer();
-
-    return true;
-
-  }catch(e){
-
-    return false;
-
-  }
-
-}
-
-
-/* =====================================================
-   MIGRATION
-   ===================================================== */
-
-function migrateCareer(){
-
-  if(!career.players)
-    career.players = {};
-
-  if(!career.lineups)
-    career.lineups = {};
-
-  if(!career.trainingUsed)
-    career.trainingUsed = false;
-
-  if(!career.week)
-    career.week = 1;
-
-  if(!career.budget)
-    career.budget = 1000000000;
-
-  if(!career.morale)
-    career.morale = 75;
-
-  if(!career.chemistry)
-    career.chemistry = 70;
-
-  if(!career.contracts)
-    career.contracts = {};
-
-  Object.keys(career.players).forEach(teamId=>{
-
-    career.players[teamId].forEach(p=>{
-
-      if(p.stamina === undefined)
-        p.stamina = 100;
-
-      if(p.form === undefined)
-        p.form = 75;
-
-      if(p.salary === undefined)
-        p.salary =
-          Math.max(
-            3000000,
-            Math.round(p.ovr * 100000)
-          );
-
-      if(p.contractYears === undefined)
-        p.contractYears = 2;
-
-      if(p.transferValue === undefined)
-        p.transferValue =
-          Math.round(
-            p.ovr * p.ovr * 100000
-          );
-
-    });
-
-  });
-
-  save();
-
-}
-
-
-/* =====================================================
-   CREATE CAREER
-   ===================================================== */
-
-function createCareer(
-  country,
-  league,
-  organizationId,
-  teamId
-){
-
-  career = {
-
-    country,
-    league,
-
-    organizationId,
-
-    currentTeamId:teamId,
-
-    week:1,
-
-    season:18,
-
-    budget:1000000000,
-
-    morale:75,
-
-    chemistry:70,
-
-    trainingUsed:false,
-
-    players:{},
-
-    lineups:{},
-
-    contracts:{},
-
-    history:[]
-
-  };
-
-  initializeRosters();
-
-  save();
-
-  dashboard();
-
-}
-
-
-function initializeRosters(){
-
-  const org = getOrg();
-
-  if(!org) return;
-
-  org.teams.forEach(team=>{
-
-    if(!career.players[team.id]){
-
-      const base =
-        BASE_ROSTERS[team.id] || [];
-
-      career.players[team.id] =
-        base.map((p,index)=>({
-
-          id:
-            team.id+"_"+index+"_"+Date.now(),
-
-          name:p[0],
-
-          role:p[1],
-
-          ovr:p[2],
-
-          potential:p[3],
-
-          stamina:100,
-
-          form:75,
-
-          salary:
-            Math.round(p[2]*100000),
-
-          contractYears:2,
-
-          transferValue:
-            Math.round(
-              p[2]*p[2]*100000
-            )
-
-        }));
-
-    }
-
-  });
-
-}
-
-
-/* =====================================================
-   START
-   ===================================================== */
 
 function home(){
+return `<div class="page-title"><div><h1>🌐 MPL WORLD MANAGER</h1><div class="muted">Bangun organisasi dari tim kecil sampai panggung dunia.</div></div><button class="primary" onclick="go('world')">Jelajahi World →</button></div>
+<div class="hero"><div class="tag">ROAD TO M8</div><div class="m8">M8</div><h2>WORLD CHAMPIONSHIP</h2><p>Coming Soon</p><div class="grid grid4" style="margin-top:22px">
+${[
+["🇵🇭","Philippines"],["🇮🇩","Indonesia"],["🇲🇾","Malaysia"],["🌍","MENA"],["🇹🇷","Türkiye"],["🌐","EECA"]
+].map(x=>`<div><div class="flag">${x[0]}</div><b>${x[1]}</b></div>`).join("")}</div></div>
+<div class="grid grid3" style="margin-top:18px">
+<div class="panel"><h3>🎯 Mulai dari mana saja</h3><p class="muted">Pilih organisasi besar atau tim kecil. Semua punya jalan karier.</p><button class="primary" onclick="go('world')">Pilih Tim</button></div>
+<div class="panel"><h3>📈 Bangun Legacy</h3><p class="muted">Training, transfer, kontrak, roster, staff, keuangan, dan reputasi.</p></div>
+<div class="panel"><h3>🌍 Dunia tetap berjalan</h3><p class="muted">AI menjalankan liga dan transfer ketika kamu tidak berada di sana.</p></div>
+</div>`;
+}
 
-  app.innerHTML = `
+function world(){
+return `<div class="page-title"><div><h1>🌍 WORLD</h1><div class="muted">Pilih region untuk melihat liga dan tim.</div></div><div class="badge">2026 DATABASE</div></div>
+<div class="hero" style="min-height:170px"><div class="tag">ROAD TO M8</div><div class="m8" style="font-size:48px">M8 WORLD</div><p>Panggung tertinggi menunggu.</p></div>
+${Object.values(DB.regions).map(r=>regionBlock(r)).join("")}
+<div class="section"><div class="section-head" style="background:#6b4c00">🏆 INTERNATIONAL</div><div class="grid grid4" style="padding:14px">${DB.international.map(t=>`<div class="card"><div class="title">${t.name}</div><span class="badge ${tierClass(t.tier)}">${t.tier}</span><div class="sub">${t.route}</div></div>`).join("")}</div></div>`;
+}
+function regionBlock(r){
+return `<div class="section"><div class="section-head ${r.color}">⌃ &nbsp; ${r.name}</div><div style="padding:14px"><div class="grid grid4">${r.countries.map(c=>`<div class="card" onclick="selectCountry('${c.id}')"><div class="flag">${c.flag}</div><div class="title">${c.name}</div><div class="sub">${c.leagues.length} competition aktif di database</div>${c.leagues.map(l=>`<span class="badge ${tierClass(l.tier)}">${l.name.replace(/ Season \\d+| 2026/g,"")}</span>`).join("")}</div>`).join("")}</div></div></div>`;
+}
 
-  <div class="container center">
+function countryPage(){
+const c=findCountry(state.country); if(!c)return world();
+return `<div class="page-title"><div><h1>${c.flag} ${c.name}</h1><div class="muted">Pilih kompetisi. Tier 2 bukan jalan buntu.</div></div><button class="ghost" onclick="go('world')">← World</button></div>
+<div class="grid grid2">${c.leagues.map(l=>`<div class="card" onclick="selectLeague('${l.id}')"><span class="badge ${tierClass(l.tier)}">${l.tier}</span><div class="title" style="margin-top:8px">${l.name}</div><div class="sub">${l.teams.length} tim • Tier ${l.level}</div><p class="muted small">Klik untuk melihat semua tim yang tersedia.</p></div>`).join("")}</div>`;
+}
 
-    <h1 class="big-title">
-      MPL WORLD MANAGER
-    </h1>
+function leaguePage(){
+const l=findLeague(state.league); if(!l)return world();
+const c=findCountry(state.country);
+return `<div class="page-title"><div><h1>${l.name}</h1><div class="muted">${c.flag} ${c.name} • ${l.tier} • Tier ${l.level}</div></div><button class="ghost" onclick="go('country')">← Liga</button></div>
+<div class="panel"><b>Aturan karier:</b> tim kecil dapat membangun reputasi, memenangkan kompetisi, masuk jalur regional, dan mengejar panggung internasional jika jalur turnamennya terbuka.</div>
+<div class="list">${l.teams.map((t,i)=>`<div class="card team" onclick="selectTeam('${encodeURIComponent(t)}')"><div class="team-left"><div class="logo">${initials(t)}</div><div><div class="title">${t}</div><div class="sub">Seed #${i+1} • ${l.level===1?"Professional":"Development / Challenger"}</div></div></div><span class="badge ${tierClass(l.tier)}">${l.tier}</span></div>`).join("")}</div>`;
+}
 
-    <p>
-      Global Mobile Legends Esports Organization Manager
-    </p>
+function teamPage(){
+const l=findLeague(state.league), c=findCountry(state.country), t=state.team;
+return `<div class="page-title"><div><h1>🛡️ ${t}</h1><div class="muted">${c.flag} ${c.name} • ${l.name}</div></div><button class="primary" onclick="startCareer()">Mulai Karier →</button></div>
+<div class="grid grid3">
+<div class="panel"><h3>🏢 Organisasi</h3><p class="muted">Kamu mengelola organisasi, bukan hanya satu lineup.</p></div>
+<div class="panel"><h3>👥 Roster</h3><p class="muted">Rekrut, lepas, pinjamkan, dan kembangkan pemain.</p></div>
+<div class="panel"><h3>🌍 Road to International</h3><p class="muted">Performa dan jalur kompetisi menentukan kesempatan berikutnya.</p></div>
+</div>`;
+}
 
-    <br>
+function career(){
+if(!state.career)return `<div class="empty"><h2>Belum ada karier</h2><button class="primary" onclick="go('world')">Pilih Tim</button></div>`;
+const c=state.career;
+return `<div class="page-title"><div><h1>⚔ ${c.team}</h1><div class="muted">${c.league} • Week ${c.week}</div></div><button class="goldbtn" onclick="playNextMatch()">⚔️ Mainkan Match Berikutnya</button></div>
+<div class="statgrid">
+<div class="stat">💰 Budget<b>Rp ${fmt(c.budget)}</b></div><div class="stat">⭐ Reputasi<b>${c.reputation}</b></div><div class="stat">😊 Morale<b>${c.morale}</b></div><div class="stat">🤝 Chemistry<b>${c.chemistry}</b></div><div class="stat">🏆 Win Rate<b>${c.wins}/${c.games}</b></div>
+</div>
+<div class="tabs"><button class="active">Overview</button><button onclick="state.page='calendar';render()">📅 Jadwal</button><button onclick="state.page='rankings';render()">📊 Klasemen</button><button onclick="showTraining()">Training</button><button onclick="showRoster()">Roster</button><button onclick="showTransfers()">Transfers</button><button onclick="showContracts()">Contracts</button></div>
+<div class="grid grid2">
+<div class="panel"><h2>📅 Minggu ${c.week}</h2><div class="row"><span>Next match</span><b>${c.nextOpponent||"TBD"}</b></div><div class="row"><span>League position</span><b>#${c.position}</b></div><div class="row"><span>International path</span><b>${c.level===1?"Regional qualification":"Open / Tier-2 pathway"}</b></div></div>
+<div class="panel"><h2>🌍 Organization</h2><div class="row"><span>League</span><b>${c.league}</b></div><div class="row"><span>Team tier</span><b>Tier ${c.level}</b></div><div class="row"><span>Academy</span><b>${c.academy?"Active":"Can be built"}</b></div><div class="row"><span>Staff</span><b>${c.staff}</b></div></div>
+</div>
+<div class="panel"><h2>📣 News</h2>${c.news.map(n=>`<div class="row"><span>${n}</span></div>`).join("")}</div>`;
+}
 
-    <button onclick="newCareer()">
-      🎮 MULAI KARIER
-    </button>
-
-    <button onclick="continueCareer()">
-      💾 LANJUTKAN KARIER
-    </button>
-
-    <button class="dark" onclick="worldInfo()">
-      🌍 WORLD
-    </button>
-
+function calendar(){
+  if(!state.career) return `<div class="empty"><h2>Belum ada karier</h2><button class="primary" onclick="go('world')">Pilih Tim</button></div>`;
+  const c=state.career;
+  ensureSeason(c);
+  const l=findLeague(state.league);
+  return `<div class="page-title"><div><h1>▣ ${c.league}</h1><div class="muted">Season 2026 • Week ${c.week} • ${c.gamesPlayed}/${c.schedule.length} match dimainkan</div></div>
+  <button class="goldbtn" onclick="playNextMatch()">⚔️ Mainkan Match Berikutnya</button></div>
+  <div class="grid grid3">
+    <div class="panel"><h3>📅 Jadwal</h3><p class="muted">Double round robin untuk liga profesional. Semua pertandingan AI juga disimulasikan.</p></div>
+    <div class="panel"><h3>📊 Klasemen</h3><p class="muted">1 poin untuk setiap kemenangan match BO3.</p></div>
+    <div class="panel"><h3>🏆 Playoff</h3><p class="muted">Top 6 masuk playoff untuk format liga Tier 1 yang mendukungnya.</p></div>
   </div>
-
-  `;
-
+  <div class="panel"><h2>Match Center</h2>
+    <div class="list">${c.schedule.slice(0,Math.min(c.schedule.length,24)).map((m,i)=>{
+      const done=m.played;
+      return `<div class="card row"><div><span class="badge">W${m.week}</span> <b>${m.home}</b> <span class="muted">vs</span> <b>${m.away}</b><div class="sub">${done?`Hasil ${m.homeScore}-${m.awayScore} • ${m.games} game`:"Belum dimainkan"}</div></div>${!done && (m.home===c.team||m.away===c.team)?`<button class="primary" onclick="playSpecific(${i})">Main</button>`:`<span class="badge">${done?"Selesai":"AI Match"}</span>`}</div>`;
+    }).join("")}</div>
+  </div>`;
 }
 
-
-function newCareer(){
-
-  countrySelect();
-
-}
-
-
-function continueCareer(){
-
-  if(load()){
-
-    dashboard();
-
-  }else{
-
-    alert("Belum ada career yang tersimpan.");
-
-  }
-
-}
-
-
-/* =====================================================
-   COUNTRY
-   ===================================================== */
-
-function countrySelect(){
-
-  let html = `
-
-  <div class="container">
-
-    <h2>🌍 Pilih Negara / Region</h2>
-
-    <div class="grid">
-
-  `;
-
-  Object.keys(WORLD).forEach(country=>{
-
-    html += `
-
-      <div class="org-card">
-
-        <h3>${country}</h3>
-
-        <button onclick="leagueSelect('${country}')">
-          Pilih
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-    <button class="dark" onclick="home()">
-      ← Kembali
-    </button>
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
-}
-
-
-/* =====================================================
-   LEAGUE
-   ===================================================== */
-
-function leagueSelect(country){
-
-  const leagues =
-    WORLD[country].leagues;
-
-  let html = `
-
-  <div class="container">
-
-    <h2>🏆 Pilih Liga</h2>
-
-    <div class="grid">
-
-  `;
-
-  Object.keys(leagues).forEach(league=>{
-
-    html += `
-
-      <div class="org-card">
-
-        <h3>${league}</h3>
-
-        <button onclick="organizationSelect(
-          '${country}',
-          '${league}'
-        )">
-          Pilih Liga
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-    <button class="dark"
-      onclick="countrySelect()">
-      ← Kembali
-    </button>
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
-}
-
-
-/* =====================================================
-   ORGANIZATION
-   ===================================================== */
-
-function organizationSelect(
-  country,
-  league
-){
-
-  const orgs =
-    WORLD[country]
-      .leagues[league]
-      .organizations;
-
-  let html = `
-
-  <div class="container">
-
-    <h2>🏢 Pilih Organisasi</h2>
-
-    <div class="grid">
-
-  `;
-
-  orgs.forEach(org=>{
-
-    html += `
-
-      <div class="org-card">
-
-        <h2>${org.name}</h2>
-
-        <p>
-          ${org.teams.length} team
-        </p>
-
-        <button onclick="teamSelect(
-          '${country}',
-          '${league}',
-          '${org.id}'
-        )">
-          Pilih Organisasi
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-    <button class="dark"
-      onclick="leagueSelect('${country}')">
-      ← Kembali
-    </button>
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
-}
-
-
-/* =====================================================
-   TEAM SELECT
-   ===================================================== */
-
-function teamSelect(
-  country,
-  league,
-  organizationId
-){
-
-  const org =
-    WORLD[country]
-      .leagues[league]
-      .organizations
-      .find(o=>o.id===organizationId);
-
-  let html = `
-
-  <div class="container">
-
-    <h2>👕 Pilih Tim</h2>
-
-    <p>
-      Kamu akan menjadi manager organisasi
-      <b>${org.name}</b>.
-    </p>
-
-    <div class="grid">
-
-  `;
-
-  org.teams.forEach(team=>{
-
-    html += `
-
-      <div class="team-card">
-
-        <h3>${team.name}</h3>
-
-        <span class="stat">
-          Tier ${team.tier}
-        </span>
-
-        <br>
-
-        <button onclick="startSelectedCareer(
-          '${country}',
-          '${league}',
-          '${organizationId}',
-          '${team.id}'
-        )">
-          Mulai Karier
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
-}
-
-
-function startSelectedCareer(
-  country,
-  league,
-  organizationId,
-  teamId
-){
-
-  createCareer(
-    country,
-    league,
-    organizationId,
-    teamId
-  );
-
-}
-
-
-/* =====================================================
-   HEADER
-   ===================================================== */
-
-function header(){
-
-  const team =
-    getCurrentTeam();
-
-  const org =
-    getOrg();
-
-  return `
-
-  <div class="header">
-
-    <h1>⚽ MPL WORLD MANAGER</h1>
-
-    <div class="small">
-      ${org ? org.name : ""}
-      ${team ? " • "+team.name : ""}
-      • Season ${career.season}
-      • Week ${career.week}
-    </div>
-
-    <div class="nav">
-
-      <button onclick="dashboard()">
-        🏠 Dashboard
-      </button>
-
-      <button onclick="rosterScreen()">
-        👥 Roster
-      </button>
-
-      <button onclick="trainingScreen()">
-        🏋️ Training
-      </button>
-
-      <button onclick="transferScreen()">
-        🔄 Transfer
-      </button>
-
-      <button onclick="scheduleScreen()">
-        📅 Schedule
-      </button>
-
-      <button onclick="organizationScreen()">
-        🏢 Organization
-      </button>
-
-      <button class="danger"
-        onclick="resetCareer()">
-        Reset
-      </button>
-
-    </div>
-
-  </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   DASHBOARD
-   ===================================================== */
-
-function dashboard(){
-
-  if(!career){
-
-    home();
-
-    return;
-
-  }
-
-  migrateCareer();
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  app.innerHTML = header()+`
-
-  <div class="container">
-
-    <div class="card">
-
-      <h2>🏠 Organization Dashboard</h2>
-
-      <div class="stat">
-        💰 Budget:
-        <span class="money">
-          ${money(career.budget)}
-        </span>
-      </div>
-
-      <div class="stat">
-        📅 Week ${career.week}
-      </div>
-
-      <div class="stat">
-        👥 ${roster.length} pemain
-      </div>
-
-      <div class="stat">
-        ❤️ Morale ${career.morale}
-      </div>
-
-      <div class="stat">
-        🤝 Chemistry ${career.chemistry}
-      </div>
-
-    </div>
-
-
-    <div class="card">
-
-      <h2>👕 Tim Aktif</h2>
-
-      <h3>${team.name}</h3>
-
-      <p>
-        Tier ${team.tier}
-      </p>
-
-      <button onclick="rosterScreen()">
-        Kelola Roster
-      </button>
-
-      <button onclick="trainingScreen()">
-        Training
-      </button>
-
-      <button onclick="transferScreen()">
-        Transfer Market
-      </button>
-
-    </div>
-
-
-    <div class="card">
-
-      <h2>📌 Menu Cepat</h2>
-
-      <button onclick="organizationScreen()">
-        Lihat Semua Tim Organisasi
-      </button>
-
-      <button onclick="scheduleScreen()">
-        Lihat Jadwal
-      </button>
-
-    </div>
-
-  </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   ORGANIZATION
-   ===================================================== */
-
-function organizationScreen(){
-
-  const org =
-    getOrg();
-
-  let html = header()+`
-
-  <div class="container">
-
-    <h2>🏢 ${org.name}</h2>
-
-    <p>
-      Kamu mengelola seluruh organisasi,
-      bukan hanya satu tim.
-    </p>
-
-    <div class="grid">
-
-  `;
-
-  org.teams.forEach(team=>{
-
-    const roster =
-      getRoster(team.id);
-
-    html += `
-
-      <div class="team-card">
-
-        <h3>${team.name}</h3>
-
-        <span class="stat">
-          Tier ${team.tier}
-        </span>
-
-        <span class="stat">
-          👥 ${roster.length}
-        </span>
-
-        <br>
-
-        <button onclick="switchTeam('${team.id}')">
-          Kelola Tim
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
-}
-
-
-function switchTeam(teamId){
-
-  career.currentTeamId =
-    teamId;
-
+function ensureSeason(c){
+  if(c.schedule && c.standings && c.gamesPlayed!==undefined) return;
+  const l=findLeague(state.league);
+  const teams=l?l.teams:[c.team,"AI Team 1","AI Team 2","AI Team 3","AI Team 4","AI Team 5","AI Team 6","AI Team 7","AI Team 8"];
+  const unique=[...new Set([c.team,...teams])].slice(0,12);
+  c.teams=unique;
+  c.schedule=makeDoubleRoundRobin(unique);
+  c.schedule.forEach(m=>m.played=false);
+  c.gamesPlayed=0;c.wins=0;c.losses=0;c.points=0;
+  c.standings=unique.map(team=>({team,played:0,wins:0,losses:0,points:0,gf:0,ga:0}));
+  c.week=1;c.position=1;
   save();
-
-  dashboard();
-
 }
 
-
-/* =====================================================
-   ROSTER
-   ===================================================== */
-
-function rosterScreen(){
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  let html = header()+`
-
-  <div class="container">
-
-    <h2>👥 Roster — ${team.name}</h2>
-
-    <p>
-      ${roster.length} pemain
-    </p>
-
-    <div class="grid">
-
-  `;
-
-  roster.forEach((p,index)=>{
-
-    html += `
-
-      <div class="player-card">
-
-        <h3>${p.name}</h3>
-
-        <div class="role">
-          ${p.role}
-        </div>
-
-        <div class="stat">
-          OVR ${p.ovr}
-        </div>
-
-        <div class="stat">
-          POT ${p.potential}
-        </div>
-
-        <div class="stat">
-          ⚡ ${p.stamina}
-        </div>
-
-        <div class="stat">
-          😊 ${p.form}
-        </div>
-
-        <hr>
-
-        <div class="small">
-          Gaji:
-          <span class="money">
-            ${money(p.salary)}
-          </span>
-          / minggu
-        </div>
-
-        <div class="small">
-          Kontrak:
-          ${p.contractYears} tahun
-        </div>
-
-        <button
-          onclick="addToLineup(${index})"
-          class="green">
-          Masukkan Lineup
-        </button>
-
-        <button
-          onclick="releasePlayer(${index})"
-          class="danger">
-          Lepas
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-    <hr>
-
-    <h2>⭐ Starting Lineup</h2>
-
-    ${renderLineup()}
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
-}
-
-
-function renderLineup(){
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  const lineup =
-    career.lineups[team.id] || {};
-
-  const roles =
-    ["EXP","JUNGLE","MID","GOLD","ROAM"];
-
-  let html = "";
-
-  roles.forEach(role=>{
-
-    const index =
-      lineup[role];
-
-    let playerName =
-      "Belum diisi";
-
-    if(
-      index !== undefined &&
-      roster[index]
-    ){
-
-      playerName =
-        roster[index].name+
-        " — OVR "+
-        roster[index].ovr;
-
+function makeDoubleRoundRobin(teams){
+  let arr=teams.slice();
+  if(arr.length%2) arr.push("BYE");
+  const n=arr.length, rounds=n-1, half=n/2, first=[];
+  for(let r=0;r<rounds;r++){
+    for(let i=0;i<half;i++){
+      const a=arr[i],b=arr[n-1-i];
+      if(a!=="BYE"&&b!=="BYE") first.push({week:r+1,home:r%2?b:a,away:r%2?a:b,played:false});
     }
-
-    html += `
-
-      <div class="card">
-
-        <b>${role}</b>
-
-        <br>
-
-        ${playerName}
-
-      </div>
-
-    `;
-
-  });
-
-  return html;
-
-}
-
-
-function addToLineup(index){
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  const player =
-    roster[index];
-
-  if(!career.lineups[team.id])
-    career.lineups[team.id]={};
-
-  career.lineups[team.id][player.role] =
-    index;
-
-  save();
-
-  rosterScreen();
-
-}
-
-
-/* =====================================================
-   TRAINING
-   ===================================================== */
-
-const TRAINING = [
-
-  {
-    name:"Intensive Training",
-    price:100000000,
-    morale:-3,
-    chemistry:0,
-    stamina:-15,
-    ovr:1
-  },
-
-  {
-    name:"Tactical Training",
-    price:75000000,
-    morale:2,
-    chemistry:5,
-    stamina:-8,
-    ovr:.5
-  },
-
-  {
-    name:"Physical Training",
-    price:50000000,
-    morale:1,
-    chemistry:0,
-    stamina:10,
-    ovr:0
-  },
-
-  {
-    name:"Recovery",
-    price:25000000,
-    morale:6,
-    chemistry:1,
-    stamina:25,
-    ovr:0
-  },
-
-  {
-    name:"Bootcamp",
-    price:250000000,
-    morale:8,
-    chemistry:12,
-    stamina:-10,
-    ovr:1
+    arr=[arr[0],arr[n-1],...arr.slice(1,n-1)];
   }
-
-];
-
-
-function trainingScreen(){
-
-  let html = header()+`
-
-  <div class="container">
-
-    <h2>🏋️ Training Center</h2>
-
-    <div class="card">
-
-      <h3>
-        Budget:
-        <span class="money">
-          ${money(career.budget)}
-        </span>
-      </h3>
-
-      <p>
-        Training hanya dapat dilakukan
-        sekali setiap minggu.
-      </p>
-
-    </div>
-
-    <div class="grid">
-
-  `;
-
-  TRAINING.forEach((t,index)=>{
-
-    html += `
-
-      <div class="card">
-
-        <h3>${t.name}</h3>
-
-        <p>
-          💰 ${money(t.price)}
-        </p>
-
-        <p>
-          Morale:
-          ${t.morale >= 0 ? "+" : ""}
-          ${t.morale}
-        </p>
-
-        <p>
-          Chemistry:
-          +${t.chemistry}
-        </p>
-
-        <p>
-          Stamina:
-          ${t.stamina >= 0 ? "+" : ""}
-          ${t.stamina}
-        </p>
-
-        <p>
-          OVR:
-          +${t.ovr}
-        </p>
-
-        <button
-          onclick="doTraining(${index})"
-          ${career.trainingUsed ? "disabled" : ""}>
-          ${career.trainingUsed
-            ? "Sudah Training"
-            : "Pilih Training"}
-        </button>
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
+  return first.concat(first.map(m=>({...m,week:m.week+rounds,home:m.away,away:m.home,played:false})));
 }
 
-
-function doTraining(index){
-
-  if(career.trainingUsed){
-
-    alert(
-      "Training minggu ini sudah digunakan."
-    );
-
-    return;
-
+function getStanding(c,team){
+  return c.standings.find(x=>x.team===team);
+}
+function strength(c,team){
+  const s=getStanding(c,team);
+  let base=55+(s?Math.min(20,s.points*2):0);
+  if(team===c.team) base+=c.reputation*.45+c.chemistry*.15+c.morale*.12;
+  else base+=Math.random()*15;
+  return base;
+}
+function simulateMatch(c,m){
+  const hs=strength(c,m.home), as=strength(c,m.away);
+  const p=1/(1+Math.exp((as-hs)/12));
+  const homeWin=Math.random()<p;
+  let h=homeWin?2:Math.floor(Math.random()*2), a=homeWin?Math.floor(Math.random()*2):2;
+  if(h===a) homeWin ? h=2 : a=2;
+  m.homeScore=h;m.awayScore=a;m.games=3;m.played=true;
+  const H=getStanding(c,m.home),A=getStanding(c,m.away);
+  H.played++;A.played++;H.gf+=h;H.ga+=a;A.gf+=a;A.ga+=h;
+  if(h>a){H.wins++;H.points++;A.losses++}else{A.wins++;A.points++;H.losses++}
+  c.gamesPlayed++;
+  if(m.home===c.team||m.away===c.team){
+    const won=(m.home===c.team?h>a:a>h);
+    if(won){c.wins++;c.points++;c.reputation+=2;c.morale=Math.min(100,c.morale+3);c.budget+=25000000}
+    else{c.losses++;c.morale=Math.max(0,c.morale-3);c.budget+=5000000}
+    c.chemistry=Math.min(100,c.chemistry+1);
+    c.news.unshift((won?"🔥 Menang ":"❌ Kalah ")+`${m.home} ${h}-${a} ${m.away}`);
+    c.news=c.news.slice(0,5);
   }
-
-  const t =
-    TRAINING[index];
-
-  if(career.budget < t.price){
-
-    alert("Budget tidak cukup!");
-
-    return;
-
-  }
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  career.budget -=
-    t.price;
-
-  career.morale +=
-    t.morale;
-
-  career.chemistry +=
-    t.chemistry;
-
-  career.morale =
-    Math.max(
-      0,
-      Math.min(100,career.morale)
-    );
-
-  career.chemistry =
-    Math.max(
-      0,
-      Math.min(100,career.chemistry)
-    );
-
-  roster.forEach(p=>{
-
-    p.stamina =
-      Math.max(
-        0,
-        Math.min(
-          100,
-          p.stamina+t.stamina
-        )
-      );
-
-    p.ovr =
-      Math.min(
-        p.potential,
-        p.ovr+t.ovr
-      );
-
-  });
-
-  career.trainingUsed = true;
-
-  save();
-
-  alert(
-    t.name+
-    " berhasil dilakukan!"
-  );
-
-  trainingScreen();
-
+}
+function sortStandings(c){
+  c.standings.sort((a,b)=>b.points-a.points || (b.gf-b.ga)-(a.gf-a.ga) || b.gf-a.gf);
+  c.position=Math.max(1,c.standings.findIndex(x=>x.team===c.team)+1);
+}
+function playSpecific(i){
+  const c=state.career;ensureSeason(c);const m=c.schedule[i];
+  if(!m||m.played)return;
+  // Simulate all earlier unplayed matches so the season advances naturally.
+  for(let j=0;j<=i;j++) if(!c.schedule[j].played) simulateMatch(c,c.schedule[j]);
+  sortStandings(c); c.week=Math.min(999,Math.floor(c.gamesPlayed/Math.max(1,c.teams.length/2))+1);
+  save();state.page="calendar";render();toast("Match selesai!");
+}
+function playNextMatch(){
+  const c=state.career;ensureSeason(c);
+  const i=c.schedule.findIndex(m=>!m.played && (m.home===c.team||m.away===c.team));
+  if(i<0){toast("Regular season selesai!");return showPlayoffs();}
+  playSpecific(i);
+}
+function showPlayoffs(){
+  const c=state.career;ensureSeason(c);sortStandings(c);
+  const top=c.standings.slice(0,6);
+  openModal(`<h2>🏆 Playoff Qualification</h2><p class="muted">Top 6 dari regular season masuk playoff pada liga Tier 1.</p>
+  <div class="list">${top.map((x,i)=>`<div class="card row"><b>#${i+1} ${x.team}</b><span>${x.points} pts</span></div>`).join("")}</div>
+  <button class="goldbtn" onclick="closeModal();toast('Playoff bracket siap dibangun di V4')">Lanjut</button>`);
+}
+function rankings(){
+  if(state.career){ensureSeason(state.career);sortStandings(state.career);}
+  let rows=state.career ? state.career.standings : allCountries().flatMap(c=>c.leagues.map(l=>({country:c.name,flag:c.flag,league:l.name,tier:l.tier,teams:l.teams.length}))).sort((a,b)=>a.tier.localeCompare(b.tier));
+  if(state.career) return `<div class="page-title"><div><h1>♛ ${state.career.team} — TABLE</h1><div class="muted">${state.career.league} • Live standings</div></div></div>
+  <div class="panel"><table><thead><tr><th>#</th><th>Team</th><th>MP</th><th>W</th><th>L</th><th>Pts</th><th>+/-</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td><b>${r.team}</b></td><td>${r.played}</td><td>${r.wins}</td><td>${r.losses}</td><td><b>${r.points}</b></td><td>${r.gf-r.ga}</td></tr>`).join("")}</tbody></table></div>`;
+  return `<div class="page-title"><div><h1>♛ WORLD RANKINGS</h1><div class="muted">Kekuatan liga berdasarkan tier dan ukuran kompetisi.</div></div></div>
+  <div class="panel"><table><thead><tr><th>#</th><th>Region</th><th>League</th><th>Tier</th><th>Teams</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.flag} ${r.country}</td><td>${r.league}</td><td><span class="badge ${tierClass(r.tier)}">${r.tier}</span></td><td>${r.teams}</td></tr>`).join("")}</tbody></table></div>`;
 }
 
-
-/* =====================================================
-   TRANSFER MARKET
-   ===================================================== */
-
-function transferScreen(){
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  let html = header()+`
-
-  <div class="container">
-
-    <div class="card">
-
-      <h2>🔄 Transfer Market</h2>
-
-      <p>
-        Tim aktif:
-        <b>${team.name}</b>
-      </p>
-
-      <p>
-        Budget:
-        <span class="money">
-          ${money(career.budget)}
-        </span>
-      </p>
-
-      <p>
-        Roster:
-        ${roster.length}/12
-      </p>
-
-    </div>
-
-    <div class="grid">
-
-  `;
-
-  MARKET_PLAYERS.forEach(p=>{
-
-    const already =
-      isPlayerSigned(p.id);
-
-    html += `
-
-      <div class="market-card">
-
-        <h3>${p.name}</h3>
-
-        <div class="role">
-          ${p.role}
-        </div>
-
-        <div class="stat">
-          OVR ${p.ovr}
-        </div>
-
-        <div class="stat">
-          POT ${p.potential}
-        </div>
-
-        <hr>
-
-        <p>
-          💰 Transfer:
-          <span class="money">
-            ${money(p.price)}
-          </span>
-        </p>
-
-        <p>
-          💵 Gaji:
-          ${money(p.salary)}
-          / minggu
-        </p>
-
-        <select id="contract_${p.id}">
-
-          <option value="1">
-            Kontrak 1 Tahun
-          </option>
-
-          <option value="2" selected>
-            Kontrak 2 Tahun
-          </option>
-
-          <option value="3">
-            Kontrak 3 Tahun
-          </option>
-
-        </select>
-
-        <br>
-
-        ${
-          already
-          ?
-          `<button disabled>
-            Sudah Dikontrak
-          </button>`
-          :
-          `<button
-            class="green"
-            onclick="signPlayer('${p.id}')">
-            Rekrut
-          </button>`
-        }
-
-      </div>
-
-    `;
-
-  });
-
-  html += `
-
-    </div>
-
-  </div>
-
-  `;
-
-  app.innerHTML = html;
-
+function startCareer(){
+  const l=findLeague(state.league), c=findCountry(state.country);
+  state.career={team:state.team,league:l.name,country:c.name,level:l.level,budget:1000000000,
+    reputation:l.level===1?45:25,morale:75,chemistry:60,wins:0,losses:0,points:0,
+    games:0,gamesPlayed:0,week:1,position:1,academy:l.level===2,staff:2,nextOpponent:"AI Team",
+    news:["Karier dimulai. Bangun tim dari nol.","Semua pertandingan liga akan berjalan, termasuk pertandingan AI.","Target berikutnya: playoff dan jalur regional."]};
+  ensureSeason(state.career);
+  state.page="career";save();render();toast("Karier dimulai!");
 }
-
-
-function isPlayerSigned(id){
-
-  for(const teamId in career.players){
-
-    const found =
-      career.players[teamId]
-        .find(p=>p.marketId===id);
-
-    if(found)
-      return true;
-
-  }
-
-  return false;
-
+function advanceWeek(){playNextMatch()}
+function showTraining(){
+openModal(`<h2>🏋️ Training Center</h2><p class="muted">Training hanya sekali per minggu dalam versi ini.</p>
+<div class="list">
+${[
+["Intensive Training",100000000,"+1 OVR","Morale -3"],
+["Tactical Session",75000000,"Chemistry +5","Morale +2"],
+["Physical Program",50000000,"Stamina +10",""],
+["Recovery",25000000,"Morale +6","Chemistry +1"],
+["Bootcamp",250000000,"+1 OVR","Chemistry +12"]
+].map((x,i)=>`<div class="card row"><div><b>${x[0]}</b><div class="sub">${x[2]} ${x[3]}</div></div><button class="primary" onclick="train(${i})">Rp ${fmt(x[1])}</button></div>`).join("")}</div>`);
 }
-
-
-function signPlayer(id){
-
-  const marketPlayer =
-    MARKET_PLAYERS.find(
-      p=>p.id===id
-    );
-
-  if(!marketPlayer)
-    return;
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  if(roster.length >= 12){
-
-    alert(
-      "Roster sudah penuh! Maksimal 12 pemain."
-    );
-
-    return;
-
-  }
-
-  if(isPlayerSigned(id)){
-
-    alert(
-      "Pemain ini sudah dikontrak."
-    );
-
-    return;
-
-  }
-
-  const select =
-    document.getElementById(
-      "contract_"+id
-    );
-
-  const years =
-    Number(select.value);
-
-  if(career.budget <
-     marketPlayer.price){
-
-    alert(
-      "Budget tidak cukup untuk transfer ini!"
-    );
-
-    return;
-
-  }
-
-  const player = {
-
-    id:
-      "signed_"+id+"_"+Date.now(),
-
-    marketId:id,
-
-    name:marketPlayer.name,
-
-    role:marketPlayer.role,
-
-    ovr:marketPlayer.ovr,
-
-    potential:marketPlayer.potential,
-
-    stamina:100,
-
-    form:75,
-
-    salary:marketPlayer.salary,
-
-    contractYears:years,
-
-    transferValue:
-      marketPlayer.price
-
-  };
-
-  career.budget -=
-    marketPlayer.price;
-
-  roster.push(player);
-
-  career.contracts[player.id]={
-    playerId:player.id,
-    years:years,
-    salary:player.salary
-  };
-
-  career.history.push({
-
-    type:"transfer_in",
-
-    player:player.name,
-
-    team:team.name,
-
-    fee:marketPlayer.price,
-
-    week:career.week
-
-  });
-
-  save();
-
-  alert(
-    player.name+
-    " berhasil direkrut!"
-  );
-
-  transferScreen();
-
+function train(i){
+const c=state.career;const costs=[1e8,7.5e7,5e7,2.5e7,2.5e8];if(c.budget<costs[i])return toast("Budget tidak cukup.");
+c.budget-=costs[i];
+if(i===0)c.morale-=3;
+if(i===1){c.morale+=2;c.chemistry+=5}
+if(i===2)c.morale+=1;
+if(i===3){c.morale+=6;c.chemistry+=1}
+if(i===4){c.morale+=8;c.chemistry+=12}
+c.morale=Math.min(100,c.morale);c.chemistry=Math.min(100,c.chemistry);
+save();closeModal();render();toast("Training selesai.");
 }
-
-
-/* =====================================================
-   RELEASE PLAYER
-   ===================================================== */
-
-function releasePlayer(index){
-
-  const team =
-    getCurrentTeam();
-
-  const roster =
-    getRoster(team.id);
-
-  const player =
-    roster[index];
-
-  if(!player)
-    return;
-
-  const confirmRelease =
-    confirm(
-      "Lepas "+player.name+"?"
-    );
-
-  if(!confirmRelease)
-    return;
-
-  const releaseFee =
-    Math.round(
-      player.salary * 4
-    );
-
-  if(career.budget <
-     releaseFee){
-
-    alert(
-      "Budget tidak cukup untuk membayar release fee."
-    );
-
-    return;
-
-  }
-
-  career.budget -=
-    releaseFee;
-
-  delete career.contracts[player.id];
-
-  if(career.lineups[team.id]){
-
-    Object.keys(
-      career.lineups[team.id]
-    ).forEach(role=>{
-
-      if(
-        career.lineups[team.id][role] ===
-        index
-      ){
-
-        delete career.lineups[team.id][role];
-
-      }
-
-    });
-
-  }
-
-  roster.splice(index,1);
-
-  /* perbaiki index lineup */
-
-  if(career.lineups[team.id]){
-
-    Object.keys(
-      career.lineups[team.id]
-    ).forEach(role=>{
-
-      const oldIndex =
-        career.lineups[team.id][role];
-
-      if(oldIndex > index){
-
-        career.lineups[team.id][role] =
-          oldIndex-1;
-
-      }
-
-    });
-
-  }
-
-  career.history.push({
-
-    type:"transfer_out",
-
-    player:player.name,
-
-    team:team.name,
-
-    fee:releaseFee,
-
-    week:career.week
-
-  });
-
-  save();
-
-  alert(
-    player.name+
-    " dilepas."
-  );
-
-  rosterScreen();
-
+function showRoster(){openModal(rosterHTML())}
+function showTransfers(){
+openModal(`<h2>🔄 Transfer Market</h2><p class="muted">Pasar pemain akan berkembang mengikuti reputasi organisasi.</p>
+<div class="list">${["Free Agent Scout","Regional Free Agent","Academy Prospect","Veteran Free Agent","Open Qualifier Prospect"].map((n,i)=>`<div class="card row"><div><b>${n}</b><div class="sub">OVR ${70+i*2} • ${i<2?"Experienced":"Prospect"}</div></div><button class="primary" onclick="buyPlayer(${i})">Rekrut</button></div>`).join("")}</div>`);
 }
-
-
-/* =====================================================
-   SCHEDULE / ADVANCE WEEK
-   ===================================================== */
-
-function scheduleScreen(){
-
-  app.innerHTML = header()+`
-
-  <div class="container">
-
-    <div class="card">
-
-      <h2>📅 Schedule</h2>
-
-      <p>
-        Season ${career.season}
-      </p>
-
-      <p>
-        Week ${career.week}
-      </p>
-
-      <hr>
-
-      <h3>
-        Next Week
-      </h3>
-
-      <p>
-        Saat minggu berjalan, stamina pemain
-        akan pulih dan gaji mingguan dibayar.
-      </p>
-
-      <button
-        class="green"
-        onclick="advanceWeek()">
-        ▶ Advance Week
-      </button>
-
-    </div>
-
-  </div>
-
-  `;
-
+function buyPlayer(i){const cost=60000000+i*25000000;if(state.career.budget<cost)return toast("Budget tidak cukup.");state.career.budget-=cost;state.career.news.unshift("Transfer baru: pemain berhasil direkrut.");save();closeModal();render();toast("Pemain bergabung!")}
+function showContracts(){
+openModal(`<h2>📄 Contracts</h2><div class="list">${["Rookie EXP","Young Jungle","Mid Prospect","Gold Carry","Roam Captain"].map((n,i)=>`<div class="card row"><div><b>${n}</b><div class="sub">Contract ${i+1} season • Salary Rp ${fmt((20+i*8)*1e6)}/season</div></div><button class="ghost" onclick="toast('Kontrak diperpanjang')">Extend</button></div>`).join("")}</div>`);
 }
-
-
-function advanceWeek(){
-
-  const org =
-    getOrg();
-
-  let payroll = 0;
-
-  org.teams.forEach(team=>{
-
-    const roster =
-      getRoster(team.id);
-
-    roster.forEach(player=>{
-
-      payroll +=
-        player.salary;
-
-      player.stamina =
-        Math.min(
-          100,
-          player.stamina+10
-        );
-
-      player.form =
-        Math.min(
-          100,
-          player.form+1
-        );
-
-    });
-
-  });
-
-  if(career.budget <
-     payroll){
-
-    alert(
-      "Budget tidak cukup untuk membayar payroll minggu ini!\n\n"+
-      "Payroll: "+money(payroll)
-    );
-
-    return;
-
-  }
-
-  career.budget -=
-    payroll;
-
-  career.week++;
-
-  career.trainingUsed =
-    false;
-
-  /* setiap 18 minggu masuk season baru */
-
-  if(career.week > 18){
-
-    career.week = 1;
-
-    career.season++;
-
-    Object.keys(
-      career.players
-    ).forEach(teamId=>{
-
-      career.players[teamId]
-        .forEach(p=>{
-
-          p.contractYears =
-            Math.max(
-              0,
-              p.contractYears-1
-            );
-
-        });
-
-    });
-
-    alert(
-      "🎉 Season baru dimulai!"
-    );
-
-  }
-
-  save();
-
-  dashboard();
-
-}
-
-
-/* =====================================================
-   WORLD INFO
-   ===================================================== */
-
-function worldInfo(){
-
-  app.innerHTML = `
-
-  <div class="container">
-
-    <h2>🌍 WORLD</h2>
-
-    <div class="card">
-
-      <h3>Struktur Dunia</h3>
-
-      <p>
-        World
-        →
-        Country / Region
-        →
-        League
-        →
-        Tier
-        →
-        Organization
-        →
-        Team
-      </p>
-
-      <p>
-        Kamu mengelola organisasi dan
-        semua tim yang berada di bawahnya.
-      </p>
-
-    </div>
-
-    <div class="card">
-
-      <h3>🌐 Konsep</h3>
-
-      <p>
-        Liga negara lain tetap berjalan
-        ketika kamu mengelola organisasi kamu.
-      </p>
-
-      <p>
-        Tier 2 dan tim academy juga dapat
-        berkembang dan mengikuti kompetisi
-        tertentu.
-      </p>
-
-    </div>
-
-    <button onclick="home()">
-      ← Kembali
-    </button>
-
-  </div>
-
-  `;
-
-}
-
-
-/* =====================================================
-   RESET
-   ===================================================== */
-
-function resetCareer(){
-
-  const yes =
-    confirm(
-      "Yakin ingin menghapus career?"
-    );
-
-  if(!yes)
-    return;
-
-  localStorage.removeItem(
-    SAVE_KEY
-  );
-
-  career = null;
-
-  home();
-
-}
-
-
-/* =====================================================
-   START APP
-   ===================================================== */
-
-if(load()){
-
-  dashboard();
-
-}else{
-
-  home();
-
-}
-
+function openModal(x){document.getElementById("modalbox").innerHTML=x;document.getElementById("modal").classList.add("show")}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()}
+
+function selectCountry(id){state.country=id;state.page="country";render()}
+function selectLeague(id){state.league=id;state.page="league";render()}
+function selectTeam(t){state.team=decodeURIComponent(t);state.page="team";render()}
+function go(p){state.page=p;render()}
+function bind(){}
+
+<script>
+/* MPL WORLD MANAGER V10 FINAL FOUNDATION */
+const V10_ROLES=['EXP','JUNGLE','MID','GOLD','ROAM'];
+const V10_PLAYERS={'RRQ Hoshi':[['Lynchh','EXP',82,88],['Demonkite','JUNGLE',84,89],['Rinz','MID',84,90],['Kuroky','GOLD',80,87],['Idok','ROAM',81,88],['Clayyy','MID',83,86]],'ONIC':[['Lutpi','EXP',83,89],['Kairi','JUNGLE',88,94],['Sanz','MID',88,93],['Kelra','GOLD',87,93],['Kiboy','ROAM',86,91]],'EVOS':[['Vell','EXP',79,87],['Alberttt','JUNGLE',86,92],['Ryzaa','MID',79,87],['Erlan','GOLD',80,88],['Muezza','ROAM',79,87]],'Bigetron by Vitality':[['Shogun','EXP',80,87],['Nnael','JUNGLE',82,90],['Morenooo','MID',80,88],['Emann','GOLD',85,91],['Finn','ROAM',79,87]],'Alter Ego':[['Nino','EXP',80,87],['Reyy','JUNGLE',79,87],['Dalvin','MID',78,86],['Dingarai','GOLD',80,88],['Alexander','ROAM',78,86]],'Dewa United Esports':[['QINN','EXP',77,85],['Kayn','JUNGLE',78,86],['Octa','MID',78,86],['Maybeee','GOLD',79,87],['KESUUU','ROAM',78,86]],'Geek Fam ID':[['MarceL','EXP',75,84],['Nazara','JUNGLE',77,86],['A B O Y','MID',78,87],['KennzyySkie','GOLD',77,86],['AudyTzy','ROAM',75,84]],'Team Liquid ID':[['Aran','EXP',80,88],['Kevin','JUNGLE',79,87],['Drichel','MID',80,88],['Keven','GOLD',81,89],['Lyoni','ROAM',79,87]]};
+function v10Init(c){if(c.v10)return;let a=V10_PLAYERS[c.team]||V10_ROLES.map((r,i)=>['Academy Prospect '+r,r,68+i,82+i]);c.roster=a.map((x,i)=>({id:i+1,name:x[0],role:x[1],ovr:x[2],pot:x[3],stamina:90,contract:1,salary:10000000}));c.lineup={};V10_ROLES.forEach(r=>{let p=c.roster.find(x=>x.role===r);if(p)c.lineup[r]=p.id});c.chemistry=c.chemistry||60;c.morale=c.morale||75;c.academy=!!c.academy;c.staff=c.staff||3;c.reputation=c.reputation||25;c.v10=true;save()}
+function v10Power(c){v10Init(c);return V10_ROLES.reduce((s,r)=>s+(c.roster.find(p=>p.id===c.lineup[r])?.ovr||55),0)/5+c.chemistry*.08+c.morale*.05}
+function v10Roster(){let c=state.career;v10Init(c);openModal('<h2>👥 Roster & Lineup</h2><div class="panel"><b>Lineup Power '+v10Power(c).toFixed(1)+'</b></div>'+V10_ROLES.map(r=>'<div class="card"><b>'+r+'</b>'+c.roster.filter(p=>p.role===r).map(p=>'<div class="row small"><span>'+p.name+' • OVR '+p.ovr+' • POT '+p.pot+'</span><button class="ghost" onclick="v10Pick('+p.id+',\''+r+'\')">'+(c.lineup[r]===p.id?'STARTER':'PILIH')+'</button></div>').join('')+'</div>').join(''))}
+function v10Pick(id,r){let c=state.career;v10Init(c);c.lineup[r]=id;save();v10Roster()}
+function v10Training(){let c=state.career;v10Init(c);openModal('<h2>🏋️ Training Center</h2>'+[['Intensive',100000000],['Tactical',75000000],['Physical',50000000],['Recovery',25000000]].map((x,i)=>'<div class="card row"><div><b>'+x[0]+'</b><div class="sub">Upgrade roster condition</div></div><button class="primary" onclick="v10Train('+i+')">Rp '+fmt(x[1])+'</button></div>').join(''))}
+function v10Train(i){let c=state.career;v10Init(c);let cost=[1e8,7.5e7,5e7,2.5e7][i];if(c.budget<cost)return toast('Budget tidak cukup');c.budget-=cost;c.roster.forEach(p=>{if(i===0)p.ovr=Math.min(p.pot,p.ovr+1);if(i===1)c.chemistry=Math.min(100,c.chemistry+5);if(i===2)p.stamina=Math.min(100,p.stamina+10);if(i===3)p.stamina=Math.min(100,p.stamina+20)});save();closeModal();render();toast('Training selesai')}
+function v10Transfers(){let c=state.career;v10Init(c);let a=[['Young EXP','EXP',69,84,40000000],['Rising Jungler','JUNGLE',73,87,65000000],['Mechanical Mid','MID',75,89,80000000],['Gold Carry','GOLD',74,90,85000000],['Veteran Roamer','ROAM',78,82,90000000]];openModal('<h2>🔄 Transfer Market</h2>'+a.map((p,i)=>'<div class="card row"><div><b>'+p[0]+'</b><div class="sub">'+p[1]+' • OVR '+p[2]+' • POT '+p[3]+'</div></div><button class="primary" onclick="v10Buy('+i+')">Rp '+fmt(p[4])+'</button></div>').join(''))}
+function v10Buy(i){let a=[['Young EXP','EXP',69,84,4e7],['Rising Jungler','JUNGLE',73,87,6.5e7],['Mechanical Mid','MID',75,89,8e7],['Gold Carry','GOLD',74,90,8.5e7],['Veteran Roamer','ROAM',78,82,9e7]][i],c=state.career;if(c.budget<a[4])return toast('Budget tidak cukup');c.budget-=a[4];c.roster.push({id:Date.now(),name:a[0],role:a[1],ovr:a[2],pot:a[3],stamina:85,contract:2,salary:12000000});save();closeModal();render();toast('Pemain direkrut')}
+function v10Contracts(){let c=state.career;v10Init(c);openModal('<h2>📄 Contracts</h2>'+c.roster.map(p=>'<div class="card row"><div><b>'+p.name+'</b><div class="sub">'+p.role+' • '+p.contract+' season • Rp '+fmt(p.salary)+'</div></div><button class="ghost" onclick="v10Extend('+p.id+')">EXTEND</button></div>').join(''))}
+function v10Extend(id){let c=state.career,p=c.roster.find(x=>x.id===id);if(p){p.contract++;p.salary=Math.round(p.salary*1.12)}save();v10Contracts()}
+function v10Org(){let c=state.career;openModal('<h2>🏢 Organization Manager</h2><div class="grid grid2"><div class="card"><h3>🌱 Academy</h3><p>'+(c.academy?'ACTIVE':'LOCKED')+'</p><button class="primary" onclick="v10Academy()">Upgrade</button></div><div class="card"><h3>👔 Staff</h3><p>'+c.staff+' staff</p><button class="primary" onclick="v10Staff()">Hire</button></div><div class="card"><h3>🌍 Expansion</h3><p>Bangun cabang regional.</p><button class="primary" onclick="v10Expand()">Explore</button></div></div>')}
+function v10Academy(){let c=state.career;if(c.academy)return toast('Academy sudah aktif');if(c.budget<150000000)return toast('Budget tidak cukup');c.budget-=150000000;c.academy=true;c.reputation+=5;save();closeModal();render();toast('Academy aktif')}
+function v10Staff(){let c=state.career;if(c.budget<50000000)return toast('Budget tidak cukup');c.budget-=50000000;c.staff++;c.chemistry=Math.min(100,c.chemistry+2);save();v10Org()}
+function v10Expand(){let c=state.career;if(c.reputation<55)return toast('Reputasi minimal 55');if(c.budget<300000000)return toast('Budget tidak cukup');c.budget-=300000000;c.reputation+=8;save();closeModal();render();toast('Ekspansi regional terbuka')}
+function v10International(){let c=state.career;openModal('<h2>🌏 International Path</h2><div class="panel"><div class="row"><span>Regional qualification</span><b>'+(c.reputation>=55?'OPEN':'LOCKED')+'</b></div><div class="row"><span>MCT</span><b>Performance based</b></div><div class="row"><span>M8</span><b>MCT → International</b></div></div><p class="muted">Tier 2/academy dapat mengejar jalur turnamen tertentu jika memenuhi aturan kompetisi.</p>')}
+const _careerV3=career;career=function(){let s=_careerV3();if(!state.career)return s;v10Init(state.career);return s.replace('</div>','<div class="tabs"><button onclick="v10Roster()">👥 Roster</button><button onclick="v10Training()">🏋️ Training</button><button onclick="v10Transfers()">🔄 Transfers</button><button onclick="v10Contracts()">📄 Contracts</button><button onclick="v10Org()">🏢 Organization</button><button onclick="v10International()">🌏 International</button></div></div>')};
+if(state.career)v10Init(state.career);
 </script>
-
+render();
+</script>
 </body>
 </html>
